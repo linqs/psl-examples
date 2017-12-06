@@ -1,0 +1,23 @@
+predicates:
+   AvgJokeRatingObs/1: closed
+   AvgUserRatingObs/1: closed
+   Joke/1: closed
+   RatingPrior/1: closed
+   SimObsRating/2: closed
+   User/1: closed
+   Rating/2: open
+
+observations:
+   AvgJokeRatingObs: ../data/preference-prediction/learn/avgJokeRatingObs_obs.txt
+   AvgUserRatingObs: ../data/preference-prediction/learn/avgUserRatingObs_obs.txt
+   Joke: ../data/preference-prediction/learn/joke_obs.txt
+   RatingPrior: ../data/preference-prediction/learn/ratingPrior_obs.txt
+   SimObsRating: ../data/preference-prediction/learn/simObsRating_obs.txt
+   User: ../data/preference-prediction/learn/user_obs.txt
+   Rating: ../data/preference-prediction/learn/rating_obs.txt
+
+targets:
+   Rating: ../data/preference-prediction/learn/rating_targets.txt
+
+truth:
+   Rating: ../data/preference-prediction/learn/rating_truth.txt

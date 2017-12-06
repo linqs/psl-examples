@@ -2,13 +2,14 @@
 
 ## Problem
 
-In this example, we attempt to discover the level of trust between two individuals.
+In this example, we attempt to discover a user's preference for a specific joke.
+This can also be viewed as a recommendation problem where out recommendation would just be the joke with the highest predicted rating.
 
 ## Dataset
 
-The dataset originally came from the Epinions social network.
-It contains some positive and negative examples of trust in the network along with the structural information
-of the network (ie who knows who).
+The dataset originally came from the Jester project.
+The full dataset contains ratings for almost 25,000 users on 100 jokes.
+Each joke is rated on a scale of [-10, +10] \(which has been normalized to [0, 1] for PSL\).
 
 ## Origin
 
@@ -26,7 +27,9 @@ This example is a simplified version of one of the experiments from Bach et al.'
 ## Keywords
 
  - `cli`
+ - `collaborative filtering`
  - `evaluation`
  - `inference`
  - `link prediction`
+ - `recommendation`
  - `weight learning`

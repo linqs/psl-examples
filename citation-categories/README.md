@@ -15,7 +15,7 @@ The links are represented as only one predicate, but can represent several relat
 
 ## Origin
 
-This example is a simplified version of on of the experiments from Bach et al.'s core PSL paper:
+This example is a simplified version of one of the experiments from Bach et al.'s core PSL paper:
 "Hinge-Loss Markov Random Fields and Probabilistic Soft Logic":
 ```
 @article{bach:jmlr17,
