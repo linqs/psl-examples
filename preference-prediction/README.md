@@ -1,4 +1,4 @@
-### Citation Categories
+### Preference Prediction
 
 ## Problem
 
@@ -31,5 +31,6 @@ This example is a simplified version of one of the experiments from Bach et al.'
  - `evaluation`
  - `inference`
  - `link prediction`
+ - `real data`
  - `recommendation`
  - `weight learning`

@@ -32,4 +32,5 @@ This example is a simplified version of one of the experiments from Bach et al.'
  - `collective classification`
  - `evaluation`
  - `inference`
+ - `real data`
  - `weight learning`

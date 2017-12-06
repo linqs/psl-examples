@@ -5,7 +5,7 @@ readonly JAR_PATH='psl-cli-CANARY.jar'
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 readonly BASE_NAME='preference-prediction'
 
-readonly ADDITIONAL_EVAL_OPTIONS='-ec'
+readonly ADDITIONAL_EVAL_OPTIONS='--eval-continuous'
 
 function main() {
    trap exit SIGINT
