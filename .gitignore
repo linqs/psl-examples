@@ -1,0 +1,23 @@
+# System files #
+################
+.DS_Store
+
+# Compiled sources #
+####################
+target
+classpath.out
+dependency-reduced-pom.xml
+*.jar
+
+# Eclipse metadata #
+####################
+.classpath
+.project
+.settings
+
+# Editor temporary #
+####################
+*.swp
+
+out.txt
+out.err
