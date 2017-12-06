@@ -1,0 +1,21 @@
+predicates:
+   Bias/2: closed
+   Boss/2: closed
+   Idol/2: closed
+   Knows/2: closed
+   KnowsWell/2: closed
+   Mentor/2: closed
+   OlderRelative/2: closed
+   Votes/2: open
+
+observations:
+   Bias: ../data/social-network-analysis/bias_obs.txt
+   Boss: ../data/social-network-analysis/boss_obs.txt
+   Idol: ../data/social-network-analysis/idol_obs.txt
+   Knows: ../data/social-network-analysis/knows_obs.txt
+   KnowsWell: ../data/social-network-analysis/knowswell_obs.txt
+   Mentor: ../data/social-network-analysis/mentor_obs.txt
+   OlderRelative: ../data/social-network-analysis/olderRelative_obs.txt
+
+targets:
+   Votes: ../data/social-network-analysis/votes_targets.txt

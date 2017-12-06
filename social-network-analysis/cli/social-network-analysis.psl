@@ -1,0 +1,13 @@
+0.50: Bias(A, P) >> Votes(A, P) ^2
+0.30: Votes(A, P) & KnowsWell(B, A) >> Votes(B, P) ^2
+0.10: Votes(A, P) & Knows(B, A) >> Votes(B, P) ^2
+0.05: Votes(A, P) & Boss(B, A) >> Votes(B, P) ^2
+0.10: Votes(A, P) & Mentor(B, A) >> Votes(B, P) ^2
+0.70: Votes(A, P) & OlderRelative(B, A) >> Votes(B, P) ^2
+0.80: Votes(A, P) & Idol(B, A) >> Votes(B, P) ^2
+
+// Negative prior.
+0.01: !Votes(A, P) ^2
+
+// Partial functional on votes.
+Votes(A, +B) <= 1 .
