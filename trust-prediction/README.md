@@ -2,16 +2,13 @@
 
 ## Problem
 
-In this example, we attempt to classify documents in a citation network into one of several categories.
+In this example, we attempt to discover the level of trust between two individuals.
 
 ## Dataset
 
-The dataset originally came from Cora.
-It contains informations on the categories of some documents as well as links between those documents.
-The links are represented as only one predicate, but can represent several relationships between documents such as:
- - Hyperlinks
- - Citations
- - Shared Authorship
+The dataset originally came from the Epinions social network.
+It contains some positive and negative examples of trust in the network along with the structural information
+of the network (ie who knows who).
 
 ## Origin
 
@@ -29,7 +26,7 @@ This example is a simplified version of on of the experiments from Bach et al.'s
 ## Keywords
 
  - `cli`
- - `collective classification`
  - `evaluation`
  - `inference`
+ - `link prediction`
  - `weight learning`
