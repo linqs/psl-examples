@@ -1,0 +1,59 @@
+predicates:
+   Sub/2: closed
+   RSub/2: closed
+   Mut/2: closed
+   RMut/2: closed
+   Inv/2: closed
+   Domain/2: closed
+   Range2/2: closed
+   SameEntity/2: closed
+   ValCat/2: closed
+   ValRel/3: closed
+   CandCat_General/2: closed
+   CandRel_General/3: closed
+   CandCat_CBL/2: closed
+   CandRel_CBL/3: closed
+   CandCat_CMC/2: closed
+   CandCat_CPL/2: closed
+   CandRel_CPL/3: closed
+   CandCat_Morph/2: closed
+   CandCat_SEAL/2: closed
+   CandRel_SEAL/3: closed
+   PromCat_General/2: closed
+   PromRel_General/3: closed
+   Cat/2: open
+   Rel/3: open
+
+observations:
+   CandCat_CBL: ../data/kgi/eval/CANDCAT_CBL_obs.txt
+   CandCat_CMC: ../data/kgi/eval/CANDCAT_CMC_obs.txt
+   CandCat_CPL: ../data/kgi/eval/CANDCAT_CPL_obs.txt
+   CandCat_General: ../data/kgi/eval/CANDCAT_GENERAL_obs.txt
+   CandCat_MORPH: ../data/kgi/eval/CANDCAT_MORPH_obs.txt
+   CandCat_SEAL: ../data/kgi/eval/CANDCAT_SEAL_obs.txt
+   CandRel_CBL: ../data/kgi/eval/CANDREL_CBL_obs.txt
+   CandRel_CPL: ../data/kgi/eval/CANDREL_CPL_obs.txt
+   CandRel_General: ../data/kgi/eval/CANDREL_GENERAL_obs.txt
+   CandRel_SEAL: ../data/kgi/eval/CANDREL_SEAL_obs.txt
+   Cat: ../data/kgi/eval/CAT_obs.txt
+   Domain: ../data/kgi/eval/DOMAIN_obs.txt
+   Inv: ../data/kgi/eval/INV_obs.txt
+   Mut: ../data/kgi/eval/MUT_obs.txt
+   PromCat_General: ../data/kgi/eval/PROMCAT_GENERAL_obs.txt
+   PromRel_General: ../data/kgi/eval/PROMREL_GENERAL_obs.txt
+   Range2: ../data/kgi/eval/RANGE2_obs.txt
+   Rel: ../data/kgi/eval/REL_obs.txt
+   RMut: ../data/kgi/eval/RMUT_obs.txt
+   RSub: ../data/kgi/eval/RSUB_obs.txt
+   SameEntity: ../data/kgi/eval/SAMEENTITY_obs.txt
+   Sub: ../data/kgi/eval/SUB_obs.txt
+   ValCat: ../data/kgi/eval/VALCAT_obs.txt
+   ValRel: ../data/kgi/eval/VALREL_obs.txt
+
+targets:
+   Cat: ../data/kgi/eval/CAT_targets.txt
+   Rel: ../data/kgi/eval/REL_targets.txt
+
+truth:
+   Cat: ../data/kgi/eval/CAT_truth.txt
+   Rel: ../data/kgi/eval/REL_truth.txt

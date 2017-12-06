@@ -1,0 +1,59 @@
+predicates:
+   Sub/2: closed
+   RSub/2: closed
+   Mut/2: closed
+   RMut/2: closed
+   Inv/2: closed
+   Domain/2: closed
+   Range2/2: closed
+   SameEntity/2: closed
+   ValCat/2: closed
+   ValRel/3: closed
+   CandCat_General/2: closed
+   CandRel_General/3: closed
+   CandCat_CBL/2: closed
+   CandRel_CBL/3: closed
+   CandCat_CMC/2: closed
+   CandCat_CPL/2: closed
+   CandRel_CPL/3: closed
+   CandCat_Morph/2: closed
+   CandCat_SEAL/2: closed
+   CandRel_SEAL/3: closed
+   PromCat_General/2: closed
+   PromRel_General/3: closed
+   Cat/2: open
+   Rel/3: open
+
+observations:
+   CandCat_CBL: ../data/kgi/learn/CANDCAT_CBL_obs.txt
+   CandCat_CMC: ../data/kgi/learn/CANDCAT_CMC_obs.txt
+   CandCat_CPL: ../data/kgi/learn/CANDCAT_CPL_obs.txt
+   CandCat_General: ../data/kgi/learn/CANDCAT_GENERAL_obs.txt
+   CandCat_MORPH: ../data/kgi/learn/CANDCAT_MORPH_obs.txt
+   CandCat_SEAL: ../data/kgi/learn/CANDCAT_SEAL_obs.txt
+   CandRel_CBL: ../data/kgi/learn/CANDREL_CBL_obs.txt
+   CandRel_CPL: ../data/kgi/learn/CANDREL_CPL_obs.txt
+   CandRel_General: ../data/kgi/learn/CANDREL_GENERAL_obs.txt
+   CandRel_SEAL: ../data/kgi/learn/CANDREL_SEAL_obs.txt
+   Cat: ../data/kgi/learn/CAT_obs.txt
+   Domain: ../data/kgi/learn/DOMAIN_obs.txt
+   Inv: ../data/kgi/learn/INV_obs.txt
+   Mut: ../data/kgi/learn/MUT_obs.txt
+   PromCat_General: ../data/kgi/learn/PROMCAT_GENERAL_obs.txt
+   PromRel_General: ../data/kgi/learn/PROMREL_GENERAL_obs.txt
+   Range2: ../data/kgi/learn/RANGE2_obs.txt
+   Rel: ../data/kgi/learn/REL_obs.txt
+   RMut: ../data/kgi/learn/RMUT_obs.txt
+   RSub: ../data/kgi/learn/RSUB_obs.txt
+   SameEntity: ../data/kgi/learn/SAMEENTITY_obs.txt
+   Sub: ../data/kgi/learn/SUB_obs.txt
+   ValCat: ../data/kgi/learn/VALCAT_obs.txt
+   ValRel: ../data/kgi/learn/VALREL_obs.txt
+
+targets:
+   Cat: ../data/kgi/learn/CAT_targets.txt
+   Rel: ../data/kgi/learn/REL_targets.txt
+
+truth:
+   Cat: ../data/kgi/learn/CAT_truth.txt
+   Rel: ../data/kgi/learn/REL_truth.txt

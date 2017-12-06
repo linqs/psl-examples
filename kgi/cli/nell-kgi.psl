@@ -1,0 +1,28 @@
+0025: VALCAT(B, C) & SAMEENTITY(A, B) & CAT(A, C) -> CAT(B, C) ^2
+0025: VALREL(B, Z, R) & SAMEENTITY(A, B) & REL(A, Z, R) -> REL(B, Z, R) ^2
+0025: VALREL(Z, B, R) & SAMEENTITY(A, B) & REL(Z, A, R) -> REL(Z, B, R) ^2
+0100: VALCAT(A, D) & SUB(C, D) & CAT(A, C) -> CAT(A, D) ^2
+0100: VALREL(A, B, S) & RSUB(R, S) & REL(A, B, R) -> REL(A, B, S) ^2
+0100: VALCAT(A, D) & MUT(C, D) & CAT(A, C) -> !CAT(A, D) ^2
+0100: VALREL(A, B, S) & RMUT(R, S) & REL(A, B, R) -> !REL(A, B, S) ^2
+0100: VALREL(B, A, S) & INV(R, S) & REL(A, B, R) -> REL(B, A, S) ^2
+0100: VALCAT(A, C) & DOMAIN(R, C) & REL(A, B, R) -> CAT(A, C) ^2
+0100: VALCAT(B, C) & RANGE2(R, C) & REL(A, B, R) -> CAT(B, C) ^2
+0001: VALCAT(A, C) & CANDCAT_GENERAL(A, C) -> CAT(A, C) ^2
+0001: VALREL(A, B, R) & CANDREL_GENERAL(A, B, R) -> REL(A, B, R) ^2
+0001: VALCAT(A, C) & CANDCAT_CBL(A, C) -> CAT(A, C) ^2
+0001: VALREL(A, B, R) & CANDREL_CBL(A, B, R) -> REL(A, B, R) ^2
+0001: VALCAT(A, C) & CANDCAT_CMC(A, C) -> CAT(A, C) ^2
+0001: VALCAT(A, C) & CANDCAT_CPL(A, C) -> CAT(A, C) ^2
+0001: VALREL(A, B, R) & CANDREL_CPL(A, B, R) -> REL(A, B, R) ^2
+0001: VALCAT(A, C) & CANDCAT_MORPH(A, C) -> CAT(A, C) ^2
+0001: VALCAT(A, C) & CANDCAT_SEAL(A, C) -> CAT(A, C) ^2
+0001: VALREL(A, B, R) & CANDREL_SEAL(A, B, R) -> REL(A, B, R) ^2
+0001: VALCAT(A, C) & PROMCAT_GENERAL(A, C) -> CAT(A, C) ^2
+0001: VALREL(A, B, R) & PROMREL_GENERAL(A, B, R) -> REL(A, B, R) ^2
+
+// Priors
+0002: VALCAT(A, C) -> !CAT(A, C) ^2
+0002: VALREL(A, B, R) -> !REL(A, B, R) ^2
+0001: VALCAT(A, C) -> CAT(A, C) ^2
+0001: VALREL(A, B, R) -> REL(A, B, R) ^2
