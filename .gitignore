@@ -19,5 +19,9 @@ dependency-reduced-pom.xml
 ####################
 *.swp
 
+*.jar
+*-learned.psl
+
 out.txt
 out.err
+inferred-predicates/
