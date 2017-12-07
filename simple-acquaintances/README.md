@@ -15,6 +15,7 @@ It contains information on where people have lived, what activities they like/di
 
  - `cli`
  - `evaluation`
+ - `groovy`
  - `inference`
  - `link prediction`
  - `small scale`
