@@ -22,7 +22,7 @@ function main() {
 function runEvaluation() {
    echo "Running PSL Inference"
 
-   java -jar "${JAR_PATH}" -infer -model "${BASE_NAME}.psl" -data "${BASE_NAME}.data" -output eval-results ${ADDITIONAL_EVAL_OPTIONS}
+   java -jar "${JAR_PATH}" -infer -model "${BASE_NAME}.psl" -data "${BASE_NAME}.data" -output inferred-predicates ${ADDITIONAL_EVAL_OPTIONS}
    if [[ "$?" -ne 0 ]]; then
       echo 'ERROR: Failed to run infernce'
       exit 70
