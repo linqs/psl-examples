@@ -12,6 +12,7 @@ import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
 import org.linqs.psl.evaluation.statistics.ContinuousPredictionComparator;
+import org.linqs.psl.evaluation.statistics.ContinuousPredictionStatistics;
 import org.linqs.psl.evaluation.statistics.DiscretePredictionComparator;
 import org.linqs.psl.evaluation.statistics.DiscretePredictionStatistics;
 import org.linqs.psl.groovy.PSLModel;
@@ -60,9 +61,9 @@ public class Run {
 	 * Defines the logical predicates used in this model
 	 */
 	private void definePredicates() {
-		model.add predicate: "Lived", types: [ConstantType.UniqueIntID, ConstantType.UniqueIntID];
-		model.add predicate: "Likes", types: [ConstantType.UniqueIntID, ConstantType.UniqueIntID];
-		model.add predicate: "Knows", types: [ConstantType.UniqueIntID, ConstantType.UniqueIntID];
+		model.add predicate: "Lived", types: [ConstantType.UniqueStringID, ConstantType.UniqueStringID];
+		model.add predicate: "Likes", types: [ConstantType.UniqueStringID, ConstantType.UniqueStringID];
+		model.add predicate: "Knows", types: [ConstantType.UniqueStringID, ConstantType.UniqueStringID];
 	}
 
 	/**
@@ -166,23 +167,23 @@ public class Run {
 	 * relative to the defined truth.
 	 */
 	private void evalResults(Partition targetsPartition, Partition truthPartition) {
-		Database resultsDB = dataStore.getDatabase(targetsPartition, [Knows] as Set);
+		Database resultsDB = dataStore.getDatabase(targetsPartition, [Lived, Likes] as Set);
 		Database truthDB = dataStore.getDatabase(truthPartition, [Knows] as Set);
 
 		DiscretePredictionComparator dpc = new DiscretePredictionComparator(resultsDB, truthDB, 0.5);
-		DiscretePredictionStatistics stats = dpc.compare(Knows);
+		DiscretePredictionStatistics discreteStats = dpc.compare(Knows);
 
 		ContinuousPredictionComparator cpc = new ContinuousPredictionComparator(resultsDB, truthDB);
-		double mse = cpc.compare(Knows);
+		ContinuousPredictionStatistics continuousStats = cpc.compare(Knows);
 
-		log.info("MSE: {}", mse);
-		log.info("Accuracy {}, Error {}", stats.getAccuracy(), stats.getError());
+		log.info("MSE: {}, MAE: {}", continuousStats.getMAE(), continuousStats.getMSE());
+		log.info("Accuracy {}, Error {}", discreteStats.getAccuracy(), discreteStats.getError());
 		log.info("Positive Class: precision {}, recall {}",
-				stats.getPrecision(DiscretePredictionStatistics.BinaryClass.POSITIVE),
-				stats.getRecall(DiscretePredictionStatistics.BinaryClass.POSITIVE));
+				discreteStats.getPrecision(DiscretePredictionStatistics.BinaryClass.POSITIVE),
+				discreteStats.getRecall(DiscretePredictionStatistics.BinaryClass.POSITIVE));
 		log.info("Negative Class Stats: precision {}, recall {}",
-				stats.getPrecision(DiscretePredictionStatistics.BinaryClass.NEGATIVE),
-				stats.getRecall(DiscretePredictionStatistics.BinaryClass.NEGATIVE));
+				discreteStats.getPrecision(DiscretePredictionStatistics.BinaryClass.NEGATIVE),
+				discreteStats.getRecall(DiscretePredictionStatistics.BinaryClass.NEGATIVE));
 
 		resultsDB.close();
 		truthDB.close();

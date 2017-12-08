@@ -234,7 +234,7 @@ public class Run {
 
 		log.info("AUROC: {}", stats.auroc());
 		log.info("Positive Class AUPRC: {}", stats.auprc());
-		log.info("Positive Class AUPRC: {}", stats.negAUPRC());
+		log.info("Negative Class AUPRC: {}", stats.negAUPRC());
 
 		resultsDB.close();
 		truthDB.close();
