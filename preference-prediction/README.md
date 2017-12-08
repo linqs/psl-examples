@@ -29,6 +29,7 @@ This example is a simplified version of one of the experiments from Bach et al.'
  - `cli`
  - `collaborative filtering`
  - `evaluation`
+ - `groovy`
  - `inference`
  - `link prediction`
  - `real data`
