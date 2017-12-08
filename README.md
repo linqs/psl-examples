@@ -9,6 +9,10 @@ Each experiment will generally have the following structure:
    │   ├── <experiment>.data
    │   ├── <experiment>.psl
    │   └── run.sh
+   ├── groovy
+   │   ├── pom.xml
+   │   ├── run.sh
+   │   └── src
    ├── data
    │   └── fetchData.sh
    └── README.md
