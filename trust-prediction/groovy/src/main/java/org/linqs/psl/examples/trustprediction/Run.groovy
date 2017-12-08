@@ -220,8 +220,6 @@ public class Run {
 	/**
 	 * Run statistical evaluation scripts to determine the quality of the inferences
 	 * relative to the defined truth.
-    * Note that the target predicate is categorical and we will assign the category with the
-    * highest truth value as true and the rest false.
 	 */
 	private void evalResults() {
       // Because the truth data also includes observed data, we will make sure to include the observed
