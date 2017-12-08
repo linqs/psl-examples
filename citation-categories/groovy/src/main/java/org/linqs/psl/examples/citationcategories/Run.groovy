@@ -37,6 +37,7 @@ public class Run {
 
 	private static final String DATA_PATH = Paths.get("..", "data", "citation-categories").toString();
 	private static final String OUTPUT_PATH = "inferred-predicates";
+	private static final int NUM_CATEGORIES = 7;
 
 	private static Logger log = LoggerFactory.getLogger(Run.class)
 
@@ -77,33 +78,13 @@ public class Run {
 			rule: "1.0: HasCat(A, C) & Link(B, A) & (A != B) >> HasCat(B, C) ^2"
 		);
 
-		model.add(
-			rule: "1.0: HasCat(A, '1') & Link(A, B) >> HasCat(B, '1') ^2"
-		);
-
-		model.add(
-			rule: "1.0: HasCat(A, '2') & Link(A, B) >> HasCat(B, '2') ^2"
-		);
-
-		model.add(
-			rule: "1.0: HasCat(A, '3') & Link(A, B) >> HasCat(B, '3') ^2"
-		);
-
-		model.add(
-			rule: "1.0: HasCat(A, '4') & Link(A, B) >> HasCat(B, '4') ^2"
-		);
-
-		model.add(
-			rule: "1.0: HasCat(A, '5') & Link(A, B) >> HasCat(B, '5') ^2"
-		);
-
-		model.add(
-			rule: "1.0: HasCat(A, '6') & Link(A, B) >> HasCat(B, '6') ^2"
-		);
-
-		model.add(
-			rule: "1.0: HasCat(A, '7') & Link(A, B) >> HasCat(B, '7') ^2"
-		);
+		// Add one rule for each category.
+		for (int cat = 1; cat <= NUM_CATEGORIES; cat++) {
+			String stringRule = String.format("1.0: HasCat(A, '%d') & Link(A, B) >> HasCat(B, '%d') ^2", cat, cat);
+			model.add(
+				rule: stringRule
+			);
+		}
 
 		model.add(
 			rule: "HasCat(A, +C) = 1 ."
