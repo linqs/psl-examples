@@ -13,14 +13,14 @@ import org.linqs.psl.database.loading.Inserter;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
+import org.linqs.psl.evaluation.statistics.RankingComparator;
+import org.linqs.psl.evaluation.statistics.RankingScore;
 import org.linqs.psl.groovy.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.predicate.StandardPredicate;
 import org.linqs.psl.model.term.Constant;
 import org.linqs.psl.model.term.ConstantType;
 import org.linqs.psl.utils.dataloading.InserterUtils;
-import org.linqs.psl.evaluation.statistics.RankingComparator;
-import org.linqs.psl.evaluation.statistics.RankingScore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

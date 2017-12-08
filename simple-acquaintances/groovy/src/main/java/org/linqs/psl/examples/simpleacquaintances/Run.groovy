@@ -11,14 +11,14 @@ import org.linqs.psl.database.loading.Inserter;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
+import org.linqs.psl.evaluation.statistics.ContinuousPredictionComparator;
+import org.linqs.psl.evaluation.statistics.DiscretePredictionComparator;
+import org.linqs.psl.evaluation.statistics.DiscretePredictionStatistics;
 import org.linqs.psl.groovy.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.term.Constant;
 import org.linqs.psl.model.term.ConstantType;
 import org.linqs.psl.utils.dataloading.InserterUtils;
-import org.linqs.psl.utils.evaluation.statistics.ContinuousPredictionComparator;
-import org.linqs.psl.utils.evaluation.statistics.DiscretePredictionComparator;
-import org.linqs.psl.utils.evaluation.statistics.DiscretePredictionStatistics;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,9 +60,9 @@ public class Run {
 	 * Defines the logical predicates used in this model
 	 */
 	private void definePredicates() {
-		model.add predicate: "Lived", types: [ConstantType.UniqueID, ConstantType.UniqueID];
-		model.add predicate: "Likes", types: [ConstantType.UniqueID, ConstantType.UniqueID];
-		model.add predicate: "Knows", types: [ConstantType.UniqueID, ConstantType.UniqueID];
+		model.add predicate: "Lived", types: [ConstantType.UniqueIntID, ConstantType.UniqueIntID];
+		model.add predicate: "Likes", types: [ConstantType.UniqueIntID, ConstantType.UniqueIntID];
+		model.add predicate: "Knows", types: [ConstantType.UniqueIntID, ConstantType.UniqueIntID];
 	}
 
 	/**
@@ -169,16 +169,14 @@ public class Run {
 		Database resultsDB = dataStore.getDatabase(targetsPartition, [Knows] as Set);
 		Database truthDB = dataStore.getDatabase(truthPartition, [Knows] as Set);
 
-		DiscretePredictionComparator dpc = new DiscretePredictionComparator(resultsDB);
-		dpc.setBaseline(truthDB);
+		DiscretePredictionComparator dpc = new DiscretePredictionComparator(resultsDB, truthDB, 0.5);
 		DiscretePredictionStatistics stats = dpc.compare(Knows);
 
-		ContinuousPredictionComparator cpc = new ContinuousPredictionComparator(resultsDB);
-		cpc.setBaseline(truthDB);
+		ContinuousPredictionComparator cpc = new ContinuousPredictionComparator(resultsDB, truthDB);
 		double mse = cpc.compare(Knows);
 
 		log.info("MSE: {}", mse);
-		log.info("Accuracy {}, Error {}",stats.getAccuracy(), stats.getError());
+		log.info("Accuracy {}, Error {}", stats.getAccuracy(), stats.getError());
 		log.info("Positive Class: precision {}, recall {}",
 				stats.getPrecision(DiscretePredictionStatistics.BinaryClass.POSITIVE),
 				stats.getRecall(DiscretePredictionStatistics.BinaryClass.POSITIVE));
