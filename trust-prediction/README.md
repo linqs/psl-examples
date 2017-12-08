@@ -25,8 +25,10 @@ This example is a simplified version of one of the experiments from Bach et al.'
 
 ## Keywords
 
+ - `bulk rules`
  - `cli`
  - `evaluation`
+ - `groovy`
  - `inference`
  - `link prediction`
  - `real data`
