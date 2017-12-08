@@ -221,9 +221,9 @@ public class Run {
       // Because the truth data also includes observed data, we will make sure to include the observed
       // partition here.
 		Database resultsDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TARGETS),
-            [HasCat] as Set, dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
+            [Link] as Set, dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
 		Database truthDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TRUTH),
-            [HasCat] as Set);
+            dataStore.getRegisteredPredicates());
 
       int[] categoryIndexes = [1];
 		CategoricalPredictionComparator comparator = new CategoricalPredictionComparator(resultsDB, truthDB, categoryIndexes);
