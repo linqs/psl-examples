@@ -75,12 +75,12 @@ public class Run {
 	private void defineRules() {
 		log.info("Defining model rules");
 
-      // If J1,J2 have similar observed ratings, then U will rate them similarly
+		// If J1,J2 have similar observed ratings, then U will rate them similarly
 		model.add(
 			rule: "1.0: SimObsRating(J1,J2) & Rating(U,J1) >> Rating(U,J2) ^2"
 		);
 
-      // Ratings should concentrate around observed User/Joke averages
+		// Ratings should concentrate around observed User/Joke averages
 		model.add(
 			rule: "1.0: User(U) & Joke(J) & AvgUserRatingObs(U) >> Rating(U,J) ^2"
 		);
@@ -97,7 +97,7 @@ public class Run {
 			rule: "1.0: User(U) & Joke(J) & Rating(U,J) >> AvgJokeRatingObs(J) ^2"
 		);
 
-      // Two-sided prior
+		// Two-sided prior
 		model.add(
 			rule: "1.0: User(U) & Joke(J) & RatingPrior('0') >> Rating(U, J) ^2"
 		);
@@ -105,7 +105,6 @@ public class Run {
 		model.add(
 			rule: "1.0: Rating(U,J) >> RatingPrior('0') ^2"
 		);
-
 
 		log.debug("model: {}", model);
 	}
@@ -120,38 +119,38 @@ public class Run {
 	private void loadData() {
 		log.info("Loading data into database");
 
-      for (String type : ["learn", "eval"]) {
-         Partition obsPartition = dataStore.getPartition(type + "_observations");
-         Partition targetsPartition = dataStore.getPartition(type + "_targets");
-         Partition truthPartition = dataStore.getPartition(type + "_truth");
+		for (String type : ["learn", "eval"]) {
+			Partition obsPartition = dataStore.getPartition(type + "_observations");
+			Partition targetsPartition = dataStore.getPartition(type + "_targets");
+			Partition truthPartition = dataStore.getPartition(type + "_truth");
 
-         Inserter inserter = dataStore.getInserter(AvgJokeRatingObs, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "avgJokeRatingObs_obs.txt").toString());
+			Inserter inserter = dataStore.getInserter(AvgJokeRatingObs, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "avgJokeRatingObs_obs.txt").toString());
 
-         inserter = dataStore.getInserter(AvgUserRatingObs, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "avgUserRatingObs_obs.txt").toString());
+			inserter = dataStore.getInserter(AvgUserRatingObs, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "avgUserRatingObs_obs.txt").toString());
 
-         inserter = dataStore.getInserter(Joke, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "joke_obs.txt").toString());
+			inserter = dataStore.getInserter(Joke, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "joke_obs.txt").toString());
 
-         inserter = dataStore.getInserter(RatingPrior, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "ratingPrior_obs.txt").toString());
+			inserter = dataStore.getInserter(RatingPrior, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "ratingPrior_obs.txt").toString());
 
-         inserter = dataStore.getInserter(SimObsRating, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "simObsRating_obs.txt").toString());
+			inserter = dataStore.getInserter(SimObsRating, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "simObsRating_obs.txt").toString());
 
-         inserter = dataStore.getInserter(User, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "user_obs.txt").toString());
+			inserter = dataStore.getInserter(User, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "user_obs.txt").toString());
 
-         inserter = dataStore.getInserter(Rating, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "rating_obs.txt").toString());
+			inserter = dataStore.getInserter(Rating, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "rating_obs.txt").toString());
 
-         inserter = dataStore.getInserter(Rating, targetsPartition);
-         InserterUtils.loadDelimitedData(inserter, Paths.get(DATA_PATH, type, "rating_targets.txt").toString());
+			inserter = dataStore.getInserter(Rating, targetsPartition);
+			InserterUtils.loadDelimitedData(inserter, Paths.get(DATA_PATH, type, "rating_targets.txt").toString());
 
-         inserter = dataStore.getInserter(Rating, truthPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "rating_truth.txt").toString());
-      }
+			inserter = dataStore.getInserter(Rating, truthPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "rating_truth.txt").toString());
+		}
 	}
 
 	/**
@@ -160,17 +159,17 @@ public class Run {
 	private void learnWeights() {
 		log.info("Starting weight learning");
 
-      Partition obsPartition = dataStore.getPartition(PARTITION_LEARN_OBSERVATIONS);
-      Partition targetsPartition = dataStore.getPartition(PARTITION_LEARN_TARGETS);
-      Partition truthPartition = dataStore.getPartition(PARTITION_LEARN_TRUTH);
+		Partition obsPartition = dataStore.getPartition(PARTITION_LEARN_OBSERVATIONS);
+		Partition targetsPartition = dataStore.getPartition(PARTITION_LEARN_TARGETS);
+		Partition truthPartition = dataStore.getPartition(PARTITION_LEARN_TRUTH);
 
-      Set<StandardPredicate> closedPredicates = [AvgJokeRatingObs, AvgUserRatingObs, Joke, RatingPrior, SimObsRating, User] as Set;
+		Set<StandardPredicate> closedPredicates = [AvgJokeRatingObs, AvgUserRatingObs, Joke, RatingPrior, SimObsRating, User] as Set;
 
-      // This database contains all the ground atoms (targets) that we want to infer.
-      // It also includes the observed data (because we will run inference over this db).
+		// This database contains all the ground atoms (targets) that we want to infer.
+		// It also includes the observed data (because we will run inference over this db).
 		Database randomVariableDatabase = dataStore.getDatabase(targetsPartition, closedPredicates, obsPartition);
 
-      // This database only contains the true ground atoms.
+		// This database only contains the true ground atoms.
 		Database observedTruthDatabase = dataStore.getDatabase(truthPartition, dataStore.getRegisteredPredicates());
 
 		VotedPerceptron vp = new MaxLikelihoodMPE(model, randomVariableDatabase, observedTruthDatabase, config);
@@ -188,10 +187,10 @@ public class Run {
 	private void runInference() {
 		log.info("Starting inference");
 
-      Partition obsPartition = dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS);
-      Partition targetsPartition = dataStore.getPartition(PARTITION_EVAL_TARGETS);
+		Partition obsPartition = dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS);
+		Partition targetsPartition = dataStore.getPartition(PARTITION_EVAL_TARGETS);
 
-      Set<StandardPredicate> closedPredicates = [AvgJokeRatingObs, AvgUserRatingObs, Joke, RatingPrior, SimObsRating, User] as Set;
+		Set<StandardPredicate> closedPredicates = [AvgJokeRatingObs, AvgUserRatingObs, Joke, RatingPrior, SimObsRating, User] as Set;
 
 		Database inferDB = dataStore.getDatabase(targetsPartition, closedPredicates, obsPartition);
 
@@ -227,18 +226,18 @@ public class Run {
 	/**
 	 * Run statistical evaluation scripts to determine the quality of the inferences
 	 * relative to the defined truth.
-    * Note that the target predicate is categorical and we will assign the category with the
-    * highest truth value as true and the rest false.
+	 * Note that the target predicate is categorical and we will assign the category with the
+	 * highest truth value as true and the rest false.
 	 */
 	private void evalResults() {
-      Set<StandardPredicate> closedPredicates = [AvgJokeRatingObs, AvgUserRatingObs, Joke, RatingPrior, SimObsRating, User] as Set;
+		Set<StandardPredicate> closedPredicates = [AvgJokeRatingObs, AvgUserRatingObs, Joke, RatingPrior, SimObsRating, User] as Set;
 
-      // Because the truth data also includes observed data, we will make sure to include the observed
-      // partition here.
+		// Because the truth data also includes observed data, we will make sure to include the observed
+		// partition here.
 		Database resultsDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TARGETS),
-            closedPredicates, dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
+				closedPredicates, dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
 		Database truthDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TRUTH),
-            dataStore.getRegisteredPredicates());
+				dataStore.getRegisteredPredicates());
 
 		ContinuousPredictionComparator comparator = new ContinuousPredictionComparator(resultsDB, truthDB);
 		ContinuousPredictionStatistics stats = comparator.compare(Rating);
@@ -255,7 +254,7 @@ public class Run {
 		defineRules();
 		loadData();
 
-      learnWeights();
+		learnWeights();
 		runInference();
 
 		writeOutput();

@@ -70,52 +70,52 @@ public class Run {
 	private void defineRules() {
 		log.info("Defining model rules");
 
-      // We will just add all the rules in bulk.
-      // Note that comments are allowed.
-      model.addRules("""
-         // FFpp
-         1.0: Knows(A, B) & Knows(B, C) & Knows(A, C) & Trusts(A, B) & Trusts(B, C) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
-         // FFpm
-         1.0: Knows(A, B) & Knows(B, C) & Knows(A, C) & Trusts(A, B) & !Trusts(B, C) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
-         // FFmp
-         1.0: Knows(A, B) & Knows(B, C) & Knows(A, C) & !Trusts(A, B) & Trusts(B, C) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
-         // FFmm
-         1.0: Knows(A, B) & Knows(B, C) & Knows(A, C) & !Trusts(A, B) & !Trusts(B, C) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
+		// We will just add all the rules in bulk.
+		// Note that comments are allowed.
+		model.addRules("""
+			// FFpp
+			1.0: Knows(A, B) & Knows(B, C) & Knows(A, C) & Trusts(A, B) & Trusts(B, C) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
+			// FFpm
+			1.0: Knows(A, B) & Knows(B, C) & Knows(A, C) & Trusts(A, B) & !Trusts(B, C) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
+			// FFmp
+			1.0: Knows(A, B) & Knows(B, C) & Knows(A, C) & !Trusts(A, B) & Trusts(B, C) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
+			// FFmm
+			1.0: Knows(A, B) & Knows(B, C) & Knows(A, C) & !Trusts(A, B) & !Trusts(B, C) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
 
-         // FBpp
-         1.0: Knows(A, B) & Knows(C, B) & Knows(A, C) & Trusts(A, B) & Trusts(C, B) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) 
-         // FBpm
-         1.0: Knows(A, B) & Knows(C, B) & Knows(A, C) & Trusts(A, B) & !Trusts(C, B) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
-         // FBmp
-         1.0: Knows(A, B) & Knows(C, B) & Knows(A, C) & !Trusts(A, B) & Trusts(C, B) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
-         // FBmm
-         1.0: Knows(A, B) & Knows(C, B) & Knows(A, C) & !Trusts(A, B) & !Trusts(C, B) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
+			// FBpp
+			1.0: Knows(A, B) & Knows(C, B) & Knows(A, C) & Trusts(A, B) & Trusts(C, B) & (A != B) & (B != C) & (A != C) -> Trusts(A, C)
+			// FBpm
+			1.0: Knows(A, B) & Knows(C, B) & Knows(A, C) & Trusts(A, B) & !Trusts(C, B) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
+			// FBmp
+			1.0: Knows(A, B) & Knows(C, B) & Knows(A, C) & !Trusts(A, B) & Trusts(C, B) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
+			// FBmm
+			1.0: Knows(A, B) & Knows(C, B) & Knows(A, C) & !Trusts(A, B) & !Trusts(C, B) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
 
-         // BFpp
-         1.0: Knows(B, A) & Knows(B, C) & Knows(A, C) & Trusts(B, A) & Trusts(B, C) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
-         // BFpm
-         1.0: Knows(B, A) & Knows(B, C) & Knows(A, C) & Trusts(B, A) & !Trusts(B, C) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
-         // BFmp
-         1.0: Knows(B, A) & Knows(B, C) & Knows(A, C) & !Trusts(B, A) & Trusts(B, C) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
-         // BFmm
-         1.0: Knows(B, A) & Knows(B, C) & Knows(A, C) & !Trusts(B, A) & !Trusts(B, C) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
+			// BFpp
+			1.0: Knows(B, A) & Knows(B, C) & Knows(A, C) & Trusts(B, A) & Trusts(B, C) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
+			// BFpm
+			1.0: Knows(B, A) & Knows(B, C) & Knows(A, C) & Trusts(B, A) & !Trusts(B, C) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
+			// BFmp
+			1.0: Knows(B, A) & Knows(B, C) & Knows(A, C) & !Trusts(B, A) & Trusts(B, C) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
+			// BFmm
+			1.0: Knows(B, A) & Knows(B, C) & Knows(A, C) & !Trusts(B, A) & !Trusts(B, C) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
 
-         // BBpp
-         1.0: Knows(B, A) & Knows(C, B) & Knows(A, C) & Trusts(B, A) & Trusts(C, B) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
-         // BBpm
-         1.0: Knows(B, A) & Knows(C, B) & Knows(A, C) & Trusts(B, A) & !Trusts(C, B) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
-         // BBmp
-         1.0: Knows(B, A) & Knows(C, B) & Knows(A, C) & !Trusts(B, A) & Trusts(C, B) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
-         // BBmm
-         1.0: Knows(B, A) & Knows(C, B) & Knows(A, C) & !Trusts(B, A) & !Trusts(C, B) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
+			// BBpp
+			1.0: Knows(B, A) & Knows(C, B) & Knows(A, C) & Trusts(B, A) & Trusts(C, B) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
+			// BBpm
+			1.0: Knows(B, A) & Knows(C, B) & Knows(A, C) & Trusts(B, A) & !Trusts(C, B) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
+			// BBmp
+			1.0: Knows(B, A) & Knows(C, B) & Knows(A, C) & !Trusts(B, A) & Trusts(C, B) & (A != B) & (B != C) & (A != C) -> !Trusts(A, C) ^2
+			// BBmm
+			1.0: Knows(B, A) & Knows(C, B) & Knows(A, C) & !Trusts(B, A) & !Trusts(C, B) & (A != B) & (B != C) & (A != C) -> Trusts(A, C) ^2
 
-         1.0: Knows(A, B) & Knows(B, A) & Trusts(A, B) -> Trusts(B, A) ^2
-         1.0: Knows(A, B) & Knows(B, A) & !Trusts(A, B) -> !Trusts(B, A) ^2
+			1.0: Knows(A, B) & Knows(B, A) & Trusts(A, B) -> Trusts(B, A) ^2
+			1.0: Knows(A, B) & Knows(B, A) & !Trusts(A, B) -> !Trusts(B, A) ^2
 
-         // two-sided prior
-         1.0: Knows(A, B) & Prior('0') -> Trusts(A, B) ^2
-         1.0: Knows(A, B) & Trusts(A, B) -> Prior('0') ^2
-      """);
+			// two-sided prior
+			1.0: Knows(A, B) & Prior('0') -> Trusts(A, B) ^2
+			1.0: Knows(A, B) & Trusts(A, B) -> Prior('0') ^2
+		""");
 
 		log.debug("model: {}", model);
 	}
@@ -130,26 +130,26 @@ public class Run {
 	private void loadData() {
 		log.info("Loading data into database");
 
-      for (String type : ["learn", "eval"]) {
-         Partition obsPartition = dataStore.getPartition(type + "_observations");
-         Partition targetsPartition = dataStore.getPartition(type + "_targets");
-         Partition truthPartition = dataStore.getPartition(type + "_truth");
+		for (String type : ["learn", "eval"]) {
+			Partition obsPartition = dataStore.getPartition(type + "_observations");
+			Partition targetsPartition = dataStore.getPartition(type + "_targets");
+			Partition truthPartition = dataStore.getPartition(type + "_truth");
 
-         Inserter inserter = dataStore.getInserter(Knows, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "knows_obs.txt").toString());
+			Inserter inserter = dataStore.getInserter(Knows, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "knows_obs.txt").toString());
 
-         inserter = dataStore.getInserter(Prior, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "prior_obs.txt").toString());
+			inserter = dataStore.getInserter(Prior, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "prior_obs.txt").toString());
 
-         inserter = dataStore.getInserter(Trusts, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "trusts_obs.txt").toString());
+			inserter = dataStore.getInserter(Trusts, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "trusts_obs.txt").toString());
 
-         inserter = dataStore.getInserter(Trusts, targetsPartition);
-         InserterUtils.loadDelimitedData(inserter, Paths.get(DATA_PATH, type, "trusts_target.txt").toString());
+			inserter = dataStore.getInserter(Trusts, targetsPartition);
+			InserterUtils.loadDelimitedData(inserter, Paths.get(DATA_PATH, type, "trusts_target.txt").toString());
 
-         inserter = dataStore.getInserter(Trusts, truthPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "trusts_truth.txt").toString());
-      }
+			inserter = dataStore.getInserter(Trusts, truthPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "trusts_truth.txt").toString());
+		}
 	}
 
 	/**
@@ -158,15 +158,15 @@ public class Run {
 	private void learnWeights() {
 		log.info("Starting weight learning");
 
-      Partition obsPartition = dataStore.getPartition(PARTITION_LEARN_OBSERVATIONS);
-      Partition targetsPartition = dataStore.getPartition(PARTITION_LEARN_TARGETS);
-      Partition truthPartition = dataStore.getPartition(PARTITION_LEARN_TRUTH);
+		Partition obsPartition = dataStore.getPartition(PARTITION_LEARN_OBSERVATIONS);
+		Partition targetsPartition = dataStore.getPartition(PARTITION_LEARN_TARGETS);
+		Partition truthPartition = dataStore.getPartition(PARTITION_LEARN_TRUTH);
 
-      // This database contains all the ground atoms (targets) that we want to infer.
-      // It also includes the observed data (because we will run inference over this db).
+		// This database contains all the ground atoms (targets) that we want to infer.
+		// It also includes the observed data (because we will run inference over this db).
 		Database randomVariableDatabase = dataStore.getDatabase(targetsPartition, [Knows, Prior] as Set, obsPartition);
 
-      // This database only contains the true ground atoms.
+		// This database only contains the true ground atoms.
 		Database observedTruthDatabase = dataStore.getDatabase(truthPartition, dataStore.getRegisteredPredicates());
 
 		VotedPerceptron vp = new MaxLikelihoodMPE(model, randomVariableDatabase, observedTruthDatabase, config);
@@ -184,8 +184,8 @@ public class Run {
 	private void runInference() {
 		log.info("Starting inference");
 
-      Partition obsPartition = dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS);
-      Partition targetsPartition = dataStore.getPartition(PARTITION_EVAL_TARGETS);
+		Partition obsPartition = dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS);
+		Partition targetsPartition = dataStore.getPartition(PARTITION_EVAL_TARGETS);
 		Database inferDB = dataStore.getDatabase(targetsPartition, [Knows, Prior] as Set, obsPartition);
 
 		MPEInference mpe = new MPEInference(model, inferDB, config);
@@ -222,14 +222,13 @@ public class Run {
 	 * relative to the defined truth.
 	 */
 	private void evalResults() {
-      // Because the truth data also includes observed data, we will make sure to include the observed
-      // partition here.
+		// Because the truth data also includes observed data, we will make sure to include the observed
+		// partition here.
 		Database resultsDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TARGETS),
-            [Knows, Prior] as Set, dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
+				[Knows, Prior] as Set, dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
 		Database truthDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TRUTH),
-            dataStore.getRegisteredPredicates());
+				dataStore.getRegisteredPredicates());
 
-      int[] categoryIndexes = [1];
 		RankingComparator comparator = new RankingComparator(resultsDB, truthDB, 0.5);
 		RankingScore stats = comparator.compare(Trusts);
 
@@ -246,7 +245,7 @@ public class Run {
 		defineRules();
 		loadData();
 
-      learnWeights();
+		learnWeights();
 		runInference();
 
 		writeOutput();

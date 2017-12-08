@@ -113,7 +113,6 @@ public class Run {
 			rule: "0.001: !HasCat(A, N) ^2"
 		);
 
-
 		log.debug("model: {}", model);
 	}
 
@@ -127,23 +126,23 @@ public class Run {
 	private void loadData() {
 		log.info("Loading data into database");
 
-      for (String type : ["learn", "eval"]) {
-         Partition obsPartition = dataStore.getPartition(type + "_observations");
-         Partition targetsPartition = dataStore.getPartition(type + "_targets");
-         Partition truthPartition = dataStore.getPartition(type + "_truth");
+		for (String type : ["learn", "eval"]) {
+			Partition obsPartition = dataStore.getPartition(type + "_observations");
+			Partition targetsPartition = dataStore.getPartition(type + "_targets");
+			Partition truthPartition = dataStore.getPartition(type + "_truth");
 
-         Inserter inserter = dataStore.getInserter(Link, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "link_obs.txt").toString());
+			Inserter inserter = dataStore.getInserter(Link, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "link_obs.txt").toString());
 
-         inserter = dataStore.getInserter(HasCat, obsPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "hasCat_obs.txt").toString());
+			inserter = dataStore.getInserter(HasCat, obsPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "hasCat_obs.txt").toString());
 
-         inserter = dataStore.getInserter(HasCat, targetsPartition);
-         InserterUtils.loadDelimitedData(inserter, Paths.get(DATA_PATH, type, "hasCat_targets.txt").toString());
+			inserter = dataStore.getInserter(HasCat, targetsPartition);
+			InserterUtils.loadDelimitedData(inserter, Paths.get(DATA_PATH, type, "hasCat_targets.txt").toString());
 
-         inserter = dataStore.getInserter(HasCat, truthPartition);
-         InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "hasCat_truth.txt").toString());
-      }
+			inserter = dataStore.getInserter(HasCat, truthPartition);
+			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "hasCat_truth.txt").toString());
+		}
 	}
 
 	/**
@@ -152,15 +151,15 @@ public class Run {
 	private void learnWeights() {
 		log.info("Starting weight learning");
 
-      Partition obsPartition = dataStore.getPartition(PARTITION_LEARN_OBSERVATIONS);
-      Partition targetsPartition = dataStore.getPartition(PARTITION_LEARN_TARGETS);
-      Partition truthPartition = dataStore.getPartition(PARTITION_LEARN_TRUTH);
+		Partition obsPartition = dataStore.getPartition(PARTITION_LEARN_OBSERVATIONS);
+		Partition targetsPartition = dataStore.getPartition(PARTITION_LEARN_TARGETS);
+		Partition truthPartition = dataStore.getPartition(PARTITION_LEARN_TRUTH);
 
-      // This database contains all the ground atoms (targets) that we want to infer.
-      // It also includes the observed data (because we will run inference over this db).
+		// This database contains all the ground atoms (targets) that we want to infer.
+		// It also includes the observed data (because we will run inference over this db).
 		Database randomVariableDatabase = dataStore.getDatabase(targetsPartition, [Link] as Set, obsPartition);
 
-      // This database only contains the true ground atoms.
+		// This database only contains the true ground atoms.
 		Database observedTruthDatabase = dataStore.getDatabase(truthPartition, dataStore.getRegisteredPredicates());
 
 		VotedPerceptron vp = new MaxLikelihoodMPE(model, randomVariableDatabase, observedTruthDatabase, config);
@@ -178,8 +177,8 @@ public class Run {
 	private void runInference() {
 		log.info("Starting inference");
 
-      Partition obsPartition = dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS);
-      Partition targetsPartition = dataStore.getPartition(PARTITION_EVAL_TARGETS);
+		Partition obsPartition = dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS);
+		Partition targetsPartition = dataStore.getPartition(PARTITION_EVAL_TARGETS);
 		Database inferDB = dataStore.getDatabase(targetsPartition, [Link] as Set, obsPartition);
 
 		MPEInference mpe = new MPEInference(model, inferDB, config);
@@ -214,18 +213,18 @@ public class Run {
 	/**
 	 * Run statistical evaluation scripts to determine the quality of the inferences
 	 * relative to the defined truth.
-    * Note that the target predicate is categorical and we will assign the category with the
-    * highest truth value as true and the rest false.
+	 * Note that the target predicate is categorical and we will assign the category with the
+	 * highest truth value as true and the rest false.
 	 */
 	private void evalResults() {
-      // Because the truth data also includes observed data, we will make sure to include the observed
-      // partition here.
+		// Because the truth data also includes observed data, we will make sure to include the observed
+		// partition here.
 		Database resultsDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TARGETS),
-            [Link] as Set, dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
+				[Link] as Set, dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
 		Database truthDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TRUTH),
-            dataStore.getRegisteredPredicates());
+				dataStore.getRegisteredPredicates());
 
-      int[] categoryIndexes = [1];
+		int[] categoryIndexes = [1];
 		CategoricalPredictionComparator comparator = new CategoricalPredictionComparator(resultsDB, truthDB, categoryIndexes);
 		CategoricalPredictionStatistics stats = comparator.compare(HasCat);
 
@@ -241,7 +240,7 @@ public class Run {
 		defineRules();
 		loadData();
 
-      learnWeights();
+		learnWeights();
 		runInference();
 
 		writeOutput();
