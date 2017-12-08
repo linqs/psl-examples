@@ -9,17 +9,17 @@
 		<dependency>
 			<groupId>org.linqs</groupId>
 			<artifactId>psl-groovy</artifactId>
-			<version>2.0.0</version>
+			<version>CANARY</version>
 		</dependency>
 		<dependency>
 			<groupId>org.linqs</groupId>
 			<artifactId>psl-dataloading</artifactId>
-			<version>1.0.0</version>
+			<version>CANARY</version>
 		</dependency>
 		<dependency>
 			<groupId>org.linqs</groupId>
 			<artifactId>psl-evaluation</artifactId>
-			<version>1.0.0</version>
+			<version>CANARY</version>
 		</dependency>
 	</dependencies>
 	<properties>
