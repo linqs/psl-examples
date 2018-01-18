@@ -10,6 +10,7 @@ import org.linqs.psl.database.Queries;
 import org.linqs.psl.database.loading.Inserter;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
+import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
 import org.linqs.psl.evaluation.statistics.DiscretePredictionComparator;
 import org.linqs.psl.evaluation.statistics.DiscretePredictionStatistics;
@@ -17,7 +18,6 @@ import org.linqs.psl.groovy.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.term.Constant;
 import org.linqs.psl.model.term.ConstantType;
-import org.linqs.psl.utils.dataloading.InserterUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +51,7 @@ public class Run {
 		String baseDBPath = config.getString("dbpath", System.getProperty("java.io.tmpdir"));
 		String dbPath = Paths.get(baseDBPath, this.getClass().getName() + "_" + suffix).toString();
 		dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true), config);
+		// dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true), config);
 
 		model = new PSLModel(this, dataStore);
 	}
@@ -100,16 +101,16 @@ public class Run {
 		log.info("Loading data into database");
 
 		Inserter inserter = dataStore.getInserter(Block, obsPartition);
-		InserterUtils.loadDelimitedData(inserter, Paths.get(DATA_PATH, "location_obs.txt").toString());
+		inserter.loadDelimitedData(Paths.get(DATA_PATH, "location_obs.txt").toString());
 
 		inserter = dataStore.getInserter(Similar, obsPartition);
-		InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, "similar_obs.txt").toString());
+		inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, "similar_obs.txt").toString());
 
 		inserter = dataStore.getInserter(Friends, targetsPartition);
-		InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, "friends_targets.txt").toString());
+		inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, "friends_targets.txt").toString());
 
 		inserter = dataStore.getInserter(Friends, truthPartition);
-		InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, "friends_truth.txt").toString());
+		inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, "friends_truth.txt").toString());
 	}
 
 	/**

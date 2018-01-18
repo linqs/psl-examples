@@ -1,8 +1,8 @@
 package org.linqs.psl.examples.preferenceprediction;
 
 import org.linqs.psl.application.inference.MPEInference;
+import org.linqs.psl.application.learning.weight.VotedPerceptron;
 import org.linqs.psl.application.learning.weight.maxlikelihood.MaxLikelihoodMPE;
-import org.linqs.psl.application.learning.weight.maxlikelihood.VotedPerceptron;
 import org.linqs.psl.config.ConfigBundle;
 import org.linqs.psl.config.ConfigManager;
 import org.linqs.psl.database.Database;
@@ -12,6 +12,7 @@ import org.linqs.psl.database.Queries;
 import org.linqs.psl.database.loading.Inserter;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
+import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
 import org.linqs.psl.evaluation.statistics.ContinuousPredictionComparator;
 import org.linqs.psl.evaluation.statistics.ContinuousPredictionStatistics;
@@ -20,7 +21,6 @@ import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.predicate.StandardPredicate;
 import org.linqs.psl.model.term.Constant;
 import org.linqs.psl.model.term.ConstantType;
-import org.linqs.psl.utils.dataloading.InserterUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +52,7 @@ public class Run {
 		String baseDBPath = config.getString("dbpath", System.getProperty("java.io.tmpdir"));
 		String dbPath = Paths.get(baseDBPath, this.getClass().getName() + "_" + suffix).toString();
 		dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true), config);
+		// dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true), config);
 
 		model = new PSLModel(this, dataStore);
 	}
@@ -125,31 +126,31 @@ public class Run {
 			Partition truthPartition = dataStore.getPartition(type + "_truth");
 
 			Inserter inserter = dataStore.getInserter(AvgJokeRatingObs, obsPartition);
-			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "avgJokeRatingObs_obs.txt").toString());
+			inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, type, "avgJokeRatingObs_obs.txt").toString());
 
 			inserter = dataStore.getInserter(AvgUserRatingObs, obsPartition);
-			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "avgUserRatingObs_obs.txt").toString());
+			inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, type, "avgUserRatingObs_obs.txt").toString());
 
 			inserter = dataStore.getInserter(Joke, obsPartition);
-			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "joke_obs.txt").toString());
+			inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, type, "joke_obs.txt").toString());
 
 			inserter = dataStore.getInserter(RatingPrior, obsPartition);
-			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "ratingPrior_obs.txt").toString());
+			inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, type, "ratingPrior_obs.txt").toString());
 
 			inserter = dataStore.getInserter(SimObsRating, obsPartition);
-			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "simObsRating_obs.txt").toString());
+			inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, type, "simObsRating_obs.txt").toString());
 
 			inserter = dataStore.getInserter(User, obsPartition);
-			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "user_obs.txt").toString());
+			inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, type, "user_obs.txt").toString());
 
 			inserter = dataStore.getInserter(Rating, obsPartition);
-			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "rating_obs.txt").toString());
+			inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, type, "rating_obs.txt").toString());
 
 			inserter = dataStore.getInserter(Rating, targetsPartition);
-			InserterUtils.loadDelimitedData(inserter, Paths.get(DATA_PATH, type, "rating_targets.txt").toString());
+			inserter.loadDelimitedData(Paths.get(DATA_PATH, type, "rating_targets.txt").toString());
 
 			inserter = dataStore.getInserter(Rating, truthPartition);
-			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "rating_truth.txt").toString());
+			inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, type, "rating_truth.txt").toString());
 		}
 	}
 

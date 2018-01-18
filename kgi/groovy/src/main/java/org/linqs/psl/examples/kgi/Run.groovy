@@ -1,8 +1,8 @@
 package org.linqs.psl.examples.kgi;
 
 import org.linqs.psl.application.inference.MPEInference;
+import org.linqs.psl.application.learning.weight.VotedPerceptron;
 import org.linqs.psl.application.learning.weight.maxlikelihood.MaxLikelihoodMPE;
-import org.linqs.psl.application.learning.weight.maxlikelihood.VotedPerceptron;
 import org.linqs.psl.config.ConfigBundle;
 import org.linqs.psl.config.ConfigManager;
 import org.linqs.psl.database.Database;
@@ -12,6 +12,7 @@ import org.linqs.psl.database.Queries;
 import org.linqs.psl.database.loading.Inserter;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
+import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
 import org.linqs.psl.evaluation.statistics.RankingComparator;
 import org.linqs.psl.evaluation.statistics.RankingScore;
@@ -20,7 +21,6 @@ import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.predicate.StandardPredicate;
 import org.linqs.psl.model.term.Constant;
 import org.linqs.psl.model.term.ConstantType;
-import org.linqs.psl.utils.dataloading.InserterUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +52,7 @@ public class Run {
 		String baseDBPath = config.getString("dbpath", System.getProperty("java.io.tmpdir"));
 		String dbPath = Paths.get(baseDBPath, this.getClass().getName() + "_" + suffix).toString();
 		dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true), config);
+		// dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true), config);
 
 		model = new PSLModel(this, dataStore);
 	}
@@ -144,20 +145,20 @@ public class Run {
 			for (StandardPredicate predicate : dataStore.getRegisteredPredicates()) {
 				String path = Paths.get(DATA_PATH, type, predicate.getName() + "_obs.txt").toString();
 				Inserter inserter = dataStore.getInserter(predicate, obsPartition);
-				InserterUtils.loadDelimitedDataTruth(inserter, path);
+				inserter.loadDelimitedDataTruth(path);
 			}
 
 			Inserter inserter = dataStore.getInserter(Cat, targetsPartition);
-			InserterUtils.loadDelimitedData(inserter, Paths.get(DATA_PATH, type, "CAT_targets.txt").toString());
+			inserter.loadDelimitedData(Paths.get(DATA_PATH, type, "CAT_targets.txt").toString());
 
 			inserter = dataStore.getInserter(Rel, targetsPartition);
-			InserterUtils.loadDelimitedData(inserter, Paths.get(DATA_PATH, type, "REL_targets.txt").toString());
+			inserter.loadDelimitedData(Paths.get(DATA_PATH, type, "REL_targets.txt").toString());
 
 			inserter = dataStore.getInserter(Cat, truthPartition);
-			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "CAT_truth.txt").toString());
+			inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, type, "CAT_truth.txt").toString());
 
 			inserter = dataStore.getInserter(Rel, truthPartition);
-			InserterUtils.loadDelimitedDataTruth(inserter, Paths.get(DATA_PATH, type, "REL_truth.txt").toString());
+			inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, type, "REL_truth.txt").toString());
 		}
 	}
 

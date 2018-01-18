@@ -13,11 +13,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.linqs</groupId>
-			<artifactId>psl-dataloading</artifactId>
-			<version>CANARY</version>
-		</dependency>
-		<dependency>
-			<groupId>org.linqs</groupId>
 			<artifactId>psl-evaluation</artifactId>
 			<version>CANARY</version>
 		</dependency>
