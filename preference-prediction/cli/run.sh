@@ -1,7 +1,7 @@
 #!/bin/bash
 
-readonly JAR_URL='https://linqs-data.soe.ucsc.edu/maven/repositories/psl-releases/org/linqs/psl-cli/CANARY/psl-cli-CANARY.jar'
-readonly JAR_PATH='psl-cli-CANARY.jar'
+readonly JAR_URL='https://linqs-data.soe.ucsc.edu/maven/repositories/psl-releases/org/linqs/psl-cli/CANARY-2.1.1/psl-cli-CANARY-2.1.1.jar'
+readonly JAR_PATH='psl-cli-CANARY-2.1.1.jar'
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 readonly BASE_NAME='preference-prediction'
 
