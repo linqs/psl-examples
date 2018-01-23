@@ -38,10 +38,8 @@ function check_requirements() {
 }
 
 function buildClasspath() {
-   if [ -e "${CLASSPATH_FILE}" ]; then
-      echo "Classpath found cached, skipping classpath build."
-      return
-   fi
+   # Rebuild every time.
+   # It is hard for new users to know when to rebuild.
 
    mvn dependency:build-classpath -Dmdep.outputFile="${CLASSPATH_FILE}"
    if [[ "$?" -ne 0 ]]; then
