@@ -7,7 +7,7 @@ readonly BASE_NAME='citation-categories'
 
 readonly ADDITIONAL_PSL_OPTIONS=''
 readonly ADDITIONAL_LEARN_OPTIONS=''
-readonly ADDITIONAL_EVAL_OPTIONS=''
+readonly ADDITIONAL_EVAL_OPTIONS='--eval org.linqs.psl.evaluation.statistics.CategoricalEvaluator -D categoricalevaluator.categoryindexes=1'
 
 function main() {
    trap exit SIGINT
