@@ -12,10 +12,8 @@ import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
 import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
-import org.linqs.psl.evaluation.statistics.ContinuousPredictionComparator;
-import org.linqs.psl.evaluation.statistics.ContinuousPredictionStatistics;
-import org.linqs.psl.evaluation.statistics.DiscretePredictionComparator;
-import org.linqs.psl.evaluation.statistics.DiscretePredictionStatistics;
+import org.linqs.psl.evaluation.statistics.DiscreteEvaluator;
+import org.linqs.psl.evaluation.statistics.Evaluator;
 import org.linqs.psl.groovy.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.term.Constant;
@@ -171,20 +169,9 @@ public class Run {
 		Database resultsDB = dataStore.getDatabase(targetsPartition, [Lived, Likes] as Set);
 		Database truthDB = dataStore.getDatabase(truthPartition, [Knows] as Set);
 
-		DiscretePredictionComparator dpc = new DiscretePredictionComparator(resultsDB, truthDB, 0.5);
-		DiscretePredictionStatistics discreteStats = dpc.compare(Knows);
-
-		ContinuousPredictionComparator cpc = new ContinuousPredictionComparator(resultsDB, truthDB);
-		ContinuousPredictionStatistics continuousStats = cpc.compare(Knows);
-
-		log.info("MSE: {}, MAE: {}", continuousStats.getMAE(), continuousStats.getMSE());
-		log.info("Accuracy {}, Error {}", discreteStats.getAccuracy(), discreteStats.getError());
-		log.info("Positive Class: precision {}, recall {}",
-				discreteStats.getPrecision(DiscretePredictionStatistics.BinaryClass.POSITIVE),
-				discreteStats.getRecall(DiscretePredictionStatistics.BinaryClass.POSITIVE));
-		log.info("Negative Class Stats: precision {}, recall {}",
-				discreteStats.getPrecision(DiscretePredictionStatistics.BinaryClass.NEGATIVE),
-				discreteStats.getRecall(DiscretePredictionStatistics.BinaryClass.NEGATIVE));
+		Evaluator eval = new DiscreteEvaluator();
+		eval.compute(resultsDB, truthDB, Knows);
+		log.info(eval.getAllStats());
 
 		resultsDB.close();
 		truthDB.close();

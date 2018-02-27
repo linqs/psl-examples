@@ -14,8 +14,8 @@ import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
 import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
-import org.linqs.psl.evaluation.statistics.ContinuousPredictionComparator;
-import org.linqs.psl.evaluation.statistics.ContinuousPredictionStatistics;
+import org.linqs.psl.evaluation.statistics.Evaluator;
+import org.linqs.psl.evaluation.statistics.ContinuousEvaluator;
 import org.linqs.psl.groovy.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.predicate.StandardPredicate;
@@ -240,11 +240,9 @@ public class Run {
 		Database truthDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TRUTH),
 				dataStore.getRegisteredPredicates());
 
-		ContinuousPredictionComparator comparator = new ContinuousPredictionComparator(resultsDB, truthDB);
-		ContinuousPredictionStatistics stats = comparator.compare(Rating);
-
-		log.info("MAE: {}", stats.getMAE());
-		log.info("MSE: {}", stats.getMSE());
+		Evaluator eval = new ContinuousEvaluator();
+		eval.compute(resultsDB, truthDB, Rating);
+		log.info(eval.getAllStats());
 
 		resultsDB.close();
 		truthDB.close();

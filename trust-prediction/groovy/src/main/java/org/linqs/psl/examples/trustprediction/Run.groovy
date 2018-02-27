@@ -14,8 +14,8 @@ import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
 import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
-import org.linqs.psl.evaluation.statistics.RankingComparator;
-import org.linqs.psl.evaluation.statistics.RankingScore;
+import org.linqs.psl.evaluation.statistics.Evaluator;
+import org.linqs.psl.evaluation.statistics.RankingEvaluator;
 import org.linqs.psl.groovy.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.term.Constant;
@@ -230,12 +230,9 @@ public class Run {
 		Database truthDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TRUTH),
 				dataStore.getRegisteredPredicates());
 
-		RankingComparator comparator = new RankingComparator(resultsDB, truthDB, 0.5);
-		RankingScore stats = comparator.compare(Trusts);
-
-		log.info("AUROC: {}", stats.auroc());
-		log.info("Positive Class AUPRC: {}", stats.auprc());
-		log.info("Negative Class AUPRC: {}", stats.negAUPRC());
+		Evaluator eval = new RankingEvaluator();
+		eval.compute(resultsDB, truthDB, Trusts);
+		log.info(eval.getAllStats());
 
 		resultsDB.close();
 		truthDB.close();

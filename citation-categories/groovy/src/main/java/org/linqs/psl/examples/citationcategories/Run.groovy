@@ -14,8 +14,8 @@ import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
 import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
-import org.linqs.psl.evaluation.statistics.CategoricalPredictionComparator;
-import org.linqs.psl.evaluation.statistics.CategoricalPredictionStatistics;
+import org.linqs.psl.evaluation.statistics.CategoricalEvaluator;
+import org.linqs.psl.evaluation.statistics.Evaluator;
 import org.linqs.psl.groovy.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.term.Constant;
@@ -206,12 +206,9 @@ public class Run {
 		Database truthDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TRUTH),
 				dataStore.getRegisteredPredicates());
 
-		int[] categoryIndexes = [1];
-		CategoricalPredictionComparator comparator = new CategoricalPredictionComparator(resultsDB, truthDB, categoryIndexes);
-		CategoricalPredictionStatistics stats = comparator.compare(HasCat);
-
-		log.info("Categorical Accuracy: {}", stats.getAccuracy());
-		log.info("Categorical Error: {}", stats.getError());
+		Evaluator eval = new CategoricalEvaluator(1);
+		eval.compute(resultsDB, truthDB, HasCat);
+		log.info(eval.getAllStats());
 
 		resultsDB.close();
 		truthDB.close();

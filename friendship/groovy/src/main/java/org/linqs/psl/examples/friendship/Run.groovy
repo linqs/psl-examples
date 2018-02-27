@@ -12,8 +12,8 @@ import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
 import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
-import org.linqs.psl.evaluation.statistics.DiscretePredictionComparator;
-import org.linqs.psl.evaluation.statistics.DiscretePredictionStatistics;
+import org.linqs.psl.evaluation.statistics.DiscreteEvaluator;
+import org.linqs.psl.evaluation.statistics.Evaluator;
 import org.linqs.psl.groovy.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.term.Constant;
@@ -158,16 +158,9 @@ public class Run {
 		Database resultsDB = dataStore.getDatabase(targetsPartition, [Similar, Block] as Set);
 		Database truthDB = dataStore.getDatabase(truthPartition, [Friends] as Set);
 
-		DiscretePredictionComparator dpc = new DiscretePredictionComparator(resultsDB, truthDB, 0.5);
-		DiscretePredictionStatistics stats = dpc.compare(Friends);
-
-		log.info("Accuracy {}, Error {}", stats.getAccuracy(), stats.getError());
-		log.info("Positive Class: precision {}, recall {}",
-				stats.getPrecision(DiscretePredictionStatistics.BinaryClass.POSITIVE),
-				stats.getRecall(DiscretePredictionStatistics.BinaryClass.POSITIVE));
-		log.info("Negative Class Stats: precision {}, recall {}",
-				stats.getPrecision(DiscretePredictionStatistics.BinaryClass.NEGATIVE),
-				stats.getRecall(DiscretePredictionStatistics.BinaryClass.NEGATIVE));
+		Evaluator eval = new DiscreteEvaluator();
+		eval.compute(resultsDB, truthDB, Friends);
+		log.info(eval.getAllStats());
 
 		resultsDB.close();
 		truthDB.close();
