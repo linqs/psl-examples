@@ -6,7 +6,7 @@ readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 readonly BASE_NAME='social-network-analysis'
 
 readonly ADDITIONAL_PSL_OPTIONS='-D admmreasoner.maxiterations=500'
-readonly ADDITIONAL_EVAL_OPTIONS=''
+readonly ADDITIONAL_EVAL_OPTIONS='--infer'
 
 function main() {
    trap exit SIGINT
@@ -34,7 +34,7 @@ function getData() {
 function runEvaluation() {
    echo "Running PSL Inference"
 
-   java -jar "${JAR_PATH}" -infer -model "${BASE_NAME}.psl" -data "${BASE_NAME}.data" -output inferred-predicates ${ADDITIONAL_EVAL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS}
+   java -jar "${JAR_PATH}" --model "${BASE_NAME}.psl" --data "${BASE_NAME}.data" --output inferred-predicates ${ADDITIONAL_EVAL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS}
    if [[ "$?" -ne 0 ]]; then
       echo 'ERROR: Failed to run infernce'
       exit 70
