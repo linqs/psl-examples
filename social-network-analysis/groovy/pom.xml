@@ -37,9 +37,15 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.3</version>
 				<configuration>
 					<compilerId>groovy-eclipse-compiler</compilerId>
+					<source>1.7</source>
+					<target>1.7</target>
+					<compilerArgs>
+						<arg>-Xlint:deprecation</arg>
+						<arg>-Xlint:all</arg>
+					</compilerArgs>
 				</configuration>
 				<dependencies>
 					<dependency>
