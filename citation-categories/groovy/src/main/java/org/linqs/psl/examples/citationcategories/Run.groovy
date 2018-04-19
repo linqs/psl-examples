@@ -1,10 +1,10 @@
 package org.linqs.psl.examples.citationcategories;
 
+import org.linqs.psl.application.inference.InferenceApplication;
 import org.linqs.psl.application.inference.MPEInference;
-import org.linqs.psl.application.learning.weight.VotedPerceptron;
+import org.linqs.psl.application.learning.weight.WeightLearningApplication;
 import org.linqs.psl.application.learning.weight.maxlikelihood.MaxLikelihoodMPE;
-import org.linqs.psl.config.ConfigBundle;
-import org.linqs.psl.config.ConfigManager;
+import org.linqs.psl.config.Config;
 import org.linqs.psl.database.Database;
 import org.linqs.psl.database.DataStore;
 import org.linqs.psl.database.Partition;
@@ -42,17 +42,14 @@ public class Run {
 	private static Logger log = LoggerFactory.getLogger(Run.class)
 
 	private DataStore dataStore;
-	private ConfigBundle config;
 	private PSLModel model;
 
 	public Run() {
-		config = ConfigManager.getManager().getBundle("citationcategories");
-
 		String suffix = System.getProperty("user.name") + "@" + getHostname();
-		String baseDBPath = config.getString("dbpath", System.getProperty("java.io.tmpdir"));
+		String baseDBPath = Config.getString("dbpath", System.getProperty("java.io.tmpdir"));
 		String dbPath = Paths.get(baseDBPath, this.getClass().getName() + "_" + suffix).toString();
-		dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true), config);
-		// dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true), config);
+		dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true));
+		// dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true));
 
 		model = new PSLModel(this, dataStore);
 	}
@@ -144,8 +141,8 @@ public class Run {
 		// This database only contains the true ground atoms.
 		Database observedTruthDatabase = dataStore.getDatabase(truthPartition, dataStore.getRegisteredPredicates());
 
-		VotedPerceptron vp = new MaxLikelihoodMPE(model, randomVariableDatabase, observedTruthDatabase, config);
-		vp.learn();
+		WeightLearningApplication wla = new MaxLikelihoodMPE(model, randomVariableDatabase, observedTruthDatabase);
+		wla.learn();
 
 		randomVariableDatabase.close();
 		observedTruthDatabase.close();
@@ -163,10 +160,10 @@ public class Run {
 		Partition targetsPartition = dataStore.getPartition(PARTITION_EVAL_TARGETS);
 		Database inferDB = dataStore.getDatabase(targetsPartition, [Link] as Set, obsPartition);
 
-		MPEInference mpe = new MPEInference(model, inferDB, config);
-		mpe.mpeInference();
+		InferenceApplication inference = new MPEInference(model, inferDB);
+		inference.inference();
 
-		mpe.close();
+		inference.close();
 		inferDB.close();
 
 		log.info("Inference complete");
