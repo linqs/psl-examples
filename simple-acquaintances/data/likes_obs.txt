@@ -30,6 +30,3 @@ Sabina	Education	1
 Ben	Hiking	0.8
 Dhanya	Hiking	0.6
 Steve	Hiking	0.6
-
-
-
