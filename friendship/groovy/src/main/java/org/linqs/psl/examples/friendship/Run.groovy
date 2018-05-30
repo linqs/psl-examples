@@ -6,7 +6,6 @@ import org.linqs.psl.config.Config;
 import org.linqs.psl.database.Database;
 import org.linqs.psl.database.DataStore;
 import org.linqs.psl.database.Partition;
-import org.linqs.psl.database.Queries;
 import org.linqs.psl.database.loading.Inserter;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
@@ -136,7 +135,7 @@ public class Run {
 		(new File(OUTPUT_PATH)).mkdirs();
 		FileWriter writer = new FileWriter(Paths.get(OUTPUT_PATH, "FRIENDS.txt").toString());
 
-		for (GroundAtom atom : Queries.getAllAtoms(resultsDB, Friends)) {
+		for (GroundAtom atom : resultsDB.getAllGroundAtoms(Friends)) {
 			for (Constant argument : atom.getArguments()) {
 				writer.write(argument.toString() + "\t");
 			}
