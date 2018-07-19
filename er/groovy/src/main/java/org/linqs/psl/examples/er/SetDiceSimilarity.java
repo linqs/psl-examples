@@ -90,14 +90,14 @@ public class SetDiceSimilarity implements ExternalFunction {
 			authorNamesP2 = authorNamesTemp;
 		}
 		
-		JaroWinklerDistance jaroW = JaroWinklerDistance()
+		JaroWinklerDistance jaroW = new JaroWinklerDistance();
 		double total = 0.0;
 
 		for (String s1 : authorNamesP1) {
 			double max = 0.0;
 			String remove = "";
 			for (String s2 : authorNamesP2) {
-				double sim = jaroW.score(s1, s2);
+				double sim = jaroW.apply(s1, s2);
 				System.out.println("First: " + s1 + " Second: " + s2 + " Jaro: " + sim);
 				if (sim > max){
 					max = sim;
@@ -109,52 +109,4 @@ public class SetDiceSimilarity implements ExternalFunction {
 		}
 		return total/(double)authorNamesP1.size();
 	}
-	/*
-	@Override
-	public double getValue(ReadableDatabase db, Constant... args) {
-		Set<String> authorNamesP1 = new HashSet<String>();
-		Set<String> authorNamesP2 = new HashSet<String>();
-
-		StandardPredicate authorOfPredicate = StandardPredicate.get("AuthorOf");
-      
-      DatabaseQuery query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), args[0]));
-		ResultList results = db.executeQuery(query);
-		for (int i = 0; i < results.size(); i++) {
-			authorNamesP1.add(String.valueOf(results.get(i)));
-		}
-		
-		query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), args[1]));
-		results = db.executeQuery(query);
-		for (int i = 0; i < results.size(); i++) {
-			authorNamesP2.add(String.valueOf(results.get(i)));
-		}
-
-		int numberOfAuthors = authorNamesP1.size() + authorNamesP2.size();
-		if (authorNamesP1.size() > 2 || authorNamesP2.size() > 2){
-			System.out.println("Author one: " + authorNamesP1.size() + " Author two: " + authorNamesP2.size());
-		}
-
-		// Find the intersection, and get the number of elements in that set.
-		authorNamesP1.retainAll(authorNamesP2);
-      
-		if (authorNamesP1.size() > 0){	
-			System.out.println("Common: " + authorNamesP1.size());
-		}
-      
-		int numberOfAuthorsIntersection = authorNamesP1.size();
-
-		// The coefficient is:
-		//
-		//		  2 ∙ | s1 ⋂ s2 |
-		// D = ----------------------
-		//		  | s1 | + | s2 |
-		//
-		double diceSim = (2.0 * (double)numberOfAuthorsIntersection) / (double)numberOfAuthors;
-
-		if (diceSim < simThresh) {
-			return 0.0;
-		} else {
-			return diceSim;
-      }
-	}*/
 }
