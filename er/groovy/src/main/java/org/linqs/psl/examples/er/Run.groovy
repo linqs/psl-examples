@@ -71,7 +71,6 @@ public class Run {
 		model.add function:  "SameNumTokens", implementation: new SameNumTokens();
 		model.add predicate: "SameAuthor" , types: [ConstantType.UniqueIntID, ConstantType.UniqueIntID];
 		model.add predicate: "SamePaper"  , types: [ConstantType.UniqueIntID, ConstantType.UniqueIntID];
-
 		model.add function: "SameAuthorSet", implementation: new SetDiceSimilarity();
 	}
 

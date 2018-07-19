@@ -90,15 +90,15 @@ public class SetDiceSimilarity implements ExternalFunction {
 			authorNamesP2 = authorNamesTemp;
 		}
 		
-		JaroWinklerDistance jaroW = new JaroWinklerDistance();
 		double total = 0.0;
+		double max = 0.0;
+		double sim = 0.0;
+		JaroWinklerDistance jaroW = new JaroWinklerDistance();
 
 		for (String s1 : authorNamesP1) {
-			double max = 0.0;
 			String remove = "";
 			for (String s2 : authorNamesP2) {
-				double sim = jaroW.apply(s1, s2);
-				System.out.println("First: " + s1 + " Second: " + s2 + " Jaro: " + sim);
+				sim = jaroW.apply(s1, s2);
 				if (sim > max){
 					max = sim;
 					remove = s2;
