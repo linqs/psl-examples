@@ -1,0 +1,12 @@
+// If J1,J2 have similar observed ratings, then U will rate them similarly
+1.0: SimObsRating(J1,J2) & Rating(U,J1) >> Rating(U,J2) ^2
+
+// Ratings should concentrate around observed User/Joke averages
+1.0: User(U) & Joke(J) & AvgUserRatingObs(U) >> Rating(U,J) ^2
+1.0: User(U) & Joke(J) & AvgJokeRatingObs(J) >> Rating(U,J) ^2
+1.0: User(U) & Joke(J) & Rating(U,J) >> AvgUserRatingObs(U) ^2
+1.0: User(U) & Joke(J) & Rating(U,J) >> AvgJokeRatingObs(J) ^2
+
+// Two-sided prior
+1.0: User(U) & Joke(J) & RatingPrior('0') >> Rating(U, J) ^2
+1.0: Rating(U,J) >> RatingPrior('0') ^2
