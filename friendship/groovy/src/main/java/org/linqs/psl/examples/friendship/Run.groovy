@@ -1,12 +1,11 @@
 package org.linqs.psl.examples.friendship;
 
+import org.linqs.psl.application.inference.InferenceApplication;
 import org.linqs.psl.application.inference.MPEInference;
-import org.linqs.psl.config.ConfigBundle;
-import org.linqs.psl.config.ConfigManager;
+import org.linqs.psl.config.Config;
 import org.linqs.psl.database.Database;
 import org.linqs.psl.database.DataStore;
 import org.linqs.psl.database.Partition;
-import org.linqs.psl.database.Queries;
 import org.linqs.psl.database.loading.Inserter;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
@@ -41,17 +40,14 @@ public class Run {
 	private static Logger log = LoggerFactory.getLogger(Run.class)
 
 	private DataStore dataStore;
-	private ConfigBundle config;
 	private PSLModel model;
 
 	public Run() {
-		config = ConfigManager.getManager().getBundle("friendship");
-
 		String suffix = System.getProperty("user.name") + "@" + getHostname();
-		String baseDBPath = config.getString("dbpath", System.getProperty("java.io.tmpdir"));
+		String baseDBPath = Config.getString("dbpath", System.getProperty("java.io.tmpdir"));
 		String dbPath = Paths.get(baseDBPath, this.getClass().getName() + "_" + suffix).toString();
-		dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true), config);
-		// dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true), config);
+		dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true));
+		// dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true));
 
 		model = new PSLModel(this, dataStore);
 	}
@@ -121,10 +117,10 @@ public class Run {
 
 		Database inferDB = dataStore.getDatabase(targetsPartition, [Similar, Block] as Set, obsPartition);
 
-		MPEInference mpe = new MPEInference(model, inferDB, config);
-		mpe.mpeInference();
+		InferenceApplication inference = new MPEInference(model, inferDB);
+		inference.inference();
 
-		mpe.close();
+		inference.close();
 		inferDB.close();
 
 		log.info("Inference complete");
@@ -139,7 +135,7 @@ public class Run {
 		(new File(OUTPUT_PATH)).mkdirs();
 		FileWriter writer = new FileWriter(Paths.get(OUTPUT_PATH, "FRIENDS.txt").toString());
 
-		for (GroundAtom atom : Queries.getAllAtoms(resultsDB, Friends)) {
+		for (GroundAtom atom : resultsDB.getAllGroundAtoms(Friends)) {
 			for (Constant argument : atom.getArguments()) {
 				writer.write(argument.toString() + "\t");
 			}
