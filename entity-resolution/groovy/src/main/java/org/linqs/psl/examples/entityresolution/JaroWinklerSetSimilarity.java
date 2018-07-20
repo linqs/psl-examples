@@ -15,38 +15,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.linqs.psl.examples.er;
+package org.linqs.psl.examples.entityresolution;
 
 import org.linqs.psl.database.DatabaseQuery;
 import org.linqs.psl.database.ReadableDatabase;
 import org.linqs.psl.database.ResultList;
-import org.linqs.psl.model.term.Variable;
+import org.linqs.psl.model.atom.QueryAtom;
 import org.linqs.psl.model.function.ExternalFunction;
 import org.linqs.psl.model.predicate.StandardPredicate;
 import org.linqs.psl.model.term.Constant;
 import org.linqs.psl.model.term.ConstantType;
-import org.linqs.psl.model.term.UniqueIntID;
-import org.linqs.psl.model.atom.QueryAtom;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import org.linqs.psl.model.term.Variable;
 
 import org.apache.commons.text.similarity.JaroWinklerDistance;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class JaroWinklerSetSimilarity implements ExternalFunction {
-	// similarity threshold (default=0.5)
-	private double simThresh;
-
-	public JaroWinklerSetSimilarity() {
-		this.simThresh = 0.5;
-	}
-
-	public JaroWinklerSetSimilarity(double simThresh) {
-		this.simThresh = simThresh;
-	}
-
 	@Override
 	public int getArity() {
 		return 2;
@@ -57,32 +43,27 @@ public class JaroWinklerSetSimilarity implements ExternalFunction {
 		return new ConstantType[] {ConstantType.UniqueIntID, ConstantType.UniqueIntID};
 	}
 
-	@Override
-	public double getValue(ReadableDatabase db, Constant... args) {
-		Set<String> authorNamesP1 = new HashSet<String>();
-		Set<String> authorNamesP2 = new HashSet<String>();
+   private Set<String> loadSets(ReadableDatabase db, Constant arg){
+		Set<String> authorSet = new HashSet<String>();
 		StandardPredicate authorOfPredicate = StandardPredicate.get("AuthorOf");
 		StandardPredicate authorNamePredicate = StandardPredicate.get("AuthorName");
 
-		DatabaseQuery query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), args[0]));
+		DatabaseQuery query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), arg));
 		ResultList results = db.executeQuery(query);
 		for (int i = 0; i < results.size(); i++) {
 			query = new DatabaseQuery(new QueryAtom(authorNamePredicate, results.get(i)[0], new Variable("A")));
 			ResultList resultsTwo = db.executeQuery(query);
 			for (int j = 0; j < resultsTwo.size(); j++) {
-				authorNamesP1.add(String.valueOf(resultsTwo.get(j)[0]));
+				authorSet.add(String.valueOf(resultsTwo.get(j)[0]));
 			}
 		}
+		return authorSet;
+	}
 
-		query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), args[1]));
-		results = db.executeQuery(query);
-		for (int i = 0; i < results.size(); i++) {
-			query = new DatabaseQuery(new QueryAtom(authorNamePredicate, results.get(i)[0], new Variable("A")));
-			ResultList resultsTwo = db.executeQuery(query);
-			for (int j = 0; j < resultsTwo.size(); j++) {
-				authorNamesP2.add(String.valueOf(resultsTwo.get(j)[0]));
-			}
-		}
+	@Override
+	public double getValue(ReadableDatabase db, Constant... args) {
+		Set<String> authorNamesP1 = loadSets(db, args[0]);
+		Set<String> authorNamesP2 = loadSets(db, args[1]);
 
 		if (authorNamesP2.size() < authorNamesP1.size()){
 			Set<String> authorNamesTemp = authorNamesP1;
@@ -95,11 +76,13 @@ public class JaroWinklerSetSimilarity implements ExternalFunction {
 		double sim = 0.0;
 		JaroWinklerDistance jaroW = new JaroWinklerDistance();
 
+		// Does a pair wise comparison, greedly takes the largest Jaro Winkler similarity, and goes to the next element.
 		for (String s1 : authorNamesP1) {
-			String remove = "";
+			String remove = null;
+			max = 0.0;
 			for (String s2 : authorNamesP2) {
 				sim = jaroW.apply(s1, s2);
-				if (sim > max){
+				if (remove == null || sim > max) {
 					max = sim;
 					remove = s2;
 				}
@@ -107,6 +90,6 @@ public class JaroWinklerSetSimilarity implements ExternalFunction {
 			authorNamesP2.remove(remove);
 			total += max;
 		}
-		return total/(double)authorNamesP1.size();
+		return total / (double)authorNamesP1.size();
 	}
 }

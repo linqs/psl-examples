@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly BASE_NAME='er'
+readonly BASE_NAME='entityresolution'
 readonly CLASSPATH_FILE='classpath.out'
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 readonly TARGET_CLASS="org.linqs.psl.examples.${BASE_NAME}.Run"

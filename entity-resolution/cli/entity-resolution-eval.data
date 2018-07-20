@@ -1,0 +1,29 @@
+predicates:
+   AuthorName/2: closed
+   PaperTitle/2: closed
+   AuthorOf/2: closed
+   SimName/2: closed
+   SimTitle/2: closed
+   SameInitials/2: closed
+   SameNumTokens/2: closed
+   SameAuthorSet/2: closed
+   SameAuthor/2: open
+   SamePaper/2: open
+
+observations:
+   AuthorName: ../data/entity-resolution/eval/authorName_obs.txt
+   PaperTitle: ../data/entity-resolution/eval/paperTitle_obs.txt
+   AuthorOf: ../data/entity-resolution/eval/authorOf_obs.txt
+   SimName: ../data/entity-resolution/eval/simName_obs.txt
+   SimTitle: ../data/entity-resolution/eval/simTitle_obs.txt
+   SameInitials: ../data/entity-resolution/eval/sameInitials_obs.txt
+   SameNumTokens: ../data/entity-resolution/eval/sameNumTokens_obs.txt
+   SameAuthorSet: ../data/entity-resolution/eval/sameAuthorSet_obs.txt
+
+targets:
+   SameAuthor: ../data/entity-resolution/eval/sameAuthor_targets.txt
+   SamePaper: ../data/entity-resolution/eval/samePaper_targets.txt
+
+truth:
+   SameAuthor: ../data/entity-resolution/eval/sameAuthor_truth.txt
+   SamePaper: ../data/entity-resolution/eval/samePaper_truth.txt

@@ -1,7 +1,8 @@
-package org.linqs.psl.examples.er;
+package org.linqs.psl.examples.entityresolution;
 
+import org.linqs.psl.application.inference.InferenceApplication;
 import org.linqs.psl.application.inference.MPEInference;
-import org.linqs.psl.application.learning.weight.VotedPerceptron;
+import org.linqs.psl.application.learning.weight.WeightLearningApplication;
 import org.linqs.psl.application.learning.weight.maxlikelihood.MaxLikelihoodMPE;
 import org.linqs.psl.config.Config;
 import org.linqs.psl.database.Database;
@@ -19,7 +20,6 @@ import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.predicate.StandardPredicate;
 import org.linqs.psl.model.term.Constant;
 import org.linqs.psl.model.term.ConstantType;
-
 import org.linqs.psl.utils.textsimilarity.DiceSimilarity;
 import org.linqs.psl.utils.textsimilarity.LevenshteinSimilarity;
 import org.linqs.psl.utils.textsimilarity.SameInitials;
@@ -39,7 +39,7 @@ public class Run {
 	private static final String PARTITION_EVAL_TARGETS = "eval_targets";
 	private static final String PARTITION_EVAL_TRUTH = "eval_truth";
 
-	private static final String DATA_PATH = Paths.get("..", "data", "er").toString();
+	private static final String DATA_PATH = Paths.get("..", "data", "entity-resolution").toString();
 	private static final String OUTPUT_PATH = "inferred-predicates";
 
 	private static Logger log = LoggerFactory.getLogger(Run.class)
@@ -174,8 +174,8 @@ public class Run {
 		// This database only contains the true ground atoms.
 		Database observedTruthDatabase = dataStore.getDatabase(truthPartition, dataStore.getRegisteredPredicates());
 
-		VotedPerceptron vp = new MaxLikelihoodMPE(model, randomVariableDatabase, observedTruthDatabase);
-		vp.learn();
+		WeightLearningApplication weightLearning = new MaxLikelihoodMPE(model, randomVariableDatabase, observedTruthDatabase);
+		weightLearning.learn();
 
 		randomVariableDatabase.close();
 		observedTruthDatabase.close();
@@ -196,10 +196,10 @@ public class Run {
 
 		Database inferDB = dataStore.getDatabase(targetsPartition, closedPredicates, obsPartition);
 
-		MPEInference mpe = new MPEInference(model, inferDB);
-		mpe.inference();
+		InferenceApplication inference = new MPEInference(model, inferDB);
+		inference.inference();
 
-		mpe.close();
+		inference.close();
 		inferDB.close();
 
 		log.info("Inference complete");
