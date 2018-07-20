@@ -7,7 +7,7 @@ readonly BASE_NAME='preference-prediction'
 
 readonly ADDITIONAL_PSL_OPTIONS=''
 readonly ADDITIONAL_LEARN_OPTIONS=''
-readonly ADDITIONAL_EVAL_OPTIONS='--eval-continuous'
+readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval org.linqs.psl.evaluation.statistics.DiscreteEvaluator'
 
 function main() {
    trap exit SIGINT

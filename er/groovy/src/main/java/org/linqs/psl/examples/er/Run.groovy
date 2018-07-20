@@ -1,5 +1,23 @@
 package org.linqs.psl.examples.er;
 
+
+import org.linqs.psl.database.DatabaseQuery;
+import org.linqs.psl.database.ReadableDatabase;
+import org.linqs.psl.database.ResultList;
+import org.linqs.psl.model.term.Variable;
+import org.linqs.psl.model.function.ExternalFunction;
+import org.linqs.psl.model.predicate.StandardPredicate;
+import org.linqs.psl.model.term.Constant;
+import org.linqs.psl.model.term.ConstantType;
+import org.linqs.psl.model.term.UniqueIntID;
+import org.linqs.psl.model.atom.QueryAtom;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+
 import org.linqs.psl.application.inference.MPEInference;
 import org.linqs.psl.application.learning.weight.VotedPerceptron;
 import org.linqs.psl.application.learning.weight.maxlikelihood.MaxLikelihoodMPE;
@@ -269,13 +287,42 @@ public class Run {
 		truthDB.close();
       
 	}
-	
+	/*
+	private void printPaper() {
+		System.out.println("Writing Paper Values")
+		Database db = dataStore.getDatabase(dataStore.getPartition(PARTITION_LEARN_OBSERVATIONS));
+
+		(new File("paper-values")).mkdirs();
+		FileWriter writer = new FileWriter(Paths.get("paper-values", "SimilarPapers.txt").toString());
+
+		DatabaseQuery query = new DatabaseQuery(new QueryAtom(SameAuthorSet, new Variable("A"), new Variable("B")));
+		ResultList results = db.executeQuery(query);
+		for (int i = 0; i < results.size(); i++) {
+			for (Constant argument : results.get(i)[0]) {
+				writer.write(argument.toString() + "\t");
+			}
+			writer.write("" + results.get(i)[1] + "\n");
+		}
+
+      
+      for (GroundAtom atom : db.getAtom(SameAuthorSet, new Variable("A"), new Variable("B"))) {
+			for (Constant argument : atom.getArguments()) {
+				writer.write(argument.toString() + "\t");
+			}
+			writer.write("" + atom.getValue() + "\n");
+		}
+
+		writer.close();
+		resultsDB.close();
+	}*/
+
    public void run() {
 		definePredicates();
 		defineRules();
 		loadData();
 
 		learnWeights();
+      //printPaper();
 		runInference();
 
 		writeOutput();

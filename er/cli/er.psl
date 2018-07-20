@@ -1,12 +1,15 @@
-// If J1,J2 have similar observed ratings, then U will rate them similarly
-1.0: SimObsRating(J1,J2) & Rating(U,J1) >> Rating(U,J2) ^2
+// Similar names implies the same author
+1.0: AuthorName(A1,N1) & AuthorName(A2,N2) & SimName(N1,N2) >> SameAuthor(A1,A2)
 
-// Ratings should concentrate around observed User/Joke averages
-1.0: User(U) & Joke(J) & AvgUserRatingObs(U) >> Rating(U,J) ^2
-1.0: User(U) & Joke(J) & AvgJokeRatingObs(J) >> Rating(U,J) ^2
-1.0: User(U) & Joke(J) & Rating(U,J) >> AvgUserRatingObs(U) ^2
-1.0: User(U) & Joke(J) & Rating(U,J) >> AvgJokeRatingObs(J) ^2
+// Similar titles implies the same paper
+1.0: PaperTitle(P1,T1) & PaperTitle(P2,T2) & SimTitle(T1,T2) >> SamePaper(P1,P2)
 
-// Two-sided prior
-1.0: User(U) & Joke(J) & RatingPrior('0') >> Rating(U, J) ^2
-1.0: Rating(U,J) >> RatingPrior('0') ^2
+// If two references share a common publication and have the same initials, then this implies the same author
+1.0: AuthorOf(A1,P1) & AuthorOf(A2,P2) & SamePaper(P1,P2) & AuthorName(A1,N1) & AuthorName(A2,N2) & SameInitials(N1,N2) >> SameAuthor(A1,A2)
+
+// If two papers have a common set of authors and the same number of tokens in the title, then this implies the same paper
+1.0: SameAuthorSet(P1,P2) & PaperTitle(P1,T1) & PaperTitle(P2,T2) & SameNumTokens(T1,T2) >> SamePaper(P1,P2)
+
+// Priors: By default, Authors are not the same Authors and Papers are not the same Papers
+1.0: !SameAuthor(A1,A2)
+1.0: !SamePaper(A1,A2)

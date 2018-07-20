@@ -1,23 +1,29 @@
 predicates:
-   AvgJokeRatingObs/1: closed
-   AvgUserRatingObs/1: closed
-   Joke/1: closed
-   RatingPrior/1: closed
-   SimObsRating/2: closed
-   User/1: closed
-   Rating/2: open
+   AuthorName/2: closed
+   PaperTitle/2: closed
+   AuthorOf/2: closed
+   SimName/2: closed
+   SimTitle/2: closed
+   SameInitials/2: closed
+   SameNumTokens/2: closed
+   SameAuthorSet/2: closed
+   SameAuthor/2: open
+   SamePaper/2: open
 
 observations:
-   AvgJokeRatingObs: ../data/preference-prediction/learn/avgJokeRatingObs_obs.txt
-   AvgUserRatingObs: ../data/preference-prediction/learn/avgUserRatingObs_obs.txt
-   Joke: ../data/preference-prediction/learn/joke_obs.txt
-   RatingPrior: ../data/preference-prediction/learn/ratingPrior_obs.txt
-   SimObsRating: ../data/preference-prediction/learn/simObsRating_obs.txt
-   User: ../data/preference-prediction/learn/user_obs.txt
-   Rating: ../data/preference-prediction/learn/rating_obs.txt
-
+   AuthorName: ../data/er/learn/authorName_obs.txt
+   PaperTitle: ../data/er/learn/papaerTitle_obs.txt
+   AuthorOf: ../data/er/learn/authorOf_obs.txt
+   SimName: ../data/er/learn/simName_obs.txt
+   SimTitle: ../data/er/learn/simTitle_obs.txt
+   SameInitials: ../data/er/learn/sameInitials_obs.txt
+   SameNumTokens: ../data/er/learn/sameNumTokens_obs.txt
+   SameAuthorSet: ../data/er/learn/sameAuthorSet_obs.txt
+   
 targets:
-   Rating: ../data/preference-prediction/learn/rating_targets.txt
+   SameAuthor: ../data/er/learn/sameAuthor_truth.txt
+   SamePaper: ../data/er/learn/samePaper_truth.txt
 
 truth:
-   Rating: ../data/preference-prediction/learn/rating_truth.txt
+   SameAuthor: ../data/er/learn/sameAuthor_truth.txt
+   SamePaper: ../data/er/learn/samePaper_truth.txt
