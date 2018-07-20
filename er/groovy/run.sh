@@ -8,7 +8,7 @@ readonly TARGET_CLASS="org.linqs.psl.examples.${BASE_NAME}.Run"
 function main() {
    trap exit SIGINT
 
-   #getData
+   getData
 
    check_requirements
    compile

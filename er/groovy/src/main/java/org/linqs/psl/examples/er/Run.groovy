@@ -1,21 +1,5 @@
 package org.linqs.psl.examples.er;
 
-import org.linqs.psl.database.DatabaseQuery;
-import org.linqs.psl.database.ReadableDatabase;
-import org.linqs.psl.database.ResultList;
-import org.linqs.psl.model.term.Variable;
-import org.linqs.psl.model.function.ExternalFunction;
-import org.linqs.psl.model.predicate.StandardPredicate;
-import org.linqs.psl.model.term.Constant;
-import org.linqs.psl.model.term.ConstantType;
-import org.linqs.psl.model.term.UniqueIntID;
-import org.linqs.psl.model.atom.QueryAtom;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
-
 import org.linqs.psl.application.inference.MPEInference;
 import org.linqs.psl.application.learning.weight.VotedPerceptron;
 import org.linqs.psl.application.learning.weight.maxlikelihood.MaxLikelihoodMPE;
@@ -41,9 +25,6 @@ import org.linqs.psl.utils.textsimilarity.LevenshteinSimilarity;
 import org.linqs.psl.utils.textsimilarity.SameInitials;
 import org.linqs.psl.utils.textsimilarity.SameNumTokens;
 
-// TEST
-import org.linqs.psl.model.predicate.ExternalFunctionalPredicate;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +41,7 @@ public class Run {
 
 	private static final String DATA_PATH = Paths.get("..", "data", "er").toString();
 	private static final String OUTPUT_PATH = "inferred-predicates";
-	
+
 	private static Logger log = LoggerFactory.getLogger(Run.class)
 
 	private DataStore dataStore;
@@ -70,8 +51,8 @@ public class Run {
 		String suffix = System.getProperty("user.name") + "@" + getHostname();
 		String baseDBPath = Config.getString("dbpath", System.getProperty("java.io.tmpdir"));
 		String dbPath = Paths.get(baseDBPath, this.getClass().getName() + "_" + suffix).toString();
-		// dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true));
-		dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true));
+		dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true));
+		// dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true));
 
 		model = new PSLModel(this, dataStore);
 	}
@@ -267,14 +248,14 @@ public class Run {
 		Partition targetPartition = dataStore.getPartition(PARTITION_EVAL_TARGETS);
 		Partition observationsPartition = dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS);
 		Partition truthPartition = dataStore.getPartition(PARTITION_EVAL_TRUTH);
-		
+
 		// Because the truth data also includes observed data, we will make sure to include the observed
 		// partition here.
 		Database resultsDB = dataStore.getDatabase(targetPartition, closedPredicates, observationsPartition);
 		Database truthDB = dataStore.getDatabase(truthPartition, dataStore.getRegisteredPredicates());
 
 		Evaluator eval = new DiscreteEvaluator();
-		
+
 		for (StandardPredicate targetPredicate : openPredicates) {
 			eval.compute(resultsDB, truthDB, targetPredicate);
 			log.info(eval.getAllStats());
@@ -282,102 +263,18 @@ public class Run {
 
 		resultsDB.close();
 		truthDB.close();
-      
-	}
-	private void printPaper() {
-		System.out.println("Writing Paper Values");
-		Database db = dataStore.getDatabase(dataStore.getPartition(PARTITION_LEARN_OBSERVATIONS));
-		//Database db = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
-
-		(new File("paper-values")).mkdirs();
-		FileWriter writer = new FileWriter(Paths.get("paper-values", "sameAuthorSet_obs.txt").toString());
-
-		JaroWinklerSetSimilarity sim = new JaroWinklerSetSimilarity();
-      for (GroundAtom atom1 : db.getAllGroundAtoms(PaperTitle)) {
-         for (GroundAtom atom2 : db.getAllGroundAtoms(PaperTitle)) {
-            double simValue = sim.getValue(db, atom1.getArguments()[0], atom2.getArguments()[0]);
-            if (simValue>0.5){
-					writer.write("" + atom1.getArguments()[0] + "\t" + atom2.getArguments()[0] + "\t");
-					writer.write("" + simValue + "\n");
-				}
-			}
-		}
-		writer.close();
-
-		(new File("paper-values")).mkdirs();
-		writer = new FileWriter(Paths.get("paper-values", "sameInitials_obs.txt").toString());
-
-		SameInitials initials = new SameInitials();
-      for (GroundAtom atom1 : db.getAllGroundAtoms(AuthorName)) {
-         for (GroundAtom atom2 : db.getAllGroundAtoms(AuthorName)) {
-            double simValue = initials.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
-            if (simValue>0.5){
-					writer.write(atom1.getArguments()[1].getValue() + "\t" + atom2.getArguments()[1].getValue() + "\t");
-					writer.write("" + simValue + "\n");
-				}
-			}
-		}
-
-		writer.close();
-		
-      writer = new FileWriter(Paths.get("paper-values", "sameNumTokens_obs.txt").toString());
-
-		SameNumTokens token = new SameNumTokens();
-      for (GroundAtom atom1 : db.getAllGroundAtoms(PaperTitle)) {
-         for (GroundAtom atom2 : db.getAllGroundAtoms(PaperTitle)) {
-            double simValue = token.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
-            if (simValue>0.5){
-					writer.write(atom1.getArguments()[1].getValue() + "\t" + atom2.getArguments()[1].getValue() + "\t");
-					writer.write("" + simValue + "\n");
-				}
-			}
-		}
-
-		writer.close();
-		
-      writer = new FileWriter(Paths.get("paper-values", "simName_obs.txt").toString());
-		
-		LevenshteinSimilarity simName = new LevenshteinSimilarity(0.5);
-      for (GroundAtom atom1 : db.getAllGroundAtoms(AuthorName)) {
-         for (GroundAtom atom2 : db.getAllGroundAtoms(AuthorName)) {
-				double simValue = simName.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
-            if (simValue>0.5){
-					writer.write(atom1.getArguments()[1].getValue() + "\t" + atom2.getArguments()[1].getValue() + "\t");
-					writer.write("" + simValue + "\n");
-				}
-			}
-		}
-
-		writer.close();
-		
-      writer = new FileWriter(Paths.get("paper-values", "simTitle_obs.txt").toString());
-
-		DiceSimilarity dice = new DiceSimilarity(0.5);
-      for (GroundAtom atom1 : db.getAllGroundAtoms(PaperTitle)) {
-         for (GroundAtom atom2 : db.getAllGroundAtoms(PaperTitle)) {
-            double simValue = dice.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
-            if (simValue>0.5){
-					writer.write(atom1.getArguments()[1].getValue() + "\t" + atom2.getArguments()[1].getValue() + "\t");
-					writer.write("" + simValue + "\n");
-				}
-			}
-		}
-
-		writer.close();
-		db.close();
 	}
 
-
-   public void run() {
+	public void run() {
 		definePredicates();
 		defineRules();
 		loadData();
-		printPaper();
-		//learnWeights();
-		//runInference();
 
-		//writeOutput();
-		//evalResults();
+		learnWeights();
+		runInference();
+
+		writeOutput();
+		evalResults();
 
 		dataStore.close();
 	}

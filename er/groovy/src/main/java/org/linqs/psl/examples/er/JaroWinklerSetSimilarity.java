@@ -64,7 +64,7 @@ public class JaroWinklerSetSimilarity implements ExternalFunction {
 		StandardPredicate authorOfPredicate = StandardPredicate.get("AuthorOf");
 		StandardPredicate authorNamePredicate = StandardPredicate.get("AuthorName");
 
-      DatabaseQuery query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), args[0]));
+		DatabaseQuery query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), args[0]));
 		ResultList results = db.executeQuery(query);
 		for (int i = 0; i < results.size(); i++) {
 			query = new DatabaseQuery(new QueryAtom(authorNamePredicate, results.get(i)[0], new Variable("A")));
@@ -74,9 +74,9 @@ public class JaroWinklerSetSimilarity implements ExternalFunction {
 			}
 		}
 
-      query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), args[1]));
+		query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), args[1]));
 		results = db.executeQuery(query);
-      for (int i = 0; i < results.size(); i++) {
+		for (int i = 0; i < results.size(); i++) {
 			query = new DatabaseQuery(new QueryAtom(authorNamePredicate, results.get(i)[0], new Variable("A")));
 			ResultList resultsTwo = db.executeQuery(query);
 			for (int j = 0; j < resultsTwo.size(); j++) {
@@ -84,12 +84,12 @@ public class JaroWinklerSetSimilarity implements ExternalFunction {
 			}
 		}
 
-      if (authorNamesP2.size() < authorNamesP1.size()){
+		if (authorNamesP2.size() < authorNamesP1.size()){
 			Set<String> authorNamesTemp = authorNamesP1;
 			authorNamesP1 = authorNamesP2;
 			authorNamesP2 = authorNamesTemp;
 		}
-		
+
 		double total = 0.0;
 		double max = 0.0;
 		double sim = 0.0;

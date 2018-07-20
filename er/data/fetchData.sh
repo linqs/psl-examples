@@ -1,8 +1,9 @@
 #!/bin/bash
 
-readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/er/er_small.tar.gz'
-readonly DATA_FILE='er_small.tar.gz'
-readonly DATA_DIR='er_small'
+readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/er/er_tiny.tar.gz'
+readonly DATA_FILE='er_tiny.tar.gz'
+readonly DATA_MOVE='er_tiny'
+readonly DATA_DIR='er'
 
 function main() {
    trap exit SIGINT
@@ -83,6 +84,7 @@ function extract_tar() {
 
    echo "Extracting the ${name} tar"
    tar xf "${path}"
+   mv "${DATA_MOVE}" ${expectedDir}
    if [[ "$?" -ne 0 ]]; then
       echo "ERROR: Failed to extract ${name} tar"
       exit 40

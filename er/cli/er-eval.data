@@ -19,7 +19,7 @@ observations:
    SameInitials: ../data/er/eval/sameInitials_obs.txt
    SameNumTokens: ../data/er/eval/sameNumTokens_obs.txt
    SameAuthorSet: ../data/er/eval/sameAuthorSet_obs.txt
-   
+
 targets:
    SameAuthor: ../data/er/eval/sameAuthor_targets.txt
    SamePaper: ../data/er/eval/samePaper_targets.txt
