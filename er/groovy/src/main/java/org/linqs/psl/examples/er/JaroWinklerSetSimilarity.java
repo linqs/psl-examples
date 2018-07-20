@@ -35,15 +35,15 @@ import java.util.TreeSet;
 
 import org.apache.commons.text.similarity.JaroWinklerDistance;
 
-public class SetDiceSimilarity implements ExternalFunction {
+public class JaroWinklerSetSimilarity implements ExternalFunction {
 	// similarity threshold (default=0.5)
 	private double simThresh;
 
-	public SetDiceSimilarity() {
+	public JaroWinklerSetSimilarity() {
 		this.simThresh = 0.5;
 	}
 
-	public SetDiceSimilarity(double simThresh) {
+	public JaroWinklerSetSimilarity(double simThresh) {
 		this.simThresh = simThresh;
 	}
 
