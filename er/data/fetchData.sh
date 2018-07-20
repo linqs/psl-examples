@@ -1,8 +1,8 @@
 #!/bin/bash
 
-readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/friendship.tar.gz'
-readonly DATA_FILE='friendship.tar.gz'
-readonly DATA_DIR='friendship'
+readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/er/er_small.tar.gz'
+readonly DATA_FILE='er_small.tar.gz'
+readonly DATA_DIR='er_small'
 
 function main() {
    trap exit SIGINT

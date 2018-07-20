@@ -287,46 +287,101 @@ public class Run {
 		truthDB.close();
       
 	}
-	/*
+
 	private void printPaper() {
-		System.out.println("Writing Paper Values")
+		System.out.println("Writing Paper Values");
 		Database db = dataStore.getDatabase(dataStore.getPartition(PARTITION_LEARN_OBSERVATIONS));
+		//Database db = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
 
 		(new File("paper-values")).mkdirs();
-		FileWriter writer = new FileWriter(Paths.get("paper-values", "SimilarPapers.txt").toString());
+		FileWriter writer = new FileWriter(Paths.get("paper-values", "sameAuthorSet_obs.txt").toString());
 
-		DatabaseQuery query = new DatabaseQuery(new QueryAtom(SameAuthorSet, new Variable("A"), new Variable("B")));
-		ResultList results = db.executeQuery(query);
-		for (int i = 0; i < results.size(); i++) {
-			for (Constant argument : results.get(i)[0]) {
-				writer.write(argument.toString() + "\t");
+		SetDiceSimilarity sim = new SetDiceSimilarity();
+      for (GroundAtom atom1 : db.getAllGroundAtoms(PaperTitle)) {
+         for (GroundAtom atom2 : db.getAllGroundAtoms(PaperTitle)) {
+            double simValue = sim.getValue(db, atom1.getArguments()[0], atom2.getArguments()[0]);
+            if (simValue>0.5){
+					writer.write(atom1.getArguments()[0].toString() + "\t" + atom2.getArguments()[0].toString() + "\t");
+					writer.write("" + simValue + "\n");
+				}
 			}
-			writer.write("" + results.get(i)[1] + "\n");
 		}
+		writer.close();
+		
+		(new File("paper-values")).mkdirs();
+		writer = new FileWriter(Paths.get("paper-values", "sameInitials_obs.txt").toString());
 
-      
-      for (GroundAtom atom : db.getAtom(SameAuthorSet, new Variable("A"), new Variable("B"))) {
-			for (Constant argument : atom.getArguments()) {
-				writer.write(argument.toString() + "\t");
+		SameInitials initials = new SameInitials();
+      for (GroundAtom atom1 : db.getAllGroundAtoms(AuthorName)) {
+         for (GroundAtom atom2 : db.getAllGroundAtoms(AuthorName)) {
+            double simValue = initials.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
+            if (simValue>0.5){
+					writer.write(atom1.getArguments()[1].toString() + "\t" + atom2.getArguments()[1].toString() + "\t");
+					writer.write("" + simValue + "\n");
+				}
 			}
-			writer.write("" + atom.getValue() + "\n");
 		}
 
 		writer.close();
-		resultsDB.close();
-	}*/
+		
+      writer = new FileWriter(Paths.get("paper-values", "sameNumTokens_obs.txt").toString());
+
+		SameNumTokens token = new SameNumTokens();
+      for (GroundAtom atom1 : db.getAllGroundAtoms(PaperTitle)) {
+         for (GroundAtom atom2 : db.getAllGroundAtoms(PaperTitle)) {
+            double simValue = token.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
+            if (simValue>0.5){
+					writer.write(atom1.getArguments()[1].toString() + "\t" + atom2.getArguments()[1].toString() + "\t");
+					writer.write("" + simValue + "\n");
+				}
+			}
+		}
+
+		writer.close();
+		
+      writer = new FileWriter(Paths.get("paper-values", "simName_obs.txt").toString());
+
+		LevenshteinSimilarity simName = new LevenshteinSimilarity(0.5);
+      for (GroundAtom atom1 : db.getAllGroundAtoms(AuthorName)) {
+         for (GroundAtom atom2 : db.getAllGroundAtoms(AuthorName)) {
+            double simValue = simName.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
+            if (simValue>0.5){
+					writer.write(atom1.getArguments()[1].toString() + "\t" + atom2.getArguments()[1].toString() + "\t");
+					writer.write("" + simValue + "\n");
+				}
+			}
+		}
+
+		writer.close();
+		
+      writer = new FileWriter(Paths.get("paper-values", "simTitle_obs.txt").toString());
+
+		DiceSimilarity dice = new DiceSimilarity(0.5);
+      for (GroundAtom atom1 : db.getAllGroundAtoms(PaperTitle)) {
+         for (GroundAtom atom2 : db.getAllGroundAtoms(PaperTitle)) {
+            double simValue = dice.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
+            if (simValue>0.5){
+					writer.write(atom1.getArguments()[1].toString() + "\t" + atom2.getArguments()[1].toString() + "\t");
+					writer.write("" + simValue + "\n");
+				}
+			}
+		}
+
+		writer.close();
+      db.close();
+	}
 
    public void run() {
 		definePredicates();
 		defineRules();
 		loadData();
 
-		learnWeights();
-      //printPaper();
-		runInference();
+		//learnWeights();
+      printPaper();
+		//runInference();
 
-		writeOutput();
-		evalResults();
+		//writeOutput();
+		//evalResults();
 
 		dataStore.close();
 	}
