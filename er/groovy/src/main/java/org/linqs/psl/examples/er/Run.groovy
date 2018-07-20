@@ -12,6 +12,8 @@ import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver;
 import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
 import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
+import org.linqs.psl.evaluation.statistics.DiscreteEvaluator;
+import org.linqs.psl.evaluation.statistics.Evaluator;
 import org.linqs.psl.groovy.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.predicate.StandardPredicate;
@@ -42,7 +44,7 @@ public class Run {
 
 	private static final String DATA_PATH = Paths.get("..", "data", "er").toString();
 	private static final String OUTPUT_PATH = "inferred-predicates";
-
+	
 	private static Logger log = LoggerFactory.getLogger(Run.class)
 
 	private DataStore dataStore;
@@ -243,37 +245,32 @@ public class Run {
 	 * highest truth value as true and the rest false.
 	 */
 	private void evalResults() {
-      /*
 		Set<StandardPredicate> closedPredicates = [AuthorName, AuthorOf, PaperTitle] as Set;
+		Set<StandardPredicate> openPredicates = dataStore.getRegisteredPredicates();
+		openPredicates.removeAll(closedPredicates)
 
+		Partition targetPartition = dataStore.getPartition(PARTITION_EVAL_TARGETS);
+		Partition observationsPartition = dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS);
+		Partition truthPartition = dataStore.getPartition(PARTITION_EVAL_TRUTH);
+		
 		// Because the truth data also includes observed data, we will make sure to include the observed
 		// partition here.
-		Database resultsDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TARGETS),
-				closedPredicates, dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
-		Database truthDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TRUTH),
-				dataStore.getRegisteredPredicates());
+		Database resultsDB = dataStore.getDatabase(targetPartition, closedPredicates, observationsPartition);
+		Database truthDB = dataStore.getDatabase(truthPartition, dataStore.getRegisteredPredicates());
 
-		for (double tol = 0.1; tol <= 1.0; tol += 0.1) {
-			DiscretePredictionComparator comparator = new DiscretePredictionComparator(resultsDB, truthDB, tol);
-			DiscretePredictionStatistics stats = comparator.compare(SamePaper);
-
-			//log.info("MAE: {}", stats.getMAE());
-			//log.info("MSE: {}", stats.getMSE());
-			log.info("Accuracy {}, Error {}", stats.getAccuracy(), stats.getError());
-			log.info("Positive Class: precision {}, recall {}",
-					stats.getPrecision(DiscretePredictionStatistics.BinaryClass.POSITIVE),
-					stats.getRecall(DiscretePredictionStatistics.BinaryClass.POSITIVE));
-			log.info("Negative Class Stats: precision {}, recall {}",
-					stats.getPrecision(DiscretePredictionStatistics.BinaryClass.NEGATIVE),
-					stats.getRecall(DiscretePredictionStatistics.BinaryClass.NEGATIVE));
+		Evaluator eval = new DiscreteEvaluator();
+		
+		for (StandardPredicate targetPredicate : openPredicates) {
+			eval.compute(resultsDB, truthDB, targetPredicate);
+			log.info(eval.getAllStats());
 		}
 
 		resultsDB.close();
 		truthDB.close();
-      */
+      
 	}
-
-	public void run() {
+	
+   public void run() {
 		definePredicates();
 		defineRules();
 		loadData();
