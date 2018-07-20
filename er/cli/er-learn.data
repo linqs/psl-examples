@@ -12,7 +12,7 @@ predicates:
 
 observations:
    AuthorName: ../data/er/learn/authorName_obs.txt
-   PaperTitle: ../data/er/learn/papaerTitle_obs.txt
+   PaperTitle: ../data/er/learn/paperTitle_obs.txt
    AuthorOf: ../data/er/learn/authorOf_obs.txt
    SimName: ../data/er/learn/simName_obs.txt
    SimTitle: ../data/er/learn/simTitle_obs.txt

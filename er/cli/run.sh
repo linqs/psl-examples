@@ -3,7 +3,7 @@
 readonly JAR_URL='https://linqs-data.soe.ucsc.edu/maven/repositories/psl-releases/org/linqs/psl-cli/CANARY-2.1.1/psl-cli-CANARY-2.1.1.jar'
 readonly JAR_PATH='psl-cli-CANARY-2.1.1.jar'
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
-readonly BASE_NAME='preference-prediction'
+readonly BASE_NAME='er'
 
 readonly ADDITIONAL_PSL_OPTIONS=''
 readonly ADDITIONAL_LEARN_OPTIONS=''
