@@ -70,8 +70,8 @@ public class Run {
 		String suffix = System.getProperty("user.name") + "@" + getHostname();
 		String baseDBPath = Config.getString("dbpath", System.getProperty("java.io.tmpdir"));
 		String dbPath = Paths.get(baseDBPath, this.getClass().getName() + "_" + suffix).toString();
-		dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true));
-		// dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true));
+		// dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true));
+		dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true));
 
 		model = new PSLModel(this, dataStore);
 	}
@@ -262,8 +262,7 @@ public class Run {
 	 */
 	private void evalResults() {
 		Set<StandardPredicate> closedPredicates = [AuthorName, AuthorOf, PaperTitle] as Set;
-		Set<StandardPredicate> openPredicates = dataStore.getRegisteredPredicates();
-		openPredicates.removeAll(closedPredicates)
+		Set<StandardPredicate> openPredicates = [SameAuthor, SamePaper] as Set;
 
 		Partition targetPartition = dataStore.getPartition(PARTITION_EVAL_TARGETS);
 		Partition observationsPartition = dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS);
@@ -298,13 +297,13 @@ public class Run {
          for (GroundAtom atom2 : db.getAllGroundAtoms(PaperTitle)) {
             double simValue = sim.getValue(db, atom1.getArguments()[0], atom2.getArguments()[0]);
             if (simValue>0.5){
-					writer.write(atom1.getArguments()[0].toString() + "\t" + atom2.getArguments()[0].toString() + "\t");
+					writer.write("" + atom1.getArguments()[0] + "\t" + atom2.getArguments()[0] + "\t");
 					writer.write("" + simValue + "\n");
 				}
 			}
 		}
 		writer.close();
-		
+
 		(new File("paper-values")).mkdirs();
 		writer = new FileWriter(Paths.get("paper-values", "sameInitials_obs.txt").toString());
 
@@ -313,7 +312,7 @@ public class Run {
          for (GroundAtom atom2 : db.getAllGroundAtoms(AuthorName)) {
             double simValue = initials.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
             if (simValue>0.5){
-					writer.write(atom1.getArguments()[1].toString() + "\t" + atom2.getArguments()[1].toString() + "\t");
+					writer.write(atom1.getArguments()[1].getValue() + "\t" + atom2.getArguments()[1].getValue() + "\t");
 					writer.write("" + simValue + "\n");
 				}
 			}
@@ -328,7 +327,7 @@ public class Run {
          for (GroundAtom atom2 : db.getAllGroundAtoms(PaperTitle)) {
             double simValue = token.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
             if (simValue>0.5){
-					writer.write(atom1.getArguments()[1].toString() + "\t" + atom2.getArguments()[1].toString() + "\t");
+					writer.write(atom1.getArguments()[1].getValue() + "\t" + atom2.getArguments()[1].getValue() + "\t");
 					writer.write("" + simValue + "\n");
 				}
 			}
@@ -343,7 +342,7 @@ public class Run {
          for (GroundAtom atom2 : db.getAllGroundAtoms(AuthorName)) {
 				double simValue = simName.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
             if (simValue>0.5){
-					writer.write(atom1.getArguments()[1].toString() + "\t" + atom2.getArguments()[1].toString() + "\t");
+					writer.write(atom1.getArguments()[1].getValue() + "\t" + atom2.getArguments()[1].getValue() + "\t");
 					writer.write("" + simValue + "\n");
 				}
 			}
@@ -356,20 +355,16 @@ public class Run {
 		DiceSimilarity dice = new DiceSimilarity(0.5);
       for (GroundAtom atom1 : db.getAllGroundAtoms(PaperTitle)) {
          for (GroundAtom atom2 : db.getAllGroundAtoms(PaperTitle)) {
-				for(Constant[] a : atom1.getArguments()[1]){
-					System.out.println(a.toString())
-				}
-            System.out.println(atom1.getArguments()[1].toString());
             double simValue = dice.getValue(db, atom1.getArguments()[1], atom2.getArguments()[1]);
             if (simValue>0.5){
-					writer.write(atom1.getArguments()[1].toString() + "\t" + atom2.getArguments()[1].toString() + "\t");
+					writer.write(atom1.getArguments()[1].getValue() + "\t" + atom2.getArguments()[1].getValue() + "\t");
 					writer.write("" + simValue + "\n");
 				}
 			}
 		}
 
 		writer.close();
-      db.close();
+		db.close();
 	}
 
 
@@ -379,7 +374,6 @@ public class Run {
 		loadData();
 		printPaper();
 		//learnWeights();
-
 		//runInference();
 
 		//writeOutput();

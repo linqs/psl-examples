@@ -21,8 +21,8 @@ observations:
    SameAuthorSet: ../data/er/eval/sameAuthorSet_obs.txt
    
 targets:
-   SameAuthor: ../data/er/eval/sameAuthor_truth.txt
-   SamePaper: ../data/er/eval/samePaper_truth.txt
+   SameAuthor: ../data/er/eval/sameAuthor_targets.txt
+   SamePaper: ../data/er/eval/samePaper_targets.txt
 
 truth:
    SameAuthor: ../data/er/eval/sameAuthor_truth.txt
