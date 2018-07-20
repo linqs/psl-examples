@@ -269,7 +269,7 @@ public class Run {
 		definePredicates();
 		defineRules();
 		loadData();
-		
+
 		learnWeights();
 		runInference();
 

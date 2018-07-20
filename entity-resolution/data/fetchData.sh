@@ -1,8 +1,8 @@
 #!/bin/bash
 
-readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-medium.tar.gz'
-readonly RAW_DATA_NAME='entity-resolution-medium'
-readonly DATA_FILE=${RAW_DATA_NAME}'.tar.gz'
+readonly RAW_DATA_NAME='entity-resolution-tiny'
+readonly DATA_URL="https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/${RAW_DATA_NAME}.tar.gz"
+readonly DATA_FILE="${RAW_DATA_NAME}.tar.gz"
 readonly DATA_DIR='entity-resolution'
 
 function main() {
