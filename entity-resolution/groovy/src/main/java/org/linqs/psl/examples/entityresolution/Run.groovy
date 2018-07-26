@@ -102,7 +102,7 @@ public class Run {
 			rule : """
 				1.0: SameAuthorSet(P1,P2) & PaperTitle(P1,T1) &
 				PaperTitle(P2,T2) & SameNumTokens(T1,T2) >> SamePaper(P1,P2)
-		 	"""
+			"""
 		);
 
 		// Priors: By default, Authors are not the same Authors and Papers are not the same Papers
