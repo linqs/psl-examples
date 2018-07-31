@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly PSL_VERSION='2.1.0'
+readonly PSL_VERSION='2.2.0-SNAPSHOT'
 readonly JAR_PATH="./psl-cli-${PSL_VERSION}.jar"
 readonly BASE_NAME='simple-acquaintances'
 
