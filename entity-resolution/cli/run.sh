@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly PSL_VERSION='2.1.0-SNAPSHOT'
+readonly PSL_VERSION='2.1.0'
 readonly JAR_PATH="./psl-cli-${PSL_VERSION}.jar"
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 readonly BASE_NAME='entity-resolution'
