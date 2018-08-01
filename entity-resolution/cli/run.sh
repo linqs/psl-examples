@@ -5,8 +5,8 @@ readonly JAR_PATH="./psl-cli-${PSL_VERSION}.jar"
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 readonly BASE_NAME='entity-resolution'
 
-readonly ADDITIONAL_PSL_OPTIONS=''
-readonly ADDITIONAL_LEARN_OPTIONS='--learn'
+# readonly ADDITIONAL_PSL_OPTIONS=''
+readonly ADDITIONAL_PSL_OPTIONS='--postgres psl'
 readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval org.linqs.psl.evaluation.statistics.DiscreteEvaluator'
 
 function main() {
@@ -20,7 +20,6 @@ function main() {
    fetch_psl
 
    # Run PSL
-   runWeightLearning
    runEvaluation
 }
 
@@ -33,20 +32,10 @@ function getData() {
    popd > /dev/null
 }
 
-function runWeightLearning() {
-   echo "Running PSL Weight Learning"
-
-   java -jar "${JAR_PATH}" --model "${BASE_NAME}.psl" --data "${BASE_NAME}-learn.data" ${ADDITIONAL_LEARN_OPTIONS} ${ADDITIONAL_PSL_OPTIONS}
-   if [[ "$?" -ne 0 ]]; then
-      echo 'ERROR: Failed to run weight learning'
-      exit 60
-   fi
-}
-
 function runEvaluation() {
    echo "Running PSL Inference"
 
-   java -jar "${JAR_PATH}" --model "${BASE_NAME}-learned.psl" --data "${BASE_NAME}-eval.data" --output inferred-predicates ${ADDITIONAL_EVAL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS}
+   java -jar "${JAR_PATH}" --model "${BASE_NAME}.psl" --data "${BASE_NAME}.data" --output inferred-predicates ${ADDITIONAL_EVAL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS}
    if [[ "$?" -ne 0 ]]; then
       echo 'ERROR: Failed to run infernce'
       exit 70
