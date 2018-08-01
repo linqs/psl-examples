@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly RAW_DATA_NAME='entity-resolution-tiny'
+readonly RAW_DATA_NAME='entity-resolution-small'
 readonly DATA_URL="https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/${RAW_DATA_NAME}.tar.gz"
 readonly DATA_FILE="${RAW_DATA_NAME}.tar.gz"
 readonly DATA_DIR='entity-resolution'

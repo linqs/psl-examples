@@ -1,24 +1,53 @@
 predicates:
-   AuthorName/2: closed
-   PaperTitle/2: closed
-   AuthorOf/2: closed
-   SimName/2: closed
-   SimTitle/2: closed
-   SameInitials/2: closed
-   SameNumTokens/2: closed
-   SameAuthorSet/2: closed
-   SameAuthor/2: open
-   SamePaper/2: open
+   AuthorName/2:
+      - closed
+      - types:
+         - UniqueIntID
+         - UniqueStringID
+   AuthorBlock/2:
+      - closed
+      - block
+      - types:
+         - UniqueIntID
+         - UniqueStringID
+   PaperTitle/2:
+      - closed
+      - types:
+         - UniqueIntID
+         - UniqueStringID
+   AuthorOf/2:
+      - closed
+      - types:
+         - UniqueIntID
+         - UniqueIntID
+   SimName/2:
+      - closed
+      - types:
+         - UniqueStringID
+         - UniqueStringID
+   SimTitle/2:
+      - closed
+      - types:
+         - UniqueStringID
+         - UniqueStringID
+   SameAuthor/2:
+      - open
+      - types:
+         - UniqueIntID
+         - UniqueIntID
+   SamePaper/2:
+      - open
+      - types:
+         - UniqueIntID
+         - UniqueIntID
 
 observations:
    AuthorName: ../data/entity-resolution/eval/authorName_obs.txt
+   AuthorBlock: ../data/entity-resolution/eval/authorBlock_obs.txt
    PaperTitle: ../data/entity-resolution/eval/paperTitle_obs.txt
    AuthorOf: ../data/entity-resolution/eval/authorOf_obs.txt
    SimName: ../data/entity-resolution/eval/simName_obs.txt
    SimTitle: ../data/entity-resolution/eval/simTitle_obs.txt
-   SameInitials: ../data/entity-resolution/eval/sameInitials_obs.txt
-   SameNumTokens: ../data/entity-resolution/eval/sameNumTokens_obs.txt
-   SameAuthorSet: ../data/entity-resolution/eval/sameAuthorSet_obs.txt
 
 targets:
    SameAuthor: ../data/entity-resolution/eval/sameAuthor_targets.txt

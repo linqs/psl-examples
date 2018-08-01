@@ -1,15 +1,30 @@
-// Similar names implies the same author
-1.0: AuthorName(A1,N1) & AuthorName(A2,N2) & SimName(N1,N2) >> SameAuthor(A1,A2) ^2
+// Look for text similarity.
+40.0: AuthorName(A1, N1) & AuthorName(A2, N2) & SimName(N1, N2) & (A1 != A2) -> SameAuthor(A1, A2) ^2
+40.0: PaperTitle(P1, T1) & PaperTitle(P2, T2) & SimTitle(T1, T2) & (P1 != P2) -> SamePaper(P1, P2) ^2
 
-// Similar titles implies the same paper
-1.0: PaperTitle(P1,T1) & PaperTitle(P2,T2) & SimTitle(T1,T2) >> SamePaper(P1,P2) ^2
+// Pure transitivity
+20.0: AuthorBlock(A1, B) & AuthorBlock(A2, B) & AuthorBlock(A3, B)
+   & SameAuthor(A1, A2) & SameAuthor(A2, A3)
+   & (A1 != A3) & (A1 != A2) & (A2 != A3)
+   -> SameAuthor(A1, A3) ^2
 
-// If two references share a common publication and have the same initials, then this implies the same author
-1.0: AuthorOf(A1,P1) & AuthorOf(A2,P2) & SamePaper(P1,P2) & AuthorName(A1,N1) & AuthorName(A2,N2) & SameInitials(N1,N2) >> SameAuthor(A1,A2) ^2
+// Coauthor rectangle closure.
+20.0: AuthorBlock(A1, B1) & AuthorBlock(A2, B1) & AuthorBlock(CA1, B2) & AuthorBlock(CA2, B2) &
+   & AuthorOf(A1, P1) & AuthorOf(A2, P2)
+   & AuthorOf(CA1, P1) & AuthorOf(CA2, P2) & SameAuthor(CA1, CA2)
+   & (A1 != CA1) & (A2 != CA2) & (P1 != P2)
+   -> SameAuthor(A1, A2) ^2
 
-// If two papers have a common set of authors and the same number of tokens in the title, then this implies the same paper
-1.0: SameAuthorSet(P1,P2) & PaperTitle(P1,T1) & PaperTitle(P2,T2) & SameNumTokens(T1,T2) >> SamePaper(P1,P2) ^2
+// Paper rectangle closure.
+10.0: AuthorBlock(A1, B1) & AuthorBlock(A2, B1)
+   & AuthorOf(A1, P1) & AuthorOf(A2, P2)
+   & SamePaper(P1, P2)
+   -> SameAuthor(A1, A2) ^2
 
-// Priors: By default, Authors are not the same Authors and Papers are not the same Papers
-1.0: !SameAuthor(A1,A2) ^2
-1.0: !SamePaper(A1,A2) ^2
+// Self-refernece.
+SameAuthor(A, A) = 1.0 .
+SamePaper(P, P) = 1.0 .
+
+// Negative priors.
+1.0: !SameAuthor(A1, A2) ^2
+1.0: !SamePaper(A1, A2) ^2
