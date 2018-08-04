@@ -1,0 +1,21 @@
+predicates:
+  Predicts/4: closed
+  Friend/2: closed
+  Likes/2: closed
+  Joins/2: closed
+  Has/2: closed
+  Is/3: open
+
+observations:
+  Predicts: ../data/user-modeling/local_predictor_obs.txt
+  Has: ../data/user-modeling/has_obs.txt
+  Friend: ../data/user-modeling/friend_obs.txt
+  Likes: ../data/user-modeling/likes_obs.txt
+  Joins: ../data/user-modeling/joins_obs.txt
+  Is: ../data/user-modeling/user_train.txt
+
+targets:
+  Is: ../data/user-modeling/user_target.txt
+
+truth:
+  Is: ../data/user-modeling/user_truth.txt
