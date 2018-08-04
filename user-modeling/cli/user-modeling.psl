@@ -1,12 +1,12 @@
 // Priors from local classifiers
-1: Has(U, S) & Predicts(S, U, A, L) -> Is(U, A, L) ^2
-1: Has(U, S) & ~Predicts(S, U, A, L) -> ~Is(U, A, L) ^2
+50: Has(U, S) & Predicts(S, U, A, L) -> Is(U, A, L) ^2
+50: Has(U, S) & ~Predicts(S, U, A, L) -> ~Is(U, A, L) ^2
 
 // Collective Rules for relational signals
-1: Joins(U, G) & Joins(V, G) & Is(V, A, L) -> Is(U, A, L) ^2
-1: Joins(U, G) & Joins(V, G) & ~Is(V, A, L) -> ~Is(U, A, L) ^2
-1: Likes(U, T) & Likes(V, T) & Is(V, A, L) -> Is(U, A, L) ^2
-1: Likes(U, T) & Likes(V, T) & ~Is(V, A, L) -> ~Is(U, A, L) ^2
+100: Joins(U, G) & Joins(V, G) & Is(V, A, L) -> Is(U, A, L) ^2
+100: Joins(U, G) & Joins(V, G) & ~Is(V, A, L) -> ~Is(U, A, L) ^2
+10: Likes(U, T) & Likes(V, T) & Is(V, A, L) -> Is(U, A, L) ^2
+10: Likes(U, T) & Likes(V, T) & ~Is(V, A, L) -> ~Is(U, A, L) ^2
 
 1: Friend(U, V) & Is(V, A, L)-> Is(U, A, L) ^2
 1: Friend(U, V) & ~Is(V, A, L)-> ~Is(U, A, L) ^2

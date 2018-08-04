@@ -67,28 +67,28 @@ public class Run {
 
 		// Priors from local classifiers.
 		model.add(
-			rule: "1: Has(U, S) & Predicts(S, U, A, L) -> Is(U, A, L) ^2"
+			rule: "50: Has(U, S) & Predicts(S, U, A, L) -> Is(U, A, L) ^2"
 		);
 
 		model.add(
-			rule: "1: Has(U, S) & ~Predicts(S, U, A, L) -> ~Is(U, A, L) ^2"
+			rule: "50: Has(U, S) & ~Predicts(S, U, A, L) -> ~Is(U, A, L) ^2"
 		);
 
 		// Collective Rules for relational signals.
 		model.add(
-			rule: "1: Joins(U, G) & Joins(V, G) & Is(V, A, L) -> Is(U, A, L) ^2"
+			rule: "100: Joins(U, G) & Joins(V, G) & Is(V, A, L) -> Is(U, A, L) ^2"
 		);
 
 		model.add(
-			rule: "1: Joins(U, G) & Joins(V, G) & ~Is(V, A, L) -> ~Is(U, A, L) ^2"
+			rule: "100: Joins(U, G) & Joins(V, G) & ~Is(V, A, L) -> ~Is(U, A, L) ^2"
 		);
 
 		model.add(
-			rule: "1: Likes(U, T) & Likes(V, T) & Is(V, A, L) -> Is(U, A, L) ^2"
+			rule: "10: Likes(U, T) & Likes(V, T) & Is(V, A, L) -> Is(U, A, L) ^2"
 		);
 
 		model.add(
-			rule: "1: Likes(U, T) & Likes(V, T) & ~Is(V, A, L) -> ~Is(U, A, L) ^2"
+			rule: "10: Likes(U, T) & Likes(V, T) & ~Is(V, A, L) -> ~Is(U, A, L) ^2"
 		);
 
 		model.add(
