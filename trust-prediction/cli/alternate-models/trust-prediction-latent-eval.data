@@ -1,0 +1,17 @@
+predicates:
+  Trusts/2: open
+  Trusting/1: open
+  Trustworthy/1: open
+  Knows/2: closed
+  Prior/1: closed
+
+observations:
+  Trusts: ../data/trust-prediction/eval/trusts_obs.txt
+  Knows: ../data/trust-prediction/eval/knows_obs.txt
+  Prior: ../data/trust-prediction/eval/prior_obs.txt
+
+targets:
+  Trusts: ../data/trust-prediction/eval/trusts_target.txt
+
+truth:
+  Trusts: ../data/trust-prediction/eval/trusts_truth.txt
