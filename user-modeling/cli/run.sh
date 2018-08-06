@@ -6,7 +6,7 @@ readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 readonly BASE_NAME='user-modeling'
 
 readonly ADDITIONAL_PSL_OPTIONS=''
-readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval org.linqs.psl.evaluation.statistics.DiscreteEvaluator'
+readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval org.linqs.psl.evaluation.statistics.RankingEvaluator'
 
 function main() {
    trap exit SIGINT
