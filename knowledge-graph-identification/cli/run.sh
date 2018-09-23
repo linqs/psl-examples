@@ -3,7 +3,7 @@
 readonly PSL_VERSION='2.2.0-SNAPSHOT'
 readonly JAR_PATH="./psl-cli-${PSL_VERSION}.jar"
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
-readonly BASE_NAME='kgi'
+readonly BASE_NAME='knowledge-graph-identification'
 
 readonly ADDITIONAL_PSL_OPTIONS=''
 readonly ADDITIONAL_LEARN_OPTIONS='--learn'
