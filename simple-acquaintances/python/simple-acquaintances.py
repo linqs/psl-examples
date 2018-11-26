@@ -44,6 +44,7 @@ def main():
     knows_predicate.add_data_file(Partition.TRUTH, path)
 
     # Add Rules
+
     model.add_rule(Rule('20: Lived(P1, L) & Lived(P2, L) & (P1 != P2) -> Knows(P1, P2) ^2'))
     model.add_rule(Rule('5: Lived(P1, L1) & Lived(P2, L2) & (P1 != P2) & (L1 != L2) -> !Knows(P1, P2) ^2'))
     model.add_rule(Rule('10: Likes(P1, L) & Likes(P2, L) & (P1 != P2) -> Knows(P1, P2) ^2'))
@@ -52,9 +53,11 @@ def main():
     model.add_rule(Rule('5: !Knows(P1, P2) ^2'))
 
     # Run Inference
+
     results = model.infer(psl_config = ADDITIONAL_PSL_OPTIONS)
 
     # Write out the results.
+
     out_dir = 'inferred-predicates'
     out_path = os.path.join(out_dir, 'KNOWS.txt')
 
@@ -62,6 +65,7 @@ def main():
     results[knows_predicate].to_csv(out_path, sep = "\t", header = False, index = False)
 
     # Print thr results as well.
+
     print(results[knows_predicate])
 
 if (__name__ == '__main__'):
