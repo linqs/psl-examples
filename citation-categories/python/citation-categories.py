@@ -8,6 +8,7 @@ from pslpython.predicate import Predicate
 from pslpython.rule import Rule
 
 MODEL_NAME = 'citation-categories'
+DATA_DIR = os.path.join('..', 'data', MODEL_NAME)
 
 ADDITIONAL_PSL_OPTIONS = {
     'log4j.threshold': 'INFO'
@@ -16,8 +17,6 @@ ADDITIONAL_PSL_OPTIONS = {
 ADDITIONAL_CLI_OPTIONS = [
     # '--postgres'
 ]
-
-DATA_DIR = os.path.join('..', 'data', MODEL_NAME)
 
 NUM_CATEGORIES = 7
 

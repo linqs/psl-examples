@@ -4,13 +4,24 @@
 # It esentially just ensures that the data exists and runs the python script.
 # User's should ensure that the `pslpython` python package is installed.
 
-readonly BASE_NAME='simple-acquaintances'
+readonly BASE_NAME='knowledge-graph-identification'
+readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 
 function main() {
    trap exit SIGINT
 
+   getData
    check_requirements
    run
+}
+
+function getData() {
+   pushd . > /dev/null
+
+   cd "$(dirname $FETCH_DATA_SCRIPT)"
+   bash "$(basename $FETCH_DATA_SCRIPT)"
+
+   popd > /dev/null
 }
 
 function run() {
