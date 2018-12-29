@@ -33,63 +33,63 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class JaroWinklerSetSimilarity implements ExternalFunction {
-	@Override
-	public int getArity() {
-		return 2;
-	}
+    @Override
+    public int getArity() {
+        return 2;
+    }
 
-	@Override
-	public ConstantType[] getArgumentTypes() {
-		return new ConstantType[] {ConstantType.UniqueIntID, ConstantType.UniqueIntID};
-	}
+    @Override
+    public ConstantType[] getArgumentTypes() {
+        return new ConstantType[] {ConstantType.UniqueIntID, ConstantType.UniqueIntID};
+    }
 
    private Set<String> loadSets(ReadableDatabase db, Constant arg){
-		Set<String> authorSet = new HashSet<String>();
-		StandardPredicate authorOfPredicate = StandardPredicate.get("AuthorOf");
-		StandardPredicate authorNamePredicate = StandardPredicate.get("AuthorName");
+        Set<String> authorSet = new HashSet<String>();
+        StandardPredicate authorOfPredicate = StandardPredicate.get("AuthorOf");
+        StandardPredicate authorNamePredicate = StandardPredicate.get("AuthorName");
 
-		DatabaseQuery query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), arg));
-		ResultList results = db.executeQuery(query);
-		for (int i = 0; i < results.size(); i++) {
-			query = new DatabaseQuery(new QueryAtom(authorNamePredicate, results.get(i)[0], new Variable("A")));
-			ResultList resultsTwo = db.executeQuery(query);
-			for (int j = 0; j < resultsTwo.size(); j++) {
-				authorSet.add(String.valueOf(resultsTwo.get(j)[0]));
-			}
-		}
-		return authorSet;
-	}
+        DatabaseQuery query = new DatabaseQuery(new QueryAtom(authorOfPredicate, new Variable("A"), arg));
+        ResultList results = db.executeQuery(query);
+        for (int i = 0; i < results.size(); i++) {
+            query = new DatabaseQuery(new QueryAtom(authorNamePredicate, results.get(i)[0], new Variable("A")));
+            ResultList resultsTwo = db.executeQuery(query);
+            for (int j = 0; j < resultsTwo.size(); j++) {
+                authorSet.add(String.valueOf(resultsTwo.get(j)[0]));
+            }
+        }
+        return authorSet;
+    }
 
-	@Override
-	public double getValue(ReadableDatabase db, Constant... args) {
-		Set<String> authorNamesP1 = loadSets(db, args[0]);
-		Set<String> authorNamesP2 = loadSets(db, args[1]);
+    @Override
+    public double getValue(ReadableDatabase db, Constant... args) {
+        Set<String> authorNamesP1 = loadSets(db, args[0]);
+        Set<String> authorNamesP2 = loadSets(db, args[1]);
 
-		if (authorNamesP2.size() < authorNamesP1.size()){
-			Set<String> authorNamesTemp = authorNamesP1;
-			authorNamesP1 = authorNamesP2;
-			authorNamesP2 = authorNamesTemp;
-		}
+        if (authorNamesP2.size() < authorNamesP1.size()){
+            Set<String> authorNamesTemp = authorNamesP1;
+            authorNamesP1 = authorNamesP2;
+            authorNamesP2 = authorNamesTemp;
+        }
 
-		double total = 0.0;
-		double max = 0.0;
-		double sim = 0.0;
-		JaroWinklerDistance jaroW = new JaroWinklerDistance();
+        double total = 0.0;
+        double max = 0.0;
+        double sim = 0.0;
+        JaroWinklerDistance jaroW = new JaroWinklerDistance();
 
-		// Does a pair wise comparison, greedly takes the largest Jaro Winkler similarity, and goes to the next element.
-		for (String s1 : authorNamesP1) {
-			String remove = null;
-			max = 0.0;
-			for (String s2 : authorNamesP2) {
-				sim = jaroW.apply(s1, s2);
-				if (remove == null || sim > max) {
-					max = sim;
-					remove = s2;
-				}
-			}
-			authorNamesP2.remove(remove);
-			total += max;
-		}
-		return total / (double)authorNamesP1.size();
-	}
+        // Does a pair wise comparison, greedly takes the largest Jaro Winkler similarity, and goes to the next element.
+        for (String s1 : authorNamesP1) {
+            String remove = null;
+            max = 0.0;
+            for (String s2 : authorNamesP2) {
+                sim = jaroW.apply(s1, s2);
+                if (remove == null || sim > max) {
+                    max = sim;
+                    remove = s2;
+                }
+            }
+            authorNamesP2.remove(remove);
+            total += max;
+        }
+        return total / (double)authorNamesP1.size();
+    }
 }
