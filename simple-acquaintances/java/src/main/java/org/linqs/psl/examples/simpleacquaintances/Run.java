@@ -13,8 +13,9 @@ import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
 import org.linqs.psl.evaluation.statistics.DiscreteEvaluator;
 import org.linqs.psl.evaluation.statistics.Evaluator;
-import org.linqs.psl.groovy.PSLModel;
+import org.linqs.psl.java.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
+import org.linqs.psl.model.predicate.StandardPredicate;
 import org.linqs.psl.model.term.Constant;
 import org.linqs.psl.model.term.ConstantType;
 
@@ -54,16 +55,16 @@ public class Run {
         dataStore = new RDBMSDataStore(new H2DatabaseDriver(Type.Disk, dbPath, true));
         // dataStore = new RDBMSDataStore(new PostgreSQLDriver("psl", true));
 
-        model = new PSLModel(this, dataStore);
+        model = new PSLModel(dataStore);
     }
 
     /**
-     * Defines the logical predicates used in this model
+     * Defines the logical predicates used in this model.
      */
     private void definePredicates() {
-        model.add predicate: "Lived", types: [ConstantType.UniqueStringID, ConstantType.UniqueStringID];
-        model.add predicate: "Likes", types: [ConstantType.UniqueStringID, ConstantType.UniqueStringID];
-        model.add predicate: "Knows", types: [ConstantType.UniqueStringID, ConstantType.UniqueStringID];
+        model.addPredicate("Lived", ConstantType.UniqueStringID, ConstantType.UniqueStringID);
+        model.addPredicate("Likes", ConstantType.UniqueStringID, ConstantType.UniqueStringID);
+        model.addPredicate("Knows", ConstantType.UniqueStringID, ConstantType.UniqueStringID);
     }
 
     /**
@@ -72,29 +73,12 @@ public class Run {
     private void defineRules() {
         log.info("Defining model rules");
 
-        model.add(
-            rule: "20: Lived(P1, L) & Lived(P2, L) & (P1 != P2) -> Knows(P1, P2) ^2"
-        );
-
-        model.add(
-            rule: "5: Lived(P1, L1) & Lived(P2, L2) & (P1 != P2) & (L1 != L2) -> !Knows(P1, P2) ^2"
-        );
-
-        model.add(
-            rule: "10: Likes(P1, L) & Likes(P2, L) & (P1 != P2) -> Knows(P1, P2) ^2"
-        );
-
-        model.add(
-            rule: "5: Knows(P1, P2) & Knows(P2, P3) & (P1 != P3) -> Knows(P1, P3) ^2"
-        );
-
-        model.add(
-            rule: "Knows(P1, P2) = Knows(P2, P1) ."
-        );
-
-        model.add(
-            rule: "5: !Knows(P1, P2) ^2"
-        );
+        model.addRule("20: Lived(P1, L) & Lived(P2, L) & (P1 != P2) -> Knows(P1, P2) ^2");
+        model.addRule("5: Lived(P1, L1) & Lived(P2, L2) & (P1 != P2) & (L1 != L2) -> !Knows(P1, P2) ^2");
+        model.addRule("10: Likes(P1, L) & Likes(P2, L) & (P1 != P2) -> Knows(P1, P2) ^2");
+        model.addRule("5: Knows(P1, P2) & Knows(P2, P3) & (P1 != P3) -> Knows(P1, P3) ^2");
+        model.addRule("Knows(P1, P2) = Knows(P2, P1) .");
+        model.addRule("5: !Knows(P1, P2) ^2");
 
         log.debug("model: {}", model);
     }
@@ -109,19 +93,19 @@ public class Run {
     private void loadData(Partition obsPartition, Partition targetsPartition, Partition truthPartition) {
         log.info("Loading data into database");
 
-        Inserter inserter = dataStore.getInserter(Lived, obsPartition);
+        Inserter inserter = dataStore.getInserter(model.getStandardPredicate("Lived"), obsPartition);
         inserter.loadDelimitedData(Paths.get(DATA_PATH, "lived_obs.txt").toString());
 
-        inserter = dataStore.getInserter(Likes, obsPartition);
+        inserter = dataStore.getInserter(model.getStandardPredicate("Likes"), obsPartition);
         inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, "likes_obs.txt").toString());
 
-        inserter = dataStore.getInserter(Knows, obsPartition);
+        inserter = dataStore.getInserter(model.getStandardPredicate("Knows"), obsPartition);
         inserter.loadDelimitedData(Paths.get(DATA_PATH, "knows_obs.txt").toString());
 
-        inserter = dataStore.getInserter(Knows, targetsPartition);
+        inserter = dataStore.getInserter(model.getStandardPredicate("Knows"), targetsPartition);
         inserter.loadDelimitedData(Paths.get(DATA_PATH, "knows_targets.txt").toString());
 
-        inserter = dataStore.getInserter(Knows, truthPartition);
+        inserter = dataStore.getInserter(model.getStandardPredicate("Knows"), truthPartition);
         inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, "knows_truth.txt").toString());
     }
 
@@ -131,7 +115,8 @@ public class Run {
     private void runInference(Partition obsPartition, Partition targetsPartition) {
         log.info("Starting inference");
 
-        Database inferDB = dataStore.getDatabase(targetsPartition, [Lived, Likes] as Set, obsPartition);
+        StandardPredicate[] closedPredicates = new StandardPredicate[]{model.getStandardPredicate("Lived"), model.getStandardPredicate("Likes")};
+        Database inferDB = dataStore.getDatabase(targetsPartition, closedPredicates, obsPartition);
 
         InferenceApplication inference = new MPEInference(model, inferDB);
         inference.inference();
@@ -151,7 +136,7 @@ public class Run {
         (new File(OUTPUT_PATH)).mkdirs();
         FileWriter writer = new FileWriter(Paths.get(OUTPUT_PATH, "KNOWS.txt").toString());
 
-        for (GroundAtom atom : resultsDB.getAllGroundAtoms(Knows)) {
+        for (GroundAtom atom : resultsDB.getAllGroundAtoms(model.getStandardPredicate("Knows"))) {
             for (Constant argument : atom.getArguments()) {
                 writer.write(argument.toString() + "\t");
             }
@@ -167,11 +152,12 @@ public class Run {
      * relative to the defined truth.
      */
     private void evalResults(Partition targetsPartition, Partition truthPartition) {
-        Database resultsDB = dataStore.getDatabase(targetsPartition, [Lived, Likes] as Set);
-        Database truthDB = dataStore.getDatabase(truthPartition, [Knows] as Set);
+        StandardPredicate[] closedPredicates = new StandardPredicate[]{model.getStandardPredicate("Lived"), model.getStandardPredicate("Likes")};
+        Database resultsDB = dataStore.getDatabase(targetsPartition, closedPredicates);
+        Database truthDB = dataStore.getDatabase(truthPartition, new StandardPredicate[]{model.getStandardPredicate("Knows")});
 
         Evaluator eval = new DiscreteEvaluator();
-        eval.compute(resultsDB, truthDB, Knows);
+        eval.compute(resultsDB, truthDB, model.getStandardPredicate("Knows"));
         log.info(eval.getAllStats());
 
         resultsDB.close();
