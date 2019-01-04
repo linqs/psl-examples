@@ -49,7 +49,7 @@ def write_results(results, model):
     out_dir = 'inferred-predicates'
     os.makedirs(out_dir, exist_ok = True)
 
-    for predicate in model.get_predicates():
+    for predicate in model.get_predicates().values():
         if (predicate.closed()):
             continue
 
