@@ -128,7 +128,7 @@ public class Run {
     }
 
     /**
-     * Writes the output of the model into a file
+     * Writes the output of the model into a file.
      */
     private void writeOutput(Partition targetsPartition) throws IOException {
         Database resultsDB = dataStore.getDatabase(targetsPartition);
@@ -172,22 +172,20 @@ public class Run {
         definePredicates();
         defineRules();
         loadData(obsPartition, targetsPartition, truthPartition);
-        runInference(obsPartition, targetsPartition);
 
+        runInference(obsPartition, targetsPartition);
         try {
             writeOutput(targetsPartition);
         } catch (IOException ex) {
             throw new RuntimeException("Unable to write out results.", ex);
         }
-
         evalResults(targetsPartition, truthPartition);
 
         dataStore.close();
     }
 
     /**
-     * Run this model from the command line
-     * @param args - the command line arguments
+     * Run this model from the command line.
      */
     public static void main(String[] args) {
         Run run = new Run();

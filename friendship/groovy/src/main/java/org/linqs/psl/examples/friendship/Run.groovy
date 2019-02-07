@@ -53,7 +53,7 @@ public class Run {
     }
 
     /**
-     * Defines the logical predicates used in this model
+     * Defines the logical predicates used in this model.
      */
     private void definePredicates() {
         model.add predicate: "Similar", types: [ConstantType.UniqueIntID, ConstantType.UniqueIntID];
@@ -127,7 +127,7 @@ public class Run {
     }
 
     /**
-     * Writes the output of the model into a file
+     * Writes the output of the model into a file.
      */
     private void writeOutput(Partition targetsPartition) {
         Database resultsDB = dataStore.getDatabase(targetsPartition);
@@ -178,8 +178,7 @@ public class Run {
     }
 
     /**
-     * Run this model from the command line
-     * @param args - the command line arguments
+     * Run this model from the command line.
      */
     public static void main(String[] args) {
         Run run = new Run();
