@@ -245,12 +245,11 @@ class DataGen():
         # 2. Generate  Knows truth data
         knowsMatrix = self.__generateKnows(people)
         # 3. Write data to files
-        # self.__writeDataToFile(data, path)
         data = self.__prepareDataToWrite(knowsMatrix, people)
         paths = {
             'knowsData': 'knows_data.txt',
             'knowsObs': 'knows_obs.txt',
-            'knowsTarget': 'knows_target.txt',
+            'knowsTarget': 'knows_targets.txt',
             'knowsTruth': 'knows_truth.txt',
             'livedObs': 'lived_obs.txt',
             'likesObs': 'likes_obs.txt'}
