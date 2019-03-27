@@ -16,6 +16,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 DEFAULT_GLOBAL_LIKES = 5
 DEFAULT_LOCAL_LIKES = 5
 DEFAULT_LOCAL_LIKES_VARIANCE = 1.0
+DEFAULT_MAX_RAND_INT = 1000000
 DEFAULT_PEOPLE = 25
 DEFAULT_PLACES = 5
 DEFAULT_PLACES_LIVED_MEAN = 3.0
@@ -69,12 +70,6 @@ def parse_args():
         description='Generate data for the PSL simple-acquaintances example.')
 
     parser.add_argument(
-        '--coinFlipSeed',
-        default = None,
-        type = float,
-        help = 'Seed for the random coin flip function.')
-
-    parser.add_argument(
         '--globalLikes',
         default = DEFAULT_GLOBAL_LIKES,
         type = checkNonNegativeInt,
@@ -123,6 +118,12 @@ def parse_args():
         help = 'Standard deviation of the number of places a person has lived in.')
 
     parser.add_argument(
+        '--randomSeed',
+        default = np.random.randint(DEFAULT_MAX_RAND_INT),
+        type = int,
+        help = 'Seed for the random number generator used in the script.')
+
+    parser.add_argument(
         '--targetSplit',
         default = DEFAULT_TARGET_SPLIT,
         type = checkValidSplit,
@@ -130,6 +131,13 @@ def parse_args():
 
     args = parser.parse_args()
     return args
+
+
+def setRandomSeed(seed):
+    """
+    Set the seed for all random number generators in the script.
+    """
+    np.random.seed(seed)
 
 
 def getTruncatedNormal(mean, sd, low, upp):
@@ -167,7 +175,7 @@ class DataGen():
             placesLivedSD,
             localLikesVariance,
             targetSplit,
-            coinFlipSeed,
+            randomSeed,
             outputDir):
         self.numberOfPeople = numberOfPeople
         self.places = [i for i in range(numberOfPlaces)]
@@ -178,11 +186,13 @@ class DataGen():
         self.placesLivedUpper = numberOfPlaces
         self.localLikesVariance = localLikesVariance
         self.targetSplit = targetSplit
-        self.coinFlipSeed = coinFlipSeed
+        self.randomSeed = randomSeed
         self.outputDir = outputDir
 
         self.placesAffectingLocalThings = {}
         self.__generatePALT()  # Fill in placesAffectingLocalThings.
+
+        setRandomSeed(self.randomSeed)
 
     def __generatePALT(self):
         """
@@ -209,13 +219,10 @@ class DataGen():
         
         return likeability
 
-    def __flipCoin(self, seed, bias = 0.5):
+    def __flipCoin(self, bias = 0.5):
         """
         Return 1 or 0 based on a biased coin toss. Default bias = 0.5.
         """
-        if seed:
-            np.random.seed(seed)
-
         return 1 if np.random.random() < bias else 0
 
     def __calculateSimilarity(self, p1, p2):
@@ -265,7 +272,7 @@ class DataGen():
         knowsMatrix = np.zeros((self.numberOfPeople, self.numberOfPeople))
         for pair in combinations(people, 2):
             similarity = self.__calculateSimilarity(pair[0], pair[1])
-            knows = self.__flipCoin(self.coinFlipSeed, similarity)
+            knows = self.__flipCoin(similarity)
 
             # Set both (i,j) and (j,i) since P1 knows P2 => P2 knows P1.
             knowsMatrix[pair[0].index][pair[1].index] = knows
@@ -335,16 +342,16 @@ class DataGen():
             for localLike in person.localLikes:
                 likesObs.append([person.index, len(self.globalThings) + localLike, person.localLikes[localLike]])
         
-        config = {  'People': self.numberOfPeople,
-                    'Places': len(self.places),
-                    'Global things': len(self.globalThings),
-                    'Local things': len(self.localThings),
-                    'Places lived mean': self.placesLivedMean,
-                    'Places lived standard deviation': self.placesLivedSD,
-                    'Local likes variance': self.localLikesVariance,
-                    'Target split': self.targetSplit,
-                    'Coin flip seed': self.coinFlipSeed,
-                    'Output directory': self.outputDir}
+        config = {  'people': self.numberOfPeople,
+                    'places': len(self.places),
+                    'globalThings': len(self.globalThings),
+                    'localThings': len(self.localThings),
+                    'placesLivedMean': self.placesLivedMean,
+                    'PlacesLivedStandardDeviation': self.placesLivedSD,
+                    'localLikesVariance': self.localLikesVariance,
+                    'targetSplit': self.targetSplit,
+                    'randomNumberGeneratorSeed': self.randomSeed,
+                    'outputDirectory': self.outputDir}
 
         data = {
             'knowsData': knowsData,
@@ -377,8 +384,6 @@ class DataGen():
         self.__writeDataToFile(data, paths)
 
 
-
-
 if __name__ == "__main__":
     args = parse_args()
     datagen = DataGen(
@@ -390,6 +395,6 @@ if __name__ == "__main__":
         args.placesLivedSD,
         args.localLikesVariance,
         args.targetSplit,
-        args.coinFlipSeed,
+        args.randomSeed,
         args.outputDir)
     datagen.generateData()
