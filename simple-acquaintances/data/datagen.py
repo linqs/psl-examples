@@ -337,7 +337,7 @@ class DataGen():
             for globalLike in person.globalLikes:
                 likesObs.append([person.index, globalLike, person.globalLikes[globalLike]])
 
-        # NOTE: Both global and local likes are combined in a single list called likesObs.
+        #Both global and local likes are combined in a single list called likesObs.
         for person in people:
             for localLike in person.localLikes:
                 likesObs.append([person.index, len(self.globalThings) + localLike, person.localLikes[localLike]])
