@@ -23,30 +23,29 @@ DEFAULT_PLACES_LIVED_MEAN = 3.0
 DEFAULT_PLACES_LIVED_SD = 1.0
 DEFAULT_TARGET_SPLIT = 0.2
 
-
 def checkNonNegativeInt(arg):
     """
-    Check if argument is non negative integer.
+    Check if argument is a non negative integer.
+    Python accepts arg as a string and thus the function ".isdigit()" just checks if arg is any value from [0...).
+    This works because it does not accept floats or negative integers.
     """
     if not arg.isdigit():
         raise argparse.ArgumentTypeError(
             '{} is not a non negative integer.'.format(arg))
     return int(arg)
 
-
 def checkValidSplit(arg):
     """
     Check if argument is a valid split for targets i.e {0...1}.
     """
     try:
-        if 0 <= float(arg) <= 1:
+        if 0.0 <= float(arg) and float(arg) <= 1.0:
             return arg
         else:
             raise argparse.ArgumentTypeError('The input should be a valid float between [0, 1].')
-    except ValueError as e:
+    except ValueError as ex:
         raise argparse.ArgumentTypeError('{}. The input should be a valid float between [0, 1].'
-                                        .format(e))
-
+                                        .format(ex))
 
 def checkNonNegativeFloat(arg):
     """
@@ -60,7 +59,6 @@ def checkNonNegativeFloat(arg):
     except ValueError as e:
         raise argparse.ArgumentTypeError('{}. The input should be a non negative float value.'
                                         .format(e))
-
 
 def parse_args():
     """
@@ -129,9 +127,7 @@ def parse_args():
         type = checkValidSplit,
         help = 'Fraction of the truth data to be used as targets.')
 
-    args = parser.parse_args()
-    return args
-
+    return parser.parse_args()
 
 def setRandomSeed(seed):
     """
@@ -139,14 +135,12 @@ def setRandomSeed(seed):
     """
     np.random.seed(seed)
 
-
-def getTruncatedNormal(mean, sd, low, upp):
+def getTruncatedNormal(mean, sd, lower, upper):
     """
     Return truncated normal distribution.
     """
     return truncnorm(
-        (low - mean) / sd, (upp - mean) / sd, loc = mean, scale = sd)
-
+        (lower - mean) / sd, (upper - mean) / sd, loc = mean, scale = sd)
 
 class Person():
     """
@@ -159,7 +153,6 @@ class Person():
         self.lived = None
         self.localLikes = None
 
-
 class DataGen():
     """
     Data generator class for simple-acquaintances example.
@@ -167,16 +160,9 @@ class DataGen():
 
     def __init__(
             self,
-            numberOfPeople,
-            numberOfPlaces,
-            numberOfGlobal,
-            numberOfLocal,
-            placesLivedMean,
-            placesLivedSD,
-            localLikesVariance,
-            targetSplit,
-            randomSeed,
-            outputDir):
+            numberOfPeople,  numberOfPlaces, numberOfGlobal, numberOfLocal,
+            placesLivedMean, placesLivedSD, localLikesVariance, targetSplit,
+            randomSeed, outputDir):
         self.numberOfPeople = numberOfPeople
         self.places = [i for i in range(numberOfPlaces)]
         self.globalThings = [i for i in range(numberOfGlobal)]
@@ -201,8 +187,7 @@ class DataGen():
         eg: [Place1:[LThing1, Lthing2], Place2:[LThing1,LThing2]]
         """
         for i in self.places:
-            self.placesAffectingLocalThings[i] = np.random.uniform(
-                0, 1, len(self.localThings))
+            self.placesAffectingLocalThings[i] = np.random.uniform(0, 1, len(self.localThings))
 
     def __getLikeability(self, person):
         """
@@ -212,8 +197,7 @@ class DataGen():
         for thing in self.localThings:
             likeability[thing] = 0
             for place in person.lived:
-                truncnorm_gen = getTruncatedNormal(self.placesAffectingLocalThings[place][thing],
-                                                    self.localLikesVariance, 0, 1)
+                truncnorm_gen = getTruncatedNormal(self.placesAffectingLocalThings[place][thing], self.localLikesVariance, 0, 1)
                 likeability[thing] += truncnorm_gen.rvs()
             likeability[thing] /= len(person.lived)
         
@@ -317,14 +301,17 @@ class DataGen():
                                     int(self.targetSplit * totalCombinations), replace = False)
         for i in range(knowsMatrix.shape[0]):
             for j in range(knowsMatrix.shape[1]):
-                if i != j:
+                if i == j:
+                    continue
+                else:
                     knowsData.append([i, j, knowsMatrix[i][j]])
-                if (n * i + j) not in targets and i != j:
-                    knowsObs.append([i, j, knowsMatrix[i][j]])
-                elif (n * i + j) in targets and i != j:
-                    knowsTarget.append([i, j])
-                if (n * i + j) in targets and i != j:
-                    knowsTruth.append([i, j, knowsMatrix[i][j]])
+                    if (n * i + j) not in targets:
+                        knowsObs.append([i, j, knowsMatrix[i][j]])
+                    elif (n * i + j) in targets:
+                        knowsTarget.append([i, j])
+                    
+                    if (n * i + j) in targets:
+                        knowsTruth.append([i, j, knowsMatrix[i][j]])
 
         livedObs = []
         for person in people:
@@ -337,31 +324,33 @@ class DataGen():
             for globalLike in person.globalLikes:
                 likesObs.append([person.index, globalLike, person.globalLikes[globalLike]])
 
-        #Both global and local likes are combined in a single list called likesObs.
+        # Both global and local likes are combined in a single list called likesObs.
         for person in people:
             for localLike in person.localLikes:
                 likesObs.append([person.index, len(self.globalThings) + localLike, person.localLikes[localLike]])
         
-        config = {  'people': self.numberOfPeople,
-                    'places': len(self.places),
-                    'globalThings': len(self.globalThings),
-                    'localThings': len(self.localThings),
-                    'placesLivedMean': self.placesLivedMean,
-                    'PlacesLivedStandardDeviation': self.placesLivedSD,
-                    'localLikesVariance': self.localLikesVariance,
-                    'targetSplit': self.targetSplit,
-                    'randomNumberGeneratorSeed': self.randomSeed,
-                    'outputDirectory': self.outputDir}
+        config = {  
+            'people': self.numberOfPeople,
+            'places': len(self.places),
+            'globalThings': len(self.globalThings),
+            'localThings': len(self.localThings),
+            'placesLivedMean': self.placesLivedMean,
+            'placesLivedStandardDeviation': self.placesLivedSD,
+            'localLikesVariance': self.localLikesVariance,
+            'targetSplit': self.targetSplit,
+            'randomNumberGeneratorSeed': self.randomSeed,
+            'outputDirectory': self.outputDir
+        }
 
-        data = {
+        return {
             'knowsData': knowsData,
             'knowsObs': knowsObs,
             'knowsTarget': knowsTarget,
             'knowsTruth': knowsTruth,
             'livedObs': livedObs,
             'likesObs': likesObs,
-            'config': config}
-        return data
+            'config': config
+            }
 
     def generateData(self):
         """
@@ -382,7 +371,6 @@ class DataGen():
             'likesObs': 'likes_obs.txt',
             'config': 'options.json'}
         self.__writeDataToFile(data, paths)
-
 
 if __name__ == "__main__":
     args = parse_args()
