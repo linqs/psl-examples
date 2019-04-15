@@ -129,12 +129,6 @@ def parse_args():
 
     return parser.parse_args()
 
-def setRandomSeed(seed):
-    """
-    Set the seed for all random number generators in the script.
-    """
-    np.random.seed(seed)
-
 def getTruncatedNormal(mean, sd, lower, upper):
     """
     Return truncated normal distribution.
@@ -158,9 +152,7 @@ class DataGen():
     Data generator class for simple-acquaintances example.
     """
 
-    def __init__(
-            self,
-            numberOfPeople,  numberOfPlaces, numberOfGlobal, numberOfLocal,
+    def __init__(self, numberOfPeople, numberOfPlaces, numberOfGlobal, numberOfLocal,
             placesLivedMean, placesLivedSD, localLikesVariance, targetSplit,
             randomSeed, outputDir):
         self.numberOfPeople = numberOfPeople
@@ -178,7 +170,13 @@ class DataGen():
         self.placesAffectingLocalThings = {}
         self.__generatePALT()  # Fill in placesAffectingLocalThings.
 
-        setRandomSeed(self.randomSeed)
+        self.rng = self.__createRNG(randomSeed)
+
+    def __createRNG(self, seed):
+        """
+        Create an instance of a random number generator for this class.
+        """
+        return np.random.randomState(seed)
 
     def __generatePALT(self):
         """
@@ -187,7 +185,7 @@ class DataGen():
         eg: [Place1:[LThing1, Lthing2], Place2:[LThing1,LThing2]]
         """
         for i in self.places:
-            self.placesAffectingLocalThings[i] = np.random.uniform(0, 1, len(self.localThings))
+            self.placesAffectingLocalThings[i] = self.rng.random.uniform(0, 1, len(self.localThings))
 
     def __getLikeability(self, person):
         """
@@ -207,7 +205,7 @@ class DataGen():
         """
         Return 1 or 0 based on a biased coin toss. Default bias = 0.5.
         """
-        return 1 if np.random.random() < bias else 0
+        return 1 if self.rng.random.random() < bias else 0
 
     def __calculateSimilarity(self, p1, p2):
         """
@@ -236,12 +234,12 @@ class DataGen():
                                                     1, self.placesLivedUpper)
             numberOfPlacesLived = int(truncnormGenerator.rvs())
             person.lived = [0] * len(self.places)
-            placesLived = np.random.choice(self.places, numberOfPlacesLived, replace = False)
+            placesLived = self.rng.random.choice(self.places, numberOfPlacesLived, replace = False)
             # One hot encoding of places lived by a person.
             person.lived = [1 if i in placesLived else 0 for i in range(len(self.places))]
 
             person.globalLikes = dict(zip(self.globalThings, 
-                                            np.random.uniform(0, 1, len(self.globalThings))))
+                                            self.rng.random.uniform(0, 1, len(self.globalThings))))
 
             person.localLikes = self.__getLikeability(person)
             
@@ -297,8 +295,9 @@ class DataGen():
         knowsTruth = []
         
         totalCombinations = knowsMatrix.shape[0] * (knowsMatrix.shape[1] - 1)
-        targets = np.random.choice(range(totalCombinations), 
+        targets = self.rng.random.choice(range(totalCombinations), 
                                     int(self.targetSplit * totalCombinations), replace = False)
+        
         for i in range(knowsMatrix.shape[0]):
             for j in range(knowsMatrix.shape[1]):
                 if i == j:
@@ -350,7 +349,7 @@ class DataGen():
             'livedObs': livedObs,
             'likesObs': likesObs,
             'config': config
-            }
+        }
 
     def generateData(self):
         """
