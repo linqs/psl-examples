@@ -155,28 +155,28 @@ class DataGen():
     def __init__(self, numberOfPeople, numberOfPlaces, numberOfGlobal, numberOfLocal,
             placesLivedMean, placesLivedSD, localLikesVariance, targetSplit,
             randomSeed, outputDir):
-        self.numberOfPeople = numberOfPeople
-        self.places = [i for i in range(numberOfPlaces)]
         self.globalThings = [i for i in range(numberOfGlobal)]
+        self.localLikesVariance = localLikesVariance
         self.localThings = [i for i in range(numberOfLocal)]
+        self.numberOfPeople = numberOfPeople
+        self.outputDir = outputDir
+        self.places = [i for i in range(numberOfPlaces)]
         self.placesLivedMean = placesLivedMean
         self.placesLivedSD = placesLivedSD
         self.placesLivedUpper = numberOfPlaces
-        self.localLikesVariance = localLikesVariance
-        self.targetSplit = targetSplit
         self.randomSeed = randomSeed
-        self.outputDir = outputDir
+        self.rng = self.__createRNG(randomSeed)
+        self.targetSplit = targetSplit
 
         self.placesAffectingLocalThings = {}
         self.__generatePALT()  # Fill in placesAffectingLocalThings.
 
-        self.rng = self.__createRNG(randomSeed)
 
     def __createRNG(self, seed):
         """
-        Create an instance of a random number generator for this class.
+        Return an instance of a random number generator for this class.
         """
-        return np.random.randomState(seed)
+        return np.random.RandomState(seed)
 
     def __generatePALT(self):
         """
@@ -185,7 +185,7 @@ class DataGen():
         eg: [Place1:[LThing1, Lthing2], Place2:[LThing1,LThing2]]
         """
         for i in self.places:
-            self.placesAffectingLocalThings[i] = self.rng.random.uniform(0, 1, len(self.localThings))
+            self.placesAffectingLocalThings[i] = self.rng.uniform(0, 1, len(self.localThings))
 
     def __getLikeability(self, person):
         """
@@ -205,7 +205,7 @@ class DataGen():
         """
         Return 1 or 0 based on a biased coin toss. Default bias = 0.5.
         """
-        return 1 if self.rng.random.random() < bias else 0
+        return 1 if self.rng.random_sample() < bias else 0
 
     def __calculateSimilarity(self, p1, p2):
         """
@@ -234,12 +234,12 @@ class DataGen():
                                                     1, self.placesLivedUpper)
             numberOfPlacesLived = int(truncnormGenerator.rvs())
             person.lived = [0] * len(self.places)
-            placesLived = self.rng.random.choice(self.places, numberOfPlacesLived, replace = False)
+            placesLived = self.rng.choice(self.places, numberOfPlacesLived, replace = False)
             # One hot encoding of places lived by a person.
             person.lived = [1 if i in placesLived else 0 for i in range(len(self.places))]
 
             person.globalLikes = dict(zip(self.globalThings, 
-                                            self.rng.random.uniform(0, 1, len(self.globalThings))))
+                                            self.rng.uniform(0, 1, len(self.globalThings))))
 
             person.localLikes = self.__getLikeability(person)
             
@@ -266,17 +266,9 @@ class DataGen():
         """
         Write data to file.
         """
-        if self.outputDir:
-            if self.outputDir[0] == '~':
-                prefix = os.path.expanduser(self.outputDir)
-            else:
-                prefix = self.outputDir
-        else:
-            prefix = ''
-
         for key in data:
             # We have the same keys for data and its corresponding path.
-            with open(os.path.join(prefix, paths[key]), 'w') as f:
+            with open(os.path.join(self.outputDir, paths[key]), 'w') as f:
                 if key == 'config':
                     json.dump(data[key], f, indent = 4, sort_keys = True)
                 else:
@@ -295,7 +287,7 @@ class DataGen():
         knowsTruth = []
         
         totalCombinations = knowsMatrix.shape[0] * (knowsMatrix.shape[1] - 1)
-        targets = self.rng.random.choice(range(totalCombinations), 
+        targets = self.rng.choice(range(totalCombinations), 
                                     int(self.targetSplit * totalCombinations), replace = False)
         
         for i in range(knowsMatrix.shape[0]):
@@ -373,6 +365,13 @@ class DataGen():
 
 if __name__ == "__main__":
     args = parse_args()
+
+    # resolve path if necessary before creating an instance of DataGen.
+    if args.outputDir:
+        dirToWrite = os.path.realpath(os.path.expanduser(args.outputDir))
+    else: 
+        dirToWrite = '.'
+    
     datagen = DataGen(
         args.people,
         args.places,
@@ -383,5 +382,5 @@ if __name__ == "__main__":
         args.localLikesVariance,
         args.targetSplit,
         args.randomSeed,
-        args.outputDir)
+        dirToWrite)
     datagen.generateData()
