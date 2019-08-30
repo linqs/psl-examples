@@ -23,4 +23,5 @@ before_script:
   - createdb psltest
 
 script:
-   - bash ./.ci/build_core.sh psl psl-utils
+   - ./.ci/build_core.sh psl
+   - ./.ci/run_examples.sh
