@@ -21,7 +21,7 @@ owner=$(echo "$TRAVIS_REPO_SLUG" | sed 's#/.\+$##')
 
 # Make an exception for linqs user's develop branch as most development
 # is maintained at eriq-augustine and remains up-to-date
-if [[ "$owner" = 'linqs' ] && [ "$branch" = 'develop' ]]; then
+if [ "$owner" = 'linqs' ] && [ "$branch" = 'develop' ]; then
     owner='eriq-augustine'
 fi
 
