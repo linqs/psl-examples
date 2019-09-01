@@ -1,10 +1,13 @@
 #!/bin/bash
 
-# run all run.sh scripts in psl-examples repo
-ls ./*/cli/run.sh | while read line; do
+set -e
+trap exit SIGINT
+
+# Run all run.sh scripts in psl-examples repo.
+for line in `ls ./*/cli/run.sh` ; do
     dir=$(dirname $line)
     pushd . > /dev/null
-        cd $dir;
+        cd $dir
         ./run.sh --postgres psltest -D log4j.threshold=DEBUG
     popd > /dev/null
 done
