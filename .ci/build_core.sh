@@ -22,8 +22,8 @@ fi
 # We will use the same owner for PSL core as this repo's owner.
 owner=$(echo "$TRAVIS_REPO_SLUG" | sed 's#/.\+$##')
 
-# linqs development is done under the eriq-augustine fork."
-if [ "$owner" = 'linqs' ] && [ "$branch" = 'develop' ]; then
+# LINQS development is done under the eriq-augustine fork.
+if [[ "$owner" = 'linqs' && "$branch" = 'develop' ]]; then
     owner='eriq-augustine'
 fi
 
@@ -44,4 +44,3 @@ pushd . > /dev/null
         mvn clean install -DskipTests
     done
 popd > /dev/null
-

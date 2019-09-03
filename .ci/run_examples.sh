@@ -11,4 +11,3 @@ for line in `ls ./*/cli/run.sh` ; do
         ./run.sh --postgres psltest -D log4j.threshold=DEBUG
     popd > /dev/null
 done
-
