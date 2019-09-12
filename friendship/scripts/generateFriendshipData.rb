@@ -9,6 +9,12 @@ module GenData
    # A directory inside this directory will be created for this data.
    DATA_BASE_DIR = File.join('.', 'data', 'friendship')
 
+   LOCATIONS_FILENAME = 'location_obs.txt'
+   FRIENDSHIP_TRUTH_FILENAME = 'friends_truth.txt'
+   FRIENDSHIP_TARGET_FILENAME = 'friends_targets.txt'
+   SIMILARITY_FILENAME = 'similar_obs.txt'
+   OPTIONS_FILENAME = 'options.json'
+
    DEFAULT_SEED = 4
 
    OPTIONS = [
@@ -89,61 +95,25 @@ module GenData
          :short => 's',
          :long => 'seed',
          :valueDesc => 'value',
-         :desc => 'The random seed to use.',
+         :desc => 'The random seed to use. Defaults to a random number.',
          :domain => [-999999999, 999999999],
-         :default => DEFAULT_SEED
-      },
-      {
-         :id => 'name',
-         :short => 'n',
-         :long => 'name',
-         :valueDesc => 'value',
-         :desc => 'The base name for this experiment.',
-         :domain => nil,
-         :default => 'base'
+         :default => nil
       },
    ]
 
-   def GenData.writeData(dataDir, locations, similarity, friendship, options)
-      FileUtils.mkdir_p(dataDir)
-
-      similarObsPath = File.join(dataDir, 'similar_obs.txt')
-      locationObsPath = File.join(dataDir, 'location_obs.txt')
-      friendsTargetPath = File.join(dataDir, 'friends_targets.txt')
-      friendsTruthPath = File.join(dataDir, 'friends_truth.txt')
-      optionsPath, = File.join(dataDir, 'options.json')
-
-      File.open(locationObsPath, 'w'){|file|
-         file.puts(locations.each_with_index().map{|loc, index| "#{index}\t#{loc}"}.join("\n"))
-      }
-
-      File.open(similarObsPath, 'w'){|file|
-         file.puts(similarity.map{|entry| entry.join("\t")}.join("\n"))
-      }
-
-      File.open(friendsTruthPath, 'w'){|file|
-         file.puts(friendship.map{|entry| entry.join("\t")}.join("\n"))
-      }
-
-      File.open(friendsTargetPath, 'w'){|file|
-         # Make sure to add on the zero for the initial value.
-         file.puts(friendship.map{|entry| (entry[0...2].push(0)).join("\t")}.join("\n"))
-      }
-
-      # Write out the options as well.
-      File.open(optionsPath, 'w'){|file|
-         file.puts(JSON.pretty_generate(options))
+   def GenData.writeFile(path, data)
+      File.open(path, 'a'){|file|
+         file.puts(data.map{|entry| entry.join("\t")}.join("\n"))
       }
    end
 
    # Return the directory the data is in.
-   def GenData.genData(options)
-      dataDir = File.join(DATA_BASE_DIR, "#{options['name']}_#{'%04d' % options['people']}_#{'%04d' % options['locations']}")
-
+   def GenData.genData(dataDir, options)
       if (File.exists?(dataDir))
          puts "Data directory (#{dataDir}) already exists, skipping generation."
          return dataDir
       end
+      FileUtils.mkdir_p(dataDir)
 
       random = Random.new(options['seed'])
       numPeople = options['people']
@@ -152,26 +122,38 @@ module GenData
       for i in 0...numPeople
          locations << random.rand(options['locations'])
       end
+      GenData.writeFile(File.join(dataDir, LOCATIONS_FILENAME), locations.each_with_index().map{|location, index| [index, location]})
 
       friendship = []
       for i in 0...numPeople
          for j in 0...numPeople
             if (i == j)
                next
+            end
+
+            friendshipChance = options['friendshipHigh']
+            if (locations[i] != locations[j])
+               friendshipChance = options['friendshipLow']
+            end
+
+            if (random.rand(1.0) < friendshipChance)
+               friends = 1
             else
-               friendshipChance = options['friendshipHigh']
-               if (locations[i] != locations[j])
-                  friendshipChance = options['friendshipLow']
-               end
-               
-               if (random.rand(1.0) < friendshipChance)
-                  friends = 1
-               else
-                  friends = 0
-               end
+               friends = 0
             end
 
             friendship << [i, j, friends]
+         end
+
+         if (friendship.size() > 0)
+            # Write the truth.
+            GenData.writeFile(File.join(dataDir, FRIENDSHIP_TRUTH_FILENAME), friendship)
+
+            # Remove the truth, and write the targets.
+            friendship.map!{|entry| entry[0...2]}
+            GenData.writeFile(File.join(dataDir, FRIENDSHIP_TARGET_FILENAME), friendship)
+
+            friendship.clear()
          end
       end
 
@@ -180,24 +162,32 @@ module GenData
          for j in 0...numPeople
             if (i == j)
                next
-            else
-               mean = options['similarityMeanHigh']
-               variance = options['similarityVarianceHigh']
-               if (locations[i] != locations[j])
-                  mean = options['similarityMeanLow']
-                  variance = options['similarityVarianceLow']
-               end
-
-               sim = GenData.gaussian(mean, variance, random)
             end
+
+            mean = options['similarityMeanHigh']
+            variance = options['similarityVarianceHigh']
+            if (locations[i] != locations[j])
+               mean = options['similarityMeanLow']
+               variance = options['similarityVarianceLow']
+            end
+
+            sim = GenData.gaussian(mean, variance, random)
 
             sim = [1.0, [0, sim].max()].min()
 
             similarity << [i, j, sim]
          end
+
+         if (similarity.size() > 0)
+            GenData.writeFile(File.join(dataDir, SIMILARITY_FILENAME), similarity)
+            similarity.clear()
+         end
       end
 
-      GenData.writeData(dataDir, locations, similarity, friendship, options)
+      # Write out the options for generating the data.
+      File.open(File.join(dataDir, OPTIONS_FILENAME), 'w'){|file|
+         file.puts(JSON.pretty_generate(options))
+      }
 
       return dataDir
    end
@@ -217,8 +207,8 @@ module GenData
    end
 
    def GenData.loadArgs(args)
-      if ((args.map{|arg| arg.gsub('-', '').downcase()} & ['help', 'h']).any?())
-         puts "USAGE: ruby #{$0} [OPTIONS]"
+      if (args.size() < 1 || (args.map{|arg| arg.gsub('-', '').downcase()} & ['help', 'h']).any?())
+         puts "USAGE: ruby #{$0} <out dir> [OPTIONS]"
          puts "Options:"
 
          optionsStr = OPTIONS.map{|option|
@@ -229,6 +219,7 @@ module GenData
       end
 
       optionValues = OPTIONS.map{|option| [option[:id], option[:default]]}.to_h()
+      outDir = args.shift()
 
       while (args.size() > 0)
          rawFlag = args.shift()
@@ -268,11 +259,15 @@ module GenData
          optionValues[currentOption[:id]] = value
       end
 
-      return optionValues
+      if (optionValues['seed'] == nil)
+         optionValues['seed'] = Random.new_seed()
+      end
+
+      return outDir, optionValues
    end
 
    def GenData.main(args)
-      return GenData.genData(GenData.loadArgs(args))
+      return GenData.genData(*GenData.loadArgs(args))
    end
 
    # Generate the data with simplified arguments.
@@ -281,14 +276,12 @@ module GenData
    #    location (blocks): 10
    #    friendship high: 0.85
    #    friendship low: 0.15
-   #    name: friendship
    def GenData.simpleGen(numPeople)
       args = [
          '-p', "#{numPeople}",
          '-l', '10',
          '-fh', '0.85',
-         '-fl', '0.15',
-         '-n', 'friendship'
+         '-fl', '0.15'
       ]
 
       return GenData.genData(GenData.loadArgs(args))
