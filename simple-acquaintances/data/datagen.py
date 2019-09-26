@@ -8,111 +8,116 @@ import argparse
 import itertools
 import json
 import os
-import numpy
 
+import numpy
 import scipy
 from sklearn.metrics.pairwise import cosine_similarity
 
 DEFAULT_GLOBAL_LIKES = 5
 DEFAULT_LOCAL_LIKES = 5
 DEFAULT_LOCAL_LIKES_VARIANCE = 1.0
-DEFAULT_MAX_RAND_INT = 1000000
+DEFAULT_MAX_RAND_INT = 2**32
 DEFAULT_PEOPLE = 25
 DEFAULT_PLACES = 5
 DEFAULT_PLACES_LIVED_MEAN = 3.0
 DEFAULT_PLACES_LIVED_SD = 1.0
-DEFAULT_TARGET_SPLIT = 0.2
+DEFAULT_TARGET_RATIO = 0.2
 
-def checkNonNegativeInt(arg):
+def nonNegativeInt(arg):
     """
     Check if argument is a non negative integer.
     .isdigit() checks if all the characters in a string are digits.
     This works because it does not accept floats or negative integers.
     """
+
     if not arg.isdigit():
-        raise argparse.ArgumentTypeError(
+        raise ValueError(
             '{} is not a non negative integer.'.format(arg))
     return int(arg)
 
-def checkValidSplit(arg):
+def validRatio(arg):
     """
-    Check if argument is a valid split for targets i.e {0...1}.
+    Check if argument is a valid ratio for targets i.e {0...1}.
     """
+
     try:
         if 0.0 <= float(arg) and float(arg) <= 1.0:
-            return arg
+            return float(arg)
         else:
-            raise argparse.ArgumentTypeError('The input should be a valid float between [0, 1].')
+            raise ValueError('Invalid input {}. The input should be a valid float between [0, 1].'
+                .format(arg))
     except ValueError as ex:
-        raise argparse.ArgumentTypeError('{}. The input should be a valid float between [0, 1].'
-                                        .format(ex))
+        raise ValueError('{}. The input should be a valid float between [0, 1].'
+                .format(ex))
 
-def checkNonNegativeFloat(arg):
+def nonNegativeFloat(arg):
     """
     Check if argument is non negative float.
     """
+
     try:
         if 0 <= float(arg):
-            return arg
+            return float(arg)
         else:
-            raise argparse.ArgumentTypeError('{} is not a non negative float.'.format(arg))
+            raise ValueError('{} is not a non negative float.'.format(arg))
     except ValueError as e:
-        raise argparse.ArgumentTypeError('{}. The input should be a non negative float value.'
-                                        .format(e))
+        raise ValueError('{}. The input should be a non negative float value.'
+                .format(e))
 
-def parse_args():
+def parseArgs():
     """
     Parse CLI arguments.
     """
+
     parser = argparse.ArgumentParser(
         description='Generate data for the PSL simple-acquaintances example.')
 
     parser.add_argument(
         '--globalLikes',
         default = DEFAULT_GLOBAL_LIKES,
-        type = checkNonNegativeInt,
+        type = nonNegativeInt,
         help = 'Number of global things to like.')
 
     parser.add_argument(
         '--localLikes',
         default = DEFAULT_LOCAL_LIKES,
-        type = checkNonNegativeInt,
+        type = nonNegativeInt,
         help = 'Number of local things to like.')
 
     parser.add_argument(
         '--localLikesVariance',
         default = DEFAULT_LOCAL_LIKES_VARIANCE,
-        type = checkNonNegativeFloat,
+        type = nonNegativeFloat,
         help = 'Variance for likeability of a local thing based on place lived.')
 
     parser.add_argument(
         '--outputDir',
-        default = '.',
+        default = './data',
         type = str,
         help = 'Output directory to which all data files will be written.')
 
     parser.add_argument(
         '--people',
         default = DEFAULT_PEOPLE,
-        type = checkNonNegativeInt,
+        type = nonNegativeInt,
         help = 'Number of people in your dataset.')
 
     parser.add_argument(
         '--places',
         default = DEFAULT_PLACES,
-        type = checkNonNegativeInt,
+        type = nonNegativeInt,
         help = 'Number of places in your dataset.')
 
     parser.add_argument(
         '--placesLivedMean',
         default = DEFAULT_PLACES_LIVED_MEAN,
-        type = checkNonNegativeInt,
+        type = nonNegativeInt,
         help = 'Mean of the number of places a person has lived in.')
 
     parser.add_argument(
         '--placesLivedSD',
         default = DEFAULT_PLACES_LIVED_SD,
-        type = checkNonNegativeFloat,
+        type = nonNegativeFloat,
         help = 'Standard deviation of the number of places a person has lived in.')
 
     parser.add_argument(
@@ -122,9 +127,9 @@ def parse_args():
         help = 'Seed for the random number generator used in the script.')
 
     parser.add_argument(
-        '--targetSplit',
-        default = DEFAULT_TARGET_SPLIT,
-        type = checkValidSplit,
+        '--targetRatio',
+        default = DEFAULT_TARGET_RATIO,
+        type = validRatio,
         help = 'Fraction of the truth data to be used as targets.')
 
     return parser.parse_args()
@@ -133,6 +138,7 @@ def getTruncatedNormal(mean, sd, lower, upper):
     """
     Return truncated normal distribution.
     """
+
     return scipy.stats.truncnorm(
         (lower - mean) / sd, (upper - mean) / sd, loc = mean, scale = sd)
 
@@ -153,7 +159,7 @@ class DataGen():
     """
 
     def __init__(self, numberOfPeople, numberOfPlaces, numberOfGlobal, numberOfLocal,
-            placesLivedMean, placesLivedSD, localLikesVariance, targetSplit,
+            placesLivedMean, placesLivedSD, localLikesVariance, targetRatio,
             seed, outputDir):
         self.globalThings = [i for i in range(numberOfGlobal)]
         self.localLikesVariance = localLikesVariance
@@ -165,32 +171,34 @@ class DataGen():
         self.placesLivedSD = placesLivedSD
         self.placesLivedUpper = numberOfPlaces
         self.seed = seed
-        self.rng = self.__createRNG(seed)
-        self.targetSplit = targetSplit
+        self.rng = self._createRNG(seed)
+        self.targetRatio = targetRatio
 
         self.placesAffectingLocalThings = {}
-        self.__generatePALT()  # Fill in placesAffectingLocalThings.
+        self._generatePALT()  # Fill in placesAffectingLocalThings.
 
-
-    def __createRNG(self, seed):
+    def _createRNG(self, seed):
         """
         Return an instance of a random number generator for this class.
         """
+
         return numpy.random.RandomState(seed)
 
-    def __generatePALT(self):
+    def _generatePALT(self):
         """
         Generate porbabilities of places affecting the likeablity of local things.
 
         eg: [Place1:[LThing1, Lthing2], Place2:[LThing1,LThing2]]
         """
+
         for i in self.places:
             self.placesAffectingLocalThings[i] = self.rng.uniform(0, 1, len(self.localThings))
 
-    def __getLikeability(self, person):
+    def _getLikeability(self, person):
         """
         Return likeability of localThings based on the places that a person has lived in.
         """
+
         likeability = {}
         for thing in self.localThings:
             likeability[thing] = 0
@@ -201,29 +209,35 @@ class DataGen():
 
         return likeability
 
-    def __flipCoin(self, bias = 0.5):
+    def _flipCoin(self, bias = 0.5):
         """
         Return 1 or 0 based on a biased coin toss. Default bias = 0.5.
         """
-        return 1 if self.rng.random_sample() < bias else 0
 
-    def __calculateSimilarity(self, p1, p2):
+        if self.rng.random_sample() < bias:
+            return 1
+
+        return  0
+
+    def _calculateSimilarity(self, p1, p2):
         """
         Return similarity measure between two persons (cosine similarity [0.0...1.0]).
         """
+
         person1 = numpy.array(p1.lived 
-                            + list(p1.globalLikes.values()) 
-                            + list(p1.localLikes.values())).reshape(1, -1)
+                + list(p1.globalLikes.values()) 
+                + list(p1.localLikes.values())).reshape(1, -1)
         person2 = numpy.array(p2.lived 
-                            + list(p2.globalLikes.values()) 
-                            + list(p2.localLikes.values())).reshape(1, -1)
+                + list(p2.globalLikes.values()) 
+                + list(p2.localLikes.values())).reshape(1, -1)
 
         return cosine_similarity(person1, person2)
 
-    def __generatePeople(self):
+    def _generatePeople(self):
         """
         Generate list of people with their feature vectors filled in.
         """
+
         people = []
         for i in range(self.numberOfPeople):
             person = Person()
@@ -231,7 +245,7 @@ class DataGen():
             person.index = i
 
             truncnormGenerator = getTruncatedNormal(self.placesLivedMean, self.placesLivedSD, 
-                                                    1, self.placesLivedUpper)
+                    1, self.placesLivedUpper)
             numberOfPlacesLived = int(truncnormGenerator.rvs())
             person.lived = [0] * len(self.places)
             placesLived = self.rng.choice(self.places, numberOfPlacesLived, replace = False)
@@ -239,22 +253,23 @@ class DataGen():
             person.lived = [1 if i in placesLived else 0 for i in range(len(self.places))]
 
             person.globalLikes = dict(zip(self.globalThings, 
-                                            self.rng.uniform(0, 1, len(self.globalThings))))
+                    self.rng.uniform(0, 1, len(self.globalThings))))
 
-            person.localLikes = self.__getLikeability(person)
+            person.localLikes = self._getLikeability(person)
             
             people.append(person)
 
         return people
 
-    def __generateKnows(self, people):
+    def _generateKnows(self, people):
         """
         Return the knows truth matrix for all people in the dataset.
         """
+
         knowsMatrix = numpy.zeros((self.numberOfPeople, self.numberOfPeople))
         for pair in itertools.combinations(people, 2):
-            similarity = self.__calculateSimilarity(pair[0], pair[1])
-            knows = self.__flipCoin (similarity)
+            similarity = self._calculateSimilarity(pair[0], pair[1])
+            knows = self._flipCoin(similarity)
 
             # Set both (i,j) and (j,i) since P1 knows P2 => P2 knows P1.
             knowsMatrix[pair[0].index][pair[1].index] = knows
@@ -262,10 +277,12 @@ class DataGen():
 
         return knowsMatrix
 
-    def __writeDataToFile(self, data, paths):
+    def _writeDataToFile(self, data, paths):
         """
         Write data to file.
         """
+
+        os.makedirs(self.outputDir, exist_ok=True)
         for key in data:
             # We have the same keys for data and its corresponding path.
             with open(os.path.join(self.outputDir, paths[key]), 'w') as f:
@@ -275,10 +292,11 @@ class DataGen():
                     for dataItem in data[key]:
                         f.write("\t".join([str(d) for d in dataItem]) + "\n")
 
-    def __prepareDataToWrite(self, knowsMatrix, people):
+    def _prepareDataToWrite(self, knowsMatrix, people):
         """
         Prepare data for writing to file.
         """
+
         n = knowsMatrix.shape[1]
 
         knowsData = []
@@ -288,7 +306,7 @@ class DataGen():
 
         totalCombinations = knowsMatrix.shape[0] * (knowsMatrix.shape[1] - 1)
         targets = self.rng.choice(range(totalCombinations), 
-                int(self.targetSplit * totalCombinations), replace = False)
+                int(self.targetRatio * totalCombinations), replace = False)
 
         for i in range(knowsMatrix.shape[0]):
             for j in range(knowsMatrix.shape[1]):
@@ -328,7 +346,7 @@ class DataGen():
             'placesLivedMean': self.placesLivedMean,
             'placesLivedStandardDeviation': self.placesLivedSD,
             'localLikesVariance': self.localLikesVariance,
-            'targetSplit': self.targetSplit,
+            'targetRatio': self.targetRatio,
             'seed': self.seed,
             'outputDirectory': self.outputDir
         }
@@ -347,12 +365,13 @@ class DataGen():
         """
         Driver function to generate all truth data.
         """
+
         # 1. Generate people.
-        people = self.__generatePeople()
+        people = self._generatePeople()
         # 2. Generate Knows truth data.
-        knowsMatrix = self.__generateKnows(people)
+        knowsMatrix = self._generateKnows(people)
         # 3. Write data to files.
-        data = self.__prepareDataToWrite(knowsMatrix, people)
+        data = self._prepareDataToWrite(knowsMatrix, people)
         paths = {
             'knowsData': 'knows_data.txt',
             'knowsObs': 'knows_obs.txt',
@@ -361,10 +380,10 @@ class DataGen():
             'livedObs': 'lived_obs.txt',
             'likesObs': 'likes_obs.txt',
             'config': 'options.json'}
-        self.__writeDataToFile(data, paths)
+        self._writeDataToFile(data, paths)
 
 if __name__ == "__main__":
-    args = parse_args()
+    args = parseArgs()
 
     # Resolve path if necessary before creating an instance of DataGen.
     dirToWrite = os.path.realpath(os.path.expanduser(args.outputDir))
@@ -376,7 +395,7 @@ if __name__ == "__main__":
         args.placesLivedMean,
         args.placesLivedSD,
         args.localLikesVariance,
-        args.targetSplit,
+        args.targetRatio,
         args.seed,
         dirToWrite)
     datagen.generateData()
