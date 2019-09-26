@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Generates data for the simple-acquaintances PSL example.
 
