@@ -25,6 +25,17 @@ Part of the full dataset was used to create three varying size datasets:
 Currently this example is using the small dataset.
 This can be changed be editing the `RAW_DATA_NAME` constants in the `data/fetchData.sh` script.
 
+This dataset originally came from:
+```
+@article {bhattacharya:tkdd07,
+    author = {Indrajit Bhattacharya and Lise Getoor},
+    title = {Collective Entity Resolution In Relational Data},
+    journal = {ACM Transactions on Knowledge Discovery from Data},
+    year = {2007},
+    pages = {1--36},
+}
+```
+
 ## Keywords
 
  - `cli`

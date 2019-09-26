@@ -15,19 +15,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <repositories>
-        <repository>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>fail</checksumPolicy>
-            </releases>
-            <id>psl-releases</id>
-            <name>PSL Releases</name>
-            <url>http://maven.linqs.org/maven/repositories/psl-releases/</url>
-            <layout>default</layout>
-        </repository>
-    </repositories>
     <build>
         <plugins>
             <plugin>

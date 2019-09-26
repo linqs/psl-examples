@@ -58,7 +58,7 @@ public class Run {
     }
 
     /**
-     * Defines the logical predicates used in this model
+     * Defines the logical predicates used in this model.
      */
     private void definePredicates() {
         model.add predicate: "AuthorName" , types: [ConstantType.UniqueIntID, ConstantType.String];
@@ -206,7 +206,7 @@ public class Run {
     }
 
     /**
-     * Writes the output of the model into a file
+     * Writes the output of the model into a file.
      */
     private void writeOutput() {
         Database resultsDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TARGETS));
@@ -280,8 +280,7 @@ public class Run {
     }
 
     /**
-     * Run this model from the command line
-     * @param args - the command line arguments
+     * Run this model from the command line.
      */
     public static void main(String[] args) {
         Run run = new Run();
