@@ -5,12 +5,12 @@ Use -h/--help for usage options.
 """
 
 import argparse
+import itertools
 import json
-import numpy as np
 import os
+import numpy
 
-from itertools import combinations
-from scipy.stats import truncnorm
+import scipy
 from sklearn.metrics.pairwise import cosine_similarity
 
 DEFAULT_GLOBAL_LIKES = 5
@@ -26,7 +26,7 @@ DEFAULT_TARGET_SPLIT = 0.2
 def checkNonNegativeInt(arg):
     """
     Check if argument is a non negative integer.
-    Python accepts arg as a string and thus the function ".isdigit()" just checks if arg is any value from [0...).
+    .isdigit() checks if all the characters in a string are digits.
     This works because it does not accept floats or negative integers.
     """
     if not arg.isdigit():
@@ -87,9 +87,9 @@ def parse_args():
 
     parser.add_argument(
         '--outputDir',
-        default  = None,
+        default = '.',
         type = str,
-        help = 'Output directory where all data files will be written to.')
+        help = 'Output directory to which all data files will be written.')
 
     parser.add_argument(
         '--people',
@@ -116,8 +116,8 @@ def parse_args():
         help = 'Standard deviation of the number of places a person has lived in.')
 
     parser.add_argument(
-        '--randomSeed',
-        default = np.random.randint(DEFAULT_MAX_RAND_INT),
+        '--seed',
+        default = numpy.random.randint(DEFAULT_MAX_RAND_INT),
         type = int,
         help = 'Seed for the random number generator used in the script.')
 
@@ -133,7 +133,7 @@ def getTruncatedNormal(mean, sd, lower, upper):
     """
     Return truncated normal distribution.
     """
-    return truncnorm(
+    return scipy.stats.truncnorm(
         (lower - mean) / sd, (upper - mean) / sd, loc = mean, scale = sd)
 
 class Person():
@@ -154,7 +154,7 @@ class DataGen():
 
     def __init__(self, numberOfPeople, numberOfPlaces, numberOfGlobal, numberOfLocal,
             placesLivedMean, placesLivedSD, localLikesVariance, targetSplit,
-            randomSeed, outputDir):
+            seed, outputDir):
         self.globalThings = [i for i in range(numberOfGlobal)]
         self.localLikesVariance = localLikesVariance
         self.localThings = [i for i in range(numberOfLocal)]
@@ -164,8 +164,8 @@ class DataGen():
         self.placesLivedMean = placesLivedMean
         self.placesLivedSD = placesLivedSD
         self.placesLivedUpper = numberOfPlaces
-        self.randomSeed = randomSeed
-        self.rng = self.__createRNG(randomSeed)
+        self.seed = seed
+        self.rng = self.__createRNG(seed)
         self.targetSplit = targetSplit
 
         self.placesAffectingLocalThings = {}
@@ -176,7 +176,7 @@ class DataGen():
         """
         Return an instance of a random number generator for this class.
         """
-        return np.random.RandomState(seed)
+        return numpy.random.RandomState(seed)
 
     def __generatePALT(self):
         """
@@ -198,7 +198,7 @@ class DataGen():
                 truncnorm_gen = getTruncatedNormal(self.placesAffectingLocalThings[place][thing], self.localLikesVariance, 0, 1)
                 likeability[thing] += truncnorm_gen.rvs()
             likeability[thing] /= len(person.lived)
-        
+
         return likeability
 
     def __flipCoin(self, bias = 0.5):
@@ -211,10 +211,10 @@ class DataGen():
         """
         Return similarity measure between two persons (cosine similarity [0.0...1.0]).
         """
-        person1 = np.array(p1.lived 
+        person1 = numpy.array(p1.lived 
                             + list(p1.globalLikes.values()) 
                             + list(p1.localLikes.values())).reshape(1, -1)
-        person2 = np.array(p2.lived 
+        person2 = numpy.array(p2.lived 
                             + list(p2.globalLikes.values()) 
                             + list(p2.localLikes.values())).reshape(1, -1)
 
@@ -251,10 +251,10 @@ class DataGen():
         """
         Return the knows truth matrix for all people in the dataset.
         """
-        knowsMatrix = np.zeros((self.numberOfPeople, self.numberOfPeople))
-        for pair in combinations(people, 2):
+        knowsMatrix = numpy.zeros((self.numberOfPeople, self.numberOfPeople))
+        for pair in itertools.combinations(people, 2):
             similarity = self.__calculateSimilarity(pair[0], pair[1])
-            knows = self.__flipCoin(similarity)
+            knows = self.__flipCoin (similarity)
 
             # Set both (i,j) and (j,i) since P1 knows P2 => P2 knows P1.
             knowsMatrix[pair[0].index][pair[1].index] = knows
@@ -285,24 +285,24 @@ class DataGen():
         knowsObs = []
         knowsTarget = []
         knowsTruth = []
-        
+
         totalCombinations = knowsMatrix.shape[0] * (knowsMatrix.shape[1] - 1)
         targets = self.rng.choice(range(totalCombinations), 
-                                    int(self.targetSplit * totalCombinations), replace = False)
-        
+                int(self.targetSplit * totalCombinations), replace = False)
+
         for i in range(knowsMatrix.shape[0]):
             for j in range(knowsMatrix.shape[1]):
                 if i == j:
                     continue
-                else:
-                    knowsData.append([i, j, knowsMatrix[i][j]])
-                    if (n * i + j) not in targets:
-                        knowsObs.append([i, j, knowsMatrix[i][j]])
-                    elif (n * i + j) in targets:
-                        knowsTarget.append([i, j])
-                    
-                    if (n * i + j) in targets:
-                        knowsTruth.append([i, j, knowsMatrix[i][j]])
+
+                knowsData.append([i, j, knowsMatrix[i][j]])
+                if (n * i + j) not in targets:
+                    knowsObs.append([i, j, knowsMatrix[i][j]])
+                elif (n * i + j) in targets:
+                    knowsTarget.append([i, j])
+
+                if (n * i + j) in targets:
+                    knowsTruth.append([i, j, knowsMatrix[i][j]])
 
         livedObs = []
         for person in people:
@@ -319,7 +319,7 @@ class DataGen():
         for person in people:
             for localLike in person.localLikes:
                 likesObs.append([person.index, len(self.globalThings) + localLike, person.localLikes[localLike]])
-        
+
         config = {  
             'people': self.numberOfPeople,
             'places': len(self.places),
@@ -329,7 +329,7 @@ class DataGen():
             'placesLivedStandardDeviation': self.placesLivedSD,
             'localLikesVariance': self.localLikesVariance,
             'targetSplit': self.targetSplit,
-            'randomNumberGeneratorSeed': self.randomSeed,
+            'seed': self.seed,
             'outputDirectory': self.outputDir
         }
 
@@ -349,7 +349,7 @@ class DataGen():
         """
         # 1. Generate people.
         people = self.__generatePeople()
-        # 2. Generate  Knows truth data.
+        # 2. Generate Knows truth data.
         knowsMatrix = self.__generateKnows(people)
         # 3. Write data to files.
         data = self.__prepareDataToWrite(knowsMatrix, people)
@@ -366,12 +366,8 @@ class DataGen():
 if __name__ == "__main__":
     args = parse_args()
 
-    # resolve path if necessary before creating an instance of DataGen.
-    if args.outputDir:
-        dirToWrite = os.path.realpath(os.path.expanduser(args.outputDir))
-    else: 
-        dirToWrite = '.'
-    
+    # Resolve path if necessary before creating an instance of DataGen.
+    dirToWrite = os.path.realpath(os.path.expanduser(args.outputDir))
     datagen = DataGen(
         args.people,
         args.places,
@@ -381,6 +377,6 @@ if __name__ == "__main__":
         args.placesLivedSD,
         args.localLikesVariance,
         args.targetSplit,
-        args.randomSeed,
+        args.seed,
         dirToWrite)
     datagen.generateData()
