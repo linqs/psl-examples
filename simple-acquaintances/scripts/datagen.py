@@ -287,12 +287,12 @@ class DataGen():
         os.makedirs(self.outputDir, exist_ok=True)
         for key in data:
             # We have the same keys for data and its corresponding path.
-            with open(os.path.join(self.outputDir, paths[key]), 'w') as f:
+            with open(os.path.join(self.outputDir, paths[key]), 'w') as file:
                 if key == 'config':
-                    json.dump(data[key], f, indent = 4, sort_keys = True)
+                    json.dump(data[key], file, indent = 4, sort_keys = True)
                 else:
                     for dataItem in data[key]:
-                        f.write("\t".join([str(d) for d in dataItem]) + "\n")
+                        file.write("\t".join([str(d) for d in dataItem]) + "\n")
 
     def _prepareDataToWrite(self, knowsMatrix, people):
         """
@@ -350,7 +350,6 @@ class DataGen():
             'localLikesVariance': self.localLikesVariance,
             'targetRatio': self.targetRatio,
             'seed': self.seed,
-            'outputDirectory': self.outputDir
         }
 
         return {
