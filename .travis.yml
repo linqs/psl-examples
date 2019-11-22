@@ -1,8 +1,6 @@
 dist: xenial
 
-language: java
-
-jdk: openjdk8
+language: minimal
 
 addons:
   postgresql: "9.6"
@@ -11,6 +9,8 @@ services:
   - postgresql
 
 before_install:
+  - df -h
+  - sudo update-java-alternatives -l
   - java -version
   - sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
   - export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
