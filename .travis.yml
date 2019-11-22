@@ -1,9 +1,6 @@
-dist: xenial
+dist: bionic
 
-language: java
-
-addons:
-  postgresql: "9.6"
+language: minimal
 
 services:
   - postgresql
@@ -13,6 +10,10 @@ before_install:
   - java -version
   - echo "${JAVA_HOME}"
   - sudo apt-get update
+  - sudo apt-get install openjdk-8-jdk
+  - sudo update-java-alternatives -l || echo "Yes"
+  - sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
+  - export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
   - sudo apt-get install python3 python3-pip python3-wheel python3-setuptools
   - pip3 install pandas
 
