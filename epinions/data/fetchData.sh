@@ -1,7 +1,7 @@
 #!/bin/bash
 
-readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/augustine-nips17-data/epinions/splits.tar.gz'
-readonly DATA_FILE='epinions.tar.gz'
+readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/epinions.zip'
+readonly DATA_FILE='epinions.zip'
 readonly DATA_DIR='epinions'
 
 function main() {
@@ -10,7 +10,7 @@ function main() {
    check_requirements
 
    fetch_file "${DATA_URL}" "${DATA_FILE}" 'data'
-   extract_tar "${DATA_FILE}" "${DATA_DIR}" 'data'
+   extract_zip "${DATA_FILE}" "${DATA_DIR}" 'data'
 }
 
 function check_requirements() {
@@ -70,21 +70,20 @@ function fetch_file() {
    fi
 }
 
-# Works for tarballs too.
-function extract_tar() {
+function extract_zip() {
    local path=$1
    local expectedDir=$2
    local name=$3
 
    if [[ -e "${expectedDir}" ]]; then
-      echo "Extracted ${name} tar found cached, skipping extract."
+      echo "Extracted ${name} zip found cached, skipping extract."
       return
    fi
 
-   echo "Extracting the ${name} tar"
-   tar xf "${path}"
+   echo "Extracting the ${name} zip"
+   unzip "${path}"
    if [[ "$?" -ne 0 ]]; then
-      echo "ERROR: Failed to extract ${name} tar"
+      echo "ERROR: Failed to extract ${name} zip"
       exit 40
    fi
 }

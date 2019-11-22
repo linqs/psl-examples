@@ -3,11 +3,11 @@ predicates:
    HasCat/2: open
 
 observations:
-   HasCat: ../data/splits/cora/0/learn/hasCat_obs.txt
-   Link: ../data/splits/cora/0/learn/link_obs.txt
+   HasCat: ../data/cora/0/learn/hasCat_obs.txt
+   Link: ../data/cora/0/learn/link_obs.txt
 
 targets:
-   HasCat: ../data/splits/cora/0/learn/hasCat_targets.txt
+   HasCat: ../data/cora/0/learn/hasCat_targets.txt
 
 truth:
-   HasCat: ../data/splits/cora/0/learn/hasCat_truth.txt
+   HasCat: ../data/cora/0/learn/hasCat_truth.txt

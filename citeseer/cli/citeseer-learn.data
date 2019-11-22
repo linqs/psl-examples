@@ -3,11 +3,11 @@ predicates:
    HasCat/2: open
 
 observations:
-   HasCat: ../data/splits/citeseer/0/learn/hasCat_obs.txt
-   Link: ../data/splits/citeseer/0/learn/link_obs.txt
+   HasCat: ../data/citeseer/0/learn/hasCat_obs.txt
+   Link: ../data/citeseer/0/learn/link_obs.txt
 
 targets:
-   HasCat: ../data/splits/citeseer/0/learn/hasCat_targets.txt
+   HasCat: ../data/citeseer/0/learn/hasCat_targets.txt
 
 truth:
-   HasCat: ../data/splits/citeseer/0/learn/hasCat_truth.txt
+   HasCat: ../data/citeseer/0/learn/hasCat_truth.txt

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/sridhar_all_forums_data/stance.zip'
+readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/stance.zip'
 readonly DATA_FILE='stance.zip'
 readonly DATA_DIR='stance'
 

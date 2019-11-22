@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/kouki-recsys15/lastfm.zip'
+readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/lastfm.zip'
 readonly DATA_FILE='lastfm.zip'
 readonly DATA_DIR='lastfm'
 

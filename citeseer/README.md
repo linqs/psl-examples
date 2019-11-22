@@ -1,4 +1,4 @@
-### Cora
+### Citeeseer
 
 ## Problem
 

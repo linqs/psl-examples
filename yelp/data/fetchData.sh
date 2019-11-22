@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/kouki-recsys15/yelp.zip'
+readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/yelp.zip'
 readonly DATA_FILE='yelp.zip'
 readonly DATA_DIR='yelp'
 
