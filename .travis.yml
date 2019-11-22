@@ -10,20 +10,7 @@ services:
 
 before_install:
   - df -h
-
-  - java -version
-  - echo "${JAVA_HOME}"
-
   - sudo apt-get update
-  - sudo apt install openjdk-8-jdk openjdk-8-jre
-
-  - sudo update-java-alternatives -l || echo "Yes"
-  - sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
-  - export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
-
-  - java -version
-  - echo "${JAVA_HOME}"
-
   - sudo apt-get install python3 python3-pip python3-wheel python3-setuptools
   - pip3 install pandas
 
