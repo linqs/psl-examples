@@ -1,0 +1,21 @@
+predicates:
+    participates/2: closed
+    localPro/2: closed
+    localDisagrees/2: closed
+    responds/2: closed
+    isProAuth/2: open 
+    disagrees/2: open
+
+observations:
+    participates: ../data/stance/createdebate/abortion/0/learn/participates_obs.txt
+    localPro: ../data/stance/createdebate/abortion/0/learn/localPro_obs.txt
+    localDisagrees: ../data/stance/createdebate/abortion/0/learn/localDisagrees_obs.txt
+    responds: ../data/stance/createdebate/abortion/0/learn/responds_obs.txt
+
+targets:
+    isProAuth: ../data/stance/createdebate/abortion/0/learn/isProAuth_targets.txt
+    disagrees: ../data/stance/createdebate/abortion/0/learn/disagrees_targets.txt
+
+truth:
+    isProAuth: ../data/stance/createdebate/abortion/0/learn/isProAuth_truth.txt
+    disagrees: ../data/stance/createdebate/abortion/0/learn/disagrees_truth.txt
