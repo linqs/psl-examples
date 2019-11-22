@@ -1,6 +1,6 @@
 dist: bionic
 
-language: minimal
+language: java
 
 services:
   - postgresql
