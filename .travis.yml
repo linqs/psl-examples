@@ -1,21 +1,28 @@
-dist: xenial
+dist: bionic
 
 language: java
 
-jdk: openjdk8
-
 addons:
-  postgresql: "9.6"
+  postgresql: 10
 
 services:
   - postgresql
 
 before_install:
-  - java -version
+  - sudo systemctl stop postgresql@10-main
+  - sudo mkdir -p /var/database
+  - sudo chown -R postgres /var/database
+  - sudo sed -i "s/^\s*data_directory\s*=.*$/data_directory = '\/var\/database'/" /etc/postgresql/10/main/postgresql.conf
+  - sudo su - postgres -c "/usr/lib/postgresql/10/bin/initdb -D '/var/database'"
+  - sudo systemctl start postgresql@10-main || sudo systemctl status postgresql@10-main -l
+  - sudo su - postgres -c "createuser -s travis"
+
+  - df -h
+  - sudo apt-get update
+  - sudo apt install openjdk-8-jdk openjdk-8-jre
   - sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
   - export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
   - java -version
-  - sudo apt-get update
   - sudo apt-get install python3 python3-pip python3-wheel python3-setuptools
   - pip3 install pandas
 
