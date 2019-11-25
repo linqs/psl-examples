@@ -25,6 +25,3 @@ dependency-reduced-pom.xml
 out.txt
 out.err
 inferred-predicates/
-
-drug-drug-interaction/
-jester
