@@ -3,12 +3,20 @@ dist: bionic
 language: java
 
 addons:
-  postgresql: "9.6"
+  postgresql: 10
 
 services:
   - postgresql
 
 before_install:
+  - sudo systemctl stop postgresql@10-main
+  - sudo mkdir -p /var/database
+  - sudo chown -R postgres /var/database
+  - sudo sed -i "s/^\s*data_directory\s*=.*$/data_directory = '\/var\/database'/" /etc/postgresql/10/main/postgresql.conf
+  - sudo su - postgres -c "/usr/lib/postgresql/10/bin/initdb -D '/var/database'"
+  - sudo systemctl start postgresql@10-main || sudo systemctl status postgresql@10-main -l
+  - sudo su - postgres -c "createuser -s travis"
+
   - df -h
   - sudo apt-get update
   - sudo apt install openjdk-8-jdk openjdk-8-jre
