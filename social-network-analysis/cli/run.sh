@@ -9,7 +9,7 @@ readonly JAR_PATH="./psl-cli-${PSL_VERSION}.jar"
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 readonly BASE_NAME='social-network-analysis'
 
-readonly ADDITIONAL_PSL_OPTIONS='-D admmreasoner.maxiterations=500'
+readonly ADDITIONAL_PSL_OPTIONS='--int-ids -D admmreasoner.maxiterations=500'
 readonly ADDITIONAL_EVAL_OPTIONS='--infer'
 
 function main() {
