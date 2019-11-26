@@ -9,7 +9,7 @@ readonly JAR_PATH="./psl-cli-${PSL_VERSION}.jar"
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 readonly BASE_NAME='citeseer'
 
-readonly ADDITIONAL_PSL_OPTIONS=''
+readonly ADDITIONAL_PSL_OPTIONS='--int-ids'
 readonly ADDITIONAL_LEARN_OPTIONS='--learn'
 readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval org.linqs.psl.evaluation.statistics.CategoricalEvaluator -D categoricalevaluator.categoryindexes=1'
 
