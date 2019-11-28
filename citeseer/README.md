@@ -30,7 +30,6 @@ This example is a version of one of the experiments from Bach et al.'s core PSL 
  - `cli`
  - `collective classification`
  - `evaluation`
- - `groovy`
  - `inference`
  - `real data`
  - `weight learning`

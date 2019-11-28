@@ -6,7 +6,7 @@ predicates:
     sim_pearson_items/2: closed
     sim_cosine_items/2: closed
     sim_adjcos_items/2: closed
-    sim_pearson_users/2: closed 
+    sim_pearson_users/2: closed
     sim_cosine_users/2: closed
     sim_mf_cosine_users/2: closed
     sim_mf_euclidean_users/2: closed
@@ -24,7 +24,7 @@ observations:
     user: ../data/yelp/0/learn/user_obs.txt
     item: ../data/yelp/0/learn/item_obs.txt
     users_are_friends: ../data/yelp/0/learn/users_are_friends_obs.txt
-    sim_content_items_jaccard: ../data/yelp/0/learn/sim_content_items_jaccard_obs.txt    
+    sim_content_items_jaccard: ../data/yelp/0/learn/sim_content_items_jaccard_obs.txt
 
     sim_pearson_items: ../data/yelp/0/learn/sim_pearson_items_obs.txt
     sim_cosine_items: ../data/yelp/0/learn/sim_cosine_items_obs.txt

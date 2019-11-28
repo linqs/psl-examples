@@ -3,7 +3,7 @@ predicates:
     localPro/2: closed
     localDisagrees/2: closed
     responds/2: closed
-    isProAuth/2: open 
+    isProAuth/2: open
     disagrees/2: open
 
 observations:

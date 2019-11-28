@@ -1,14 +1,19 @@
-### Stance
+### Stance CreateDebate
 
 ## Problem
 In this example, we attempt to identify the stance of a speaker in a debate as being for or against.
 
 ## Dataset
 
-The dataset comes from two online debate websites: 4FORUMS.COM, from the Internet Argument Corpus and CREATEDEBATE.com.
+The dataset comes from two online debate websites: 4forums.com , from the Internet Argument Corpus and createdebate.com . There are 4 topics in the dataset:
+ - Abortion
+ - Evolution
+ - Gay Marriage
+ - Gun Control
 
 ## Origin
 
+```
 @inproceedings{sridhar-etal-2015-joint,
     title = "Joint Models of Disagreement and Stance in Online Debate",
     author = "Sridhar, Dhanya  and
@@ -25,8 +30,13 @@ The dataset comes from two online debate websites: 4FORUMS.COM, from the Interne
     doi = "10.3115/v1/P15-1012",
     pages = "116--125",
 }
-Original author groovy Code : https://bitbucket.org/linqs/psl-joint-stance/src/master/
+```
 
-Paper : https://users.soe.ucsc.edu/~getoor/Papers/sridhar-acl15.pdf
+## Keywords
 
-Data : https://linqs-data.soe.ucsc.edu/public/sridhar_all_forums_data/all_forums_data_cliformat.zip 
+ - `cli`
+ - `collective classification`
+ - `evaluation`
+ - `inference`
+ - `real data`
+ - `weight learning`

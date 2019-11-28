@@ -1,4 +1,4 @@
-### Trust Prediction
+### Epinions
 
 ## Problem
 
@@ -27,7 +27,6 @@ This example is one of the experiments from Bach et al.'s core PSL paper:
  - `bulk rules`
  - `cli`
  - `evaluation`
- - `groovy`
  - `inference`
  - `link prediction`
  - `real data`
