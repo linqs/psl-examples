@@ -34,7 +34,7 @@ def writeTSV(path, rows)
    }
 end
 
-# Write some additional metadata that is not required 
+# Write some additional metadata that is not required.
 def writeMeta(outDir, size, seed, edgeCounts)
    # Write out party labels (as shown in the original data).
    rows = [

@@ -226,11 +226,11 @@ class DataGen():
         Return similarity measure between two persons (cosine similarity [0.0...1.0]).
         """
 
-        person1 = numpy.array(p1.lived 
-                + list(p1.globalLikes.values()) 
+        person1 = numpy.array(p1.lived
+                + list(p1.globalLikes.values())
                 + list(p1.localLikes.values())).reshape(1, -1)
-        person2 = numpy.array(p2.lived 
-                + list(p2.globalLikes.values()) 
+        person2 = numpy.array(p2.lived
+                + list(p2.globalLikes.values())
                 + list(p2.localLikes.values())).reshape(1, -1)
 
         return cosine_similarity(person1, person2)
@@ -246,7 +246,7 @@ class DataGen():
 
             person.index = i
 
-            truncnormGenerator = getTruncatedNormal(self.placesLivedMean, self.placesLivedSD, 
+            truncnormGenerator = getTruncatedNormal(self.placesLivedMean, self.placesLivedSD,
                     1, self.placesLivedUpper)
             numberOfPlacesLived = int(truncnormGenerator.rvs())
             person.lived = [0] * len(self.places)
@@ -254,11 +254,11 @@ class DataGen():
             # One hot encoding of places lived by a person.
             person.lived = [1 if i in placesLived else 0 for i in range(len(self.places))]
 
-            person.globalLikes = dict(zip(self.globalThings, 
+            person.globalLikes = dict(zip(self.globalThings,
                     self.rng.uniform(0, 1, len(self.globalThings))))
 
             person.localLikes = self._getLikeability(person)
-            
+
             people.append(person)
 
         return people
@@ -307,7 +307,7 @@ class DataGen():
         knowsTruth = []
 
         totalCombinations = knowsMatrix.shape[0] * (knowsMatrix.shape[1] - 1)
-        targets = self.rng.choice(range(totalCombinations), 
+        targets = self.rng.choice(range(totalCombinations),
                 int(self.targetRatio * totalCombinations), replace = False)
 
         for i in range(knowsMatrix.shape[0]):
@@ -340,7 +340,7 @@ class DataGen():
             for localLike in person.localLikes:
                 likesObs.append([person.index, len(self.globalThings) + localLike, person.localLikes[localLike]])
 
-        config = {  
+        config = {
             'people': self.numberOfPeople,
             'places': len(self.places),
             'globalThings': len(self.globalThings),
