@@ -1,8 +1,7 @@
-#!/bin/bash
 
-readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/stance.zip'
-readonly DATA_FILE='stance.zip'
-readonly DATA_DIR='stance'
+readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/stance-createdebate.zip'
+readonly DATA_FILE='stance-createdebate.zip'
+readonly DATA_DIR='stance-createdebate'
 
 function main() {
    trap exit SIGINT

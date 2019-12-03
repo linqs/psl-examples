@@ -1,11 +1,12 @@
 ### Stance CreateDebate
 
 ## Problem
+
 In this example, we attempt to identify the stance of a speaker in a debate as being for or against.
 
 ## Dataset
 
-The dataset comes from two online debate websites: 4forums.com , from the Internet Argument Corpus and createdebate.com . There are 4 topics in the dataset:
+The dataset comes from two online debate websites: 4forums.com from the Internet Argument Corpus and createdebate.com . There are 4 topics in the dataset:
  - Abortion
  - Evolution
  - Gay Marriage
