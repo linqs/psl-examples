@@ -7,7 +7,7 @@
 readonly PSL_VERSION='2.2.0-SNAPSHOT'
 readonly JAR_PATH="./psl-cli-${PSL_VERSION}.jar"
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
-readonly BASE_NAME='preference-prediction'
+readonly BASE_NAME='jester'
 
 readonly ADDITIONAL_PSL_OPTIONS='--int-ids'
 readonly ADDITIONAL_LEARN_OPTIONS='--learn'

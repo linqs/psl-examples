@@ -37,6 +37,8 @@
 1.0: Knows(A, B) & Knows(B, A) & Trusts(A, B) -> Trusts(B, A) ^2
 1.0: Knows(A, B) & Knows(B, A) & !Trusts(A, B) -> !Trusts(B, A) ^2
 
-// two-sided prior
+// Two-sided prior.
 1.0: Knows(A, B) & Prior('0') -> Trusts(A, B) ^2
 1.0: Knows(A, B) & Trusts(A, B) -> Prior('0') ^2
+
+0.5 : !Trusts(A, B) ^2
