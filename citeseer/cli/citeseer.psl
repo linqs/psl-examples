@@ -1,0 +1,19 @@
+// Neighbor has cat => has cat
+1.0: HasCat(A, C) & Link(A, B) & (A != B) >> HasCat(B, C) ^2
+1.0: HasCat(A, C) & Link(B, A) & (A != B) >> HasCat(B, C) ^2
+
+// Per category rules
+
+1.0: HasCat(A, '1') & Link(A, B) >> HasCat(B, '1') ^2
+1.0: HasCat(A, '2') & Link(A, B) >> HasCat(B, '2') ^2
+1.0: HasCat(A, '3') & Link(A, B) >> HasCat(B, '3') ^2
+1.0: HasCat(A, '4') & Link(A, B) >> HasCat(B, '4') ^2
+1.0: HasCat(A, '5') & Link(A, B) >> HasCat(B, '5') ^2
+1.0: HasCat(A, '6') & Link(A, B) >> HasCat(B, '6') ^2
+1.0: HasCat(A, '7') & Link(A, B) >> HasCat(B, '7') ^2
+
+// Ensure that HasCat sums to 1
+HasCat(A, +C) = 1 .
+
+// Prior
+0.001: !HasCat(A, N) ^2

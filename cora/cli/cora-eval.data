@@ -1,0 +1,13 @@
+predicates:
+   Link/2: closed
+   HasCat/2: open
+
+observations:
+   HasCat: ../data/cora/0/eval/hasCat_obs.txt
+   Link: ../data/cora/0/eval/link_obs.txt
+
+targets:
+   HasCat: ../data/cora/0/eval/hasCat_targets.txt
+
+truth:
+   HasCat: ../data/cora/0/eval/hasCat_truth.txt
