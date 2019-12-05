@@ -94,19 +94,19 @@ public class Run {
         log.info("Loading data into database");
 
         Inserter inserter = dataStore.getInserter(model.getStandardPredicate("Lived"), obsPartition);
-        inserter.loadDelimitedData(Paths.get(DATA_PATH, "lived_obs.txt").toString());
+        inserter.loadDelimitedDataAutomatic(Paths.get(DATA_PATH, "lived_obs.txt").toString());
 
         inserter = dataStore.getInserter(model.getStandardPredicate("Likes"), obsPartition);
-        inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, "likes_obs.txt").toString());
+        inserter.loadDelimitedDataAutomatic(Paths.get(DATA_PATH, "likes_obs.txt").toString());
 
         inserter = dataStore.getInserter(model.getStandardPredicate("Knows"), obsPartition);
-        inserter.loadDelimitedData(Paths.get(DATA_PATH, "knows_obs.txt").toString());
+        inserter.loadDelimitedDataAutomatic(Paths.get(DATA_PATH, "knows_obs.txt").toString());
 
         inserter = dataStore.getInserter(model.getStandardPredicate("Knows"), targetsPartition);
-        inserter.loadDelimitedData(Paths.get(DATA_PATH, "knows_targets.txt").toString());
+        inserter.loadDelimitedDataAutomatic(Paths.get(DATA_PATH, "knows_targets.txt").toString());
 
         inserter = dataStore.getInserter(model.getStandardPredicate("Knows"), truthPartition);
-        inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, "knows_truth.txt").toString());
+        inserter.loadDelimitedDataAutomatic(Paths.get(DATA_PATH, "knows_truth.txt").toString());
     }
 
     /**

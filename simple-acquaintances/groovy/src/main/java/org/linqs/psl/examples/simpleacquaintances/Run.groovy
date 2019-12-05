@@ -110,19 +110,19 @@ public class Run {
         log.info("Loading data into database");
 
         Inserter inserter = dataStore.getInserter(Lived, obsPartition);
-        inserter.loadDelimitedData(Paths.get(DATA_PATH, "lived_obs.txt").toString());
+        inserter.loadDelimitedDataAutomatic(Paths.get(DATA_PATH, "lived_obs.txt").toString());
 
         inserter = dataStore.getInserter(Likes, obsPartition);
-        inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, "likes_obs.txt").toString());
+        inserter.loadDelimitedDataAutomatic(Paths.get(DATA_PATH, "likes_obs.txt").toString());
 
         inserter = dataStore.getInserter(Knows, obsPartition);
-        inserter.loadDelimitedData(Paths.get(DATA_PATH, "knows_obs.txt").toString());
+        inserter.loadDelimitedDataAutomatic(Paths.get(DATA_PATH, "knows_obs.txt").toString());
 
         inserter = dataStore.getInserter(Knows, targetsPartition);
-        inserter.loadDelimitedData(Paths.get(DATA_PATH, "knows_targets.txt").toString());
+        inserter.loadDelimitedDataAutomatic(Paths.get(DATA_PATH, "knows_targets.txt").toString());
 
         inserter = dataStore.getInserter(Knows, truthPartition);
-        inserter.loadDelimitedDataTruth(Paths.get(DATA_PATH, "knows_truth.txt").toString());
+        inserter.loadDelimitedDataAutomatic(Paths.get(DATA_PATH, "knows_truth.txt").toString());
     }
 
     /**

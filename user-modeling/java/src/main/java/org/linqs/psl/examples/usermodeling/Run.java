@@ -162,7 +162,8 @@ public class Run {
      */
     private void writeOutput(Partition targetsPartition) throws IOException {
         Database resultsDB = dataStore.getDatabase(targetsPartition);
-
+	
+	(new File(OUTPUT_PATH)).mkdirs();
         FileWriter writer = new FileWriter(Paths.get(OUTPUT_PATH, "IS.txt").toString());
 
         for (GroundAtom atom : resultsDB.getAllGroundAtoms(model.getStandardPredicate("Is"))) {
