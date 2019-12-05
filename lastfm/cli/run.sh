@@ -4,7 +4,7 @@
 # These options are blind-passed to the CLI.
 # Ex: ./run.sh -D log4j.threshold=DEBUG
 
-readonly PSL_VERSION='2.2.0-SNAPSHOT'
+readonly PSL_VERSION='2.2.0'
 readonly JAR_PATH="./psl-cli-${PSL_VERSION}.jar"
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 readonly BASE_NAME='lastfm'
@@ -121,7 +121,7 @@ function fetch_psl() {
       local snapshotJARPath="$HOME/.m2/repository/org/linqs/psl-cli/${PSL_VERSION}/psl-cli-${PSL_VERSION}.jar"
       cp "${snapshotJARPath}" "${JAR_PATH}"
    else
-      local remoteJARURL="https://linqs-data.soe.ucsc.edu/maven/repositories/psl-releases/org/linqs/psl-cli/${PSL_VERSION}/psl-cli-${PSL_VERSION}.jar"
+      local remoteJARURL="https://repo1.maven.org/maven2/org/linqs/psl-cli/${PSL_VERSION}/psl-cli-${PSL_VERSION}.jar"
       fetch_file "${remoteJARURL}" "${JAR_PATH}" 'psl-jar'
    fi
 }
