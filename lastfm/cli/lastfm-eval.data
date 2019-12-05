@@ -1,0 +1,52 @@
+predicates:
+    user/1: closed
+    item/1: closed
+    users_are_friends/2: closed
+    sim_content_items_jaccard/2: closed
+    sim_pearson_items/2: closed
+    sim_cosine_items/2: closed
+    sim_adjcos_items/2: closed
+    sim_pearson_users/2: closed
+    sim_cosine_users/2: closed
+    sim_mf_cosine_users/2: closed
+    sim_mf_euclidean_users/2: closed
+    sim_mf_cosine_items/2: closed
+    sim_mf_euclidean_items/2: closed
+    avg_user_rating/1: closed
+    avg_item_rating/1: closed
+    rated/2: closed
+    sgd_rating/2: closed
+    bpmf_rating/2: closed
+    item_pearson_rating/2: closed
+    rating/2: open
+
+observations:
+    user: ../data/lastfm/0/eval/user_obs.txt
+    item: ../data/lastfm/0/eval/item_obs.txt
+    users_are_friends: ../data/lastfm/0/eval/users_are_friends_obs.txt
+    sim_content_items_jaccard: ../data/lastfm/0/eval/sim_content_items_jaccard_obs.txt
+
+    sim_pearson_items: ../data/lastfm/0/eval/sim_pearson_items_obs.txt
+    sim_cosine_items: ../data/lastfm/0/eval/sim_cosine_items_obs.txt
+    sim_adjcos_items:  ../data/lastfm/0/eval/sim_adjcos_items_obs.txt
+    sim_pearson_users: ../data/lastfm/0/eval/sim_pearson_users_obs.txt
+    sim_cosine_users: ../data/lastfm/0/eval/sim_cosine_users_obs.txt
+    sim_mf_cosine_users: ../data/lastfm/0/eval/sim_mf_cosine_users_obs.txt
+    sim_mf_euclidean_users: ../data/lastfm/0/eval/sim_mf_euclidean_users_obs.txt
+    sim_mf_cosine_items: ../data/lastfm/0/eval/sim_mf_cosine_items_obs.txt
+    sim_mf_euclidean_items: ../data/lastfm/0/eval/sim_mf_euclidean_items_obs.txt
+
+    avg_user_rating: ../data/lastfm/0/eval/avg_user_rating_obs.txt
+    avg_item_rating: ../data/lastfm/0/eval/avg_item_rating_obs.txt
+
+    rated: ../data/lastfm/0/eval/rated_obs.txt
+    rating: ../data/lastfm/0/eval/rating_obs.txt
+    sgd_rating: ../data/lastfm/0/eval/sgd_rating_obs.txt
+    bpmf_rating: ../data/lastfm/0/eval/bpmf_rating_obs.txt
+    item_pearson_rating: ../data/lastfm/0/eval/item_pearson_rating_obs.txt
+
+targets:
+   rating: ../data/lastfm/0/eval/rating_targets.txt
+
+truth:
+   rating: ../data/lastfm/0/eval/rating_truth.txt

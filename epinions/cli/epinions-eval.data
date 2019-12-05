@@ -1,0 +1,15 @@
+predicates:
+  Trusts/2: open
+  Knows/2: closed
+  Prior/1: closed
+
+observations:
+  Trusts: ../data/epinions/0/learn/trusts_obs.txt
+  Knows: ../data/epinions/0/learn/knows_obs.txt
+  Prior: ../data/epinions/0/learn/prior_obs.txt
+
+targets:
+  Trusts: ../data/epinions/0/learn/trusts_target.txt
+
+truth:
+  Trusts: ../data/epinions/0/learn/trusts_truth.txt
