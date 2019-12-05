@@ -8,7 +8,7 @@ BUILD_DIR='/tmp/__building_psl_core__'
 TARGET_REPOS="$@"
 
 if [ $# -eq 0 ]; then
-   echo "No target repositories specified"
+   echo "No target repositories specified."
    exit 1
 fi
 
@@ -21,11 +21,6 @@ fi
 
 # We will use the same owner for PSL core as this repo's owner.
 owner=$(echo "$TRAVIS_REPO_SLUG" | sed 's#/.\+$##')
-
-# LINQS development is done under the eriq-augustine fork.
-if [[ "$owner" = 'linqs' && "$branch" = 'develop' ]]; then
-    owner='eriq-augustine'
-fi
 
 pushd . > /dev/null
     for repo in $TARGET_REPOS; do
