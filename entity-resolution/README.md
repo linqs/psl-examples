@@ -41,7 +41,6 @@ This dataset originally came from:
  - `cli`
  - `entity resolution`
  - `evaluation`
- - `groovy`
  - `inference`
  - `link prediction`
  - `real data`

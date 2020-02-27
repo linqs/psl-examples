@@ -16,7 +16,6 @@ The social graph (i.e., friendship links) is generated as a scale-free network i
 ## Keywords
 
  - `cli`
- - `groovy`
  - `inference`
  - `collective classification`
  - `data fusion`

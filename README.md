@@ -9,7 +9,7 @@ Each experiment will generally have the following structure:
    │   ├── <experiment>.data
    │   ├── <experiment>.psl
    │   └── run.sh
-   ├── groovy
+   ├── java
    │   ├── pom.xml
    │   ├── run.sh
    │   └── src

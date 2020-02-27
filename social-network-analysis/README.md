@@ -26,6 +26,5 @@ This example is a simplified version of one of the experiments from Bach et al.'
 ## Keywords
 
  - `cli`
- - `groovy`
  - `inference`
  - `synthetic data`

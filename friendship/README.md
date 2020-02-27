@@ -15,7 +15,6 @@ The location information is used to block users (we only consider friendship whe
  - `blocking`
  - `cli`
  - `evaluation`
- - `groovy`
  - `inference`
  - `link prediction`
  - `synthetic data`
