@@ -4,12 +4,12 @@ predicates:
   Prior/1: closed
 
 observations:
-  Trusts: ../data/epinions/0/learn/trusts_obs.txt
-  Knows: ../data/epinions/0/learn/knows_obs.txt
-  Prior: ../data/epinions/0/learn/prior_obs.txt
+  Trusts: ../data/epinions/0/eval/trusts_obs.txt
+  Knows: ../data/epinions/0/eval/knows_obs.txt
+  Prior: ../data/epinions/0/eval/prior_obs.txt
 
 targets:
-  Trusts: ../data/epinions/0/learn/trusts_target.txt
+  Trusts: ../data/epinions/0/eval/trusts_target.txt
 
 truth:
-  Trusts: ../data/epinions/0/learn/trusts_truth.txt
+  Trusts: ../data/epinions/0/eval/trusts_truth.txt
