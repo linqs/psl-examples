@@ -2,6 +2,10 @@ dist: bionic
 
 language: java
 
+cache:
+  directories:
+    - $HOME/.m2
+
 addons:
   postgresql: 10
 
