@@ -11,7 +11,7 @@ readonly BASE_NAME='citeseer'
 
 readonly ADDITIONAL_PSL_OPTIONS='--int-ids'
 readonly ADDITIONAL_LEARN_OPTIONS='--learn'
-readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval org.linqs.psl.evaluation.statistics.CategoricalEvaluator -D categoricalevaluator.categoryindexes=1'
+readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval CategoricalEvaluator -D categoricalevaluator.categoryindexes=1 -D eval.includeobs=true'
 
 function main() {
    trap exit SIGINT
