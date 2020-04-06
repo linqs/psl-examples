@@ -7,8 +7,8 @@ from pslpython.partition import Partition
 from pslpython.predicate import Predicate
 from pslpython.rule import Rule
 
-MODEL_NAME = 'citation-categories'
-DATA_DIR = os.path.join('..', 'data', MODEL_NAME)
+MODEL_NAME = 'cora'
+DATA_DIR = os.path.join('..', 'data', MODEL_NAME, '0')
 
 ADDITIONAL_PSL_OPTIONS = {
     'log4j.threshold': 'INFO'

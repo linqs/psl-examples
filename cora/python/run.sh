@@ -4,7 +4,7 @@
 # It esentially just ensures that the data exists and runs the python script.
 # User's should ensure that the `pslpython` python package is installed.
 
-readonly BASE_NAME='citation-categories'
+readonly BASE_NAME='cora'
 readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
 
 function main() {
