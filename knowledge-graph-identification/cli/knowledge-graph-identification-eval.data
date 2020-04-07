@@ -25,35 +25,35 @@ predicates:
    Rel/3: open
 
 observations:
-   CandCat_CBL: ../data/kgi/eval/CANDCAT_CBL_obs.txt
-   CandCat_CMC: ../data/kgi/eval/CANDCAT_CMC_obs.txt
-   CandCat_CPL: ../data/kgi/eval/CANDCAT_CPL_obs.txt
-   CandCat_General: ../data/kgi/eval/CANDCAT_GENERAL_obs.txt
-   CandCat_MORPH: ../data/kgi/eval/CANDCAT_MORPH_obs.txt
-   CandCat_SEAL: ../data/kgi/eval/CANDCAT_SEAL_obs.txt
-   CandRel_CBL: ../data/kgi/eval/CANDREL_CBL_obs.txt
-   CandRel_CPL: ../data/kgi/eval/CANDREL_CPL_obs.txt
-   CandRel_General: ../data/kgi/eval/CANDREL_GENERAL_obs.txt
-   CandRel_SEAL: ../data/kgi/eval/CANDREL_SEAL_obs.txt
-   Cat: ../data/kgi/eval/CAT_obs.txt
-   Domain: ../data/kgi/eval/DOMAIN_obs.txt
-   Inv: ../data/kgi/eval/INV_obs.txt
-   Mut: ../data/kgi/eval/MUT_obs.txt
-   PromCat_General: ../data/kgi/eval/PROMCAT_GENERAL_obs.txt
-   PromRel_General: ../data/kgi/eval/PROMREL_GENERAL_obs.txt
-   Range2: ../data/kgi/eval/RANGE2_obs.txt
-   Rel: ../data/kgi/eval/REL_obs.txt
-   RMut: ../data/kgi/eval/RMUT_obs.txt
-   RSub: ../data/kgi/eval/RSUB_obs.txt
-   SameEntity: ../data/kgi/eval/SAMEENTITY_obs.txt
-   Sub: ../data/kgi/eval/SUB_obs.txt
-   ValCat: ../data/kgi/eval/VALCAT_obs.txt
-   ValRel: ../data/kgi/eval/VALREL_obs.txt
+   CandCat_CBL: ../data/kgi/0/eval/CANDCAT_CBL_obs.txt
+   CandCat_CMC: ../data/kgi/0/eval/CANDCAT_CMC_obs.txt
+   CandCat_CPL: ../data/kgi/0/eval/CANDCAT_CPL_obs.txt
+   CandCat_General: ../data/kgi/0/eval/CANDCAT_GENERAL_obs.txt
+   CandCat_MORPH: ../data/kgi/0/eval/CANDCAT_MORPH_obs.txt
+   CandCat_SEAL: ../data/kgi/0/eval/CANDCAT_SEAL_obs.txt
+   CandRel_CBL: ../data/kgi/0/eval/CANDREL_CBL_obs.txt
+   CandRel_CPL: ../data/kgi/0/eval/CANDREL_CPL_obs.txt
+   CandRel_General: ../data/kgi/0/eval/CANDREL_GENERAL_obs.txt
+   CandRel_SEAL: ../data/kgi/0/eval/CANDREL_SEAL_obs.txt
+   Cat: ../data/kgi/0/eval/CAT_obs.txt
+   Domain: ../data/kgi/0/eval/DOMAIN_obs.txt
+   Inv: ../data/kgi/0/eval/INV_obs.txt
+   Mut: ../data/kgi/0/eval/MUT_obs.txt
+   PromCat_General: ../data/kgi/0/eval/PROMCAT_GENERAL_obs.txt
+   PromRel_General: ../data/kgi/0/eval/PROMREL_GENERAL_obs.txt
+   Range2: ../data/kgi/0/eval/RANGE2_obs.txt
+   Rel: ../data/kgi/0/eval/REL_obs.txt
+   RMut: ../data/kgi/0/eval/RMUT_obs.txt
+   RSub: ../data/kgi/0/eval/RSUB_obs.txt
+   SameEntity: ../data/kgi/0/eval/SAMEENTITY_obs.txt
+   Sub: ../data/kgi/0/eval/SUB_obs.txt
+   ValCat: ../data/kgi/0/eval/VALCAT_obs.txt
+   ValRel: ../data/kgi/0/eval/VALREL_obs.txt
 
 targets:
-   Cat: ../data/kgi/eval/CAT_targets.txt
-   Rel: ../data/kgi/eval/REL_targets.txt
+   Cat: ../data/kgi/0/eval/CAT_targets.txt
+   Rel: ../data/kgi/0/eval/REL_targets.txt
 
 truth:
-   Cat: ../data/kgi/eval/CAT_truth.txt
-   Rel: ../data/kgi/eval/REL_truth.txt
+   Cat: ../data/kgi/0/eval/CAT_truth.txt
+   Rel: ../data/kgi/0/eval/REL_truth.txt

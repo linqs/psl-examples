@@ -7,15 +7,15 @@ predicates:
   Is/3: open
 
 observations:
-  Predicts: ../data/user-modeling/local_predictor_obs.txt
-  Has: ../data/user-modeling/has_obs.txt
-  Friend: ../data/user-modeling/friend_obs.txt
-  Likes: ../data/user-modeling/likes_obs.txt
-  Joins: ../data/user-modeling/joins_obs.txt
-  Is: ../data/user-modeling/user_train.txt
+  Predicts: ../data/user-modeling/0/eval/local_predictor_obs.txt
+  Has: ../data/user-modeling/0/eval/has_obs.txt
+  Friend: ../data/user-modeling/0/eval/friend_obs.txt
+  Likes: ../data/user-modeling/0/eval/likes_obs.txt
+  Joins: ../data/user-modeling/0/eval/joins_obs.txt
+  Is: ../data/user-modeling/0/eval/user_train.txt
 
 targets:
-  Is: ../data/user-modeling/user_target.txt
+  Is: ../data/user-modeling/0/eval/user_target.txt
 
 truth:
-  Is: ../data/user-modeling/user_truth.txt
+  Is: ../data/user-modeling/0/eval/user_truth.txt

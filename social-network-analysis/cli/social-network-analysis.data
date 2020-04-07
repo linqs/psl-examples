@@ -9,13 +9,13 @@ predicates:
    Votes/2: open
 
 observations:
-   Bias: ../data/social-network-analysis/bias_obs.txt
-   Boss: ../data/social-network-analysis/boss_obs.txt
-   Idol: ../data/social-network-analysis/idol_obs.txt
-   Knows: ../data/social-network-analysis/knows_obs.txt
-   KnowsWell: ../data/social-network-analysis/knowswell_obs.txt
-   Mentor: ../data/social-network-analysis/mentor_obs.txt
-   OlderRelative: ../data/social-network-analysis/olderRelative_obs.txt
+   Bias: ../data/social-network-analysis/0/eval/bias_obs.txt
+   Boss: ../data/social-network-analysis/0/eval/boss_obs.txt
+   Idol: ../data/social-network-analysis/0/eval/idol_obs.txt
+   Knows: ../data/social-network-analysis/0/eval/knows_obs.txt
+   KnowsWell: ../data/social-network-analysis/0/eval/knowswell_obs.txt
+   Mentor: ../data/social-network-analysis/0/eval/mentor_obs.txt
+   OlderRelative: ../data/social-network-analysis/0/eval/olderRelative_obs.txt
 
 targets:
-   Votes: ../data/social-network-analysis/votes_targets.txt
+   Votes: ../data/social-network-analysis/0/eval/votes_targets.txt

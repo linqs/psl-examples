@@ -42,17 +42,17 @@ predicates:
          - UniqueIntID
 
 observations:
-   AuthorName: ../data/entity-resolution/eval/authorName_obs.txt
-   AuthorBlock: ../data/entity-resolution/eval/authorBlock_obs.txt
-   PaperTitle: ../data/entity-resolution/eval/paperTitle_obs.txt
-   AuthorOf: ../data/entity-resolution/eval/authorOf_obs.txt
-   SimName: ../data/entity-resolution/eval/simName_obs.txt
-   SimTitle: ../data/entity-resolution/eval/simTitle_obs.txt
+   AuthorName: ../data/entity-resolution/0/eval/authorName_obs.txt
+   AuthorBlock: ../data/entity-resolution/0/eval/authorBlock_obs.txt
+   PaperTitle: ../data/entity-resolution/0/eval/paperTitle_obs.txt
+   AuthorOf: ../data/entity-resolution/0/eval/authorOf_obs.txt
+   SimName: ../data/entity-resolution/0/eval/simName_obs.txt
+   SimTitle: ../data/entity-resolution/0/eval/simTitle_obs.txt
 
 targets:
-   SameAuthor: ../data/entity-resolution/eval/sameAuthor_targets.txt
-   SamePaper: ../data/entity-resolution/eval/samePaper_targets.txt
+   SameAuthor: ../data/entity-resolution/0/eval/sameAuthor_targets.txt
+   SamePaper: ../data/entity-resolution/0/eval/samePaper_targets.txt
 
 truth:
-   SameAuthor: ../data/entity-resolution/eval/sameAuthor_truth.txt
-   SamePaper: ../data/entity-resolution/eval/samePaper_truth.txt
+   SameAuthor: ../data/entity-resolution/0/eval/sameAuthor_truth.txt
+   SamePaper: ../data/entity-resolution/0/eval/samePaper_truth.txt
