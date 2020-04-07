@@ -22,6 +22,7 @@ dependency-reduced-pom.xml
 *.jar
 *-learned.psl
 
-out.txt
-out.err
+out*.txt
+out*.err
 inferred-predicates/
+results
