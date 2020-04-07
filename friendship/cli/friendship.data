@@ -4,11 +4,11 @@ predicates:
    Friends/2: open
 
 observations:
-   Block: ../data/friendship/location_obs.txt
-   Similar: ../data/friendship/similar_obs.txt
+   Block: ../data/friendship/0/eval/location_obs.txt
+   Similar: ../data/friendship/0/eval/similar_obs.txt
 
 targets:
-   Friends: ../data/friendship/friends_targets.txt
+   Friends: ../data/friendship/0/eval/friends_targets.txt
 
 truth:
-   Friends: ../data/friendship/friends_truth.txt
+   Friends: ../data/friendship/0/eval/friends_truth.txt

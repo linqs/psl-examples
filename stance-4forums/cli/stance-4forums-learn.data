@@ -7,15 +7,15 @@ predicates:
     disagrees/2: open
 
 observations:
-    participates: ../data/stance-4forums/abortion/0/learn/participates_obs.txt
-    localPro: ../data/stance-4forums/abortion/0/learn/localPro_obs.txt
-    localDisagrees: ../data/stance-4forums/abortion/0/learn/localDisagrees_obs.txt
-    responds: ../data/stance-4forums/abortion/0/learn/responds_obs.txt
+    participates: ../data/stance-4forums/0/learn/abortion/participates_obs.txt
+    localPro: ../data/stance-4forums/0/learn/abortion/localPro_obs.txt
+    localDisagrees: ../data/stance-4forums/0/learn/abortion/localDisagrees_obs.txt
+    responds: ../data/stance-4forums/0/learn/abortion/responds_obs.txt
 
 targets:
-    isProAuth: ../data/stance-4forums/abortion/0/learn/isProAuth_targets.txt
-    disagrees: ../data/stance-4forums/abortion/0/learn/disagrees_targets.txt
+    isProAuth: ../data/stance-4forums/0/learn/abortion/isProAuth_targets.txt
+    disagrees: ../data/stance-4forums/0/learn/abortion/disagrees_targets.txt
 
 truth:
-    isProAuth: ../data/stance-4forums/abortion/0/learn/isProAuth_truth.txt
-    disagrees: ../data/stance-4forums/abortion/0/learn/disagrees_truth.txt
+    isProAuth: ../data/stance-4forums/0/learn/abortion/isProAuth_truth.txt
+    disagrees: ../data/stance-4forums/0/learn/abortion/disagrees_truth.txt

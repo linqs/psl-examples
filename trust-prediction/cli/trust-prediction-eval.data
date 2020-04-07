@@ -4,12 +4,12 @@ predicates:
   Prior/1: closed
 
 observations:
-  Trusts: ../data/trust-prediction/eval/trusts_obs.txt
-  Knows: ../data/trust-prediction/eval/knows_obs.txt
-  Prior: ../data/trust-prediction/eval/prior_obs.txt
+  Trusts: ../data/trust-prediction/0/eval/trusts_obs.txt
+  Knows: ../data/trust-prediction/0/eval/knows_obs.txt
+  Prior: ../data/trust-prediction/0/eval/prior_obs.txt
 
 targets:
-  Trusts: ../data/trust-prediction/eval/trusts_target.txt
+  Trusts: ../data/trust-prediction/0/eval/trusts_target.txt
 
 truth:
-  Trusts: ../data/trust-prediction/eval/trusts_truth.txt
+  Trusts: ../data/trust-prediction/0/eval/trusts_truth.txt

@@ -7,15 +7,15 @@ predicates:
     disagrees/2: open
 
 observations:
-    participates: ../data/stance-createdebate/abortion/0/eval/participates_obs.txt
-    localPro: ../data/stance-createdebate/abortion/0/eval/localPro_obs.txt
-    localDisagrees: ../data/stance-createdebate/abortion/0/eval/localDisagrees_obs.txt
-    responds: ../data/stance-createdebate/abortion/0/eval/responds_obs.txt
+    participates: ../data/stance-createdebate/0/eval/abortion/participates_obs.txt
+    localPro: ../data/stance-createdebate/0/eval/abortion/localPro_obs.txt
+    localDisagrees: ../data/stance-createdebate/0/eval/abortion/localDisagrees_obs.txt
+    responds: ../data/stance-createdebate/0/eval/abortion/responds_obs.txt
 
 targets:
-    isProAuth: ../data/stance-createdebate/abortion/0/eval/isProAuth_targets.txt
-    disagrees: ../data/stance-createdebate/abortion/0/eval/disagrees_targets.txt
+    isProAuth: ../data/stance-createdebate/0/eval/abortion/isProAuth_targets.txt
+    disagrees: ../data/stance-createdebate/0/eval/abortion/disagrees_targets.txt
 
 truth:
-    isProAuth: ../data/stance-createdebate/abortion/0/eval/isProAuth_truth.txt
-    disagrees: ../data/stance-createdebate/abortion/0/eval/disagrees_truth.txt
+    isProAuth: ../data/stance-createdebate/0/eval/abortion/isProAuth_truth.txt
+    disagrees: ../data/stance-createdebate/0/eval/abortion/disagrees_truth.txt
