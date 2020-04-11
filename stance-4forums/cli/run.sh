@@ -11,7 +11,7 @@ readonly BASE_NAME='stance-4forums'
 
 readonly ADDITIONAL_PSL_OPTIONS=''
 readonly ADDITIONAL_LEARN_OPTIONS='--learn'
-readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval org.linqs.psl.evaluation.statistics.ContinuousEvaluator'
+readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval ContinuousEvaluator'
 
 function main() {
    trap exit SIGINT

@@ -11,7 +11,7 @@ readonly BASE_NAME='trust-prediction'
 
 readonly ADDITIONAL_PSL_OPTIONS='--int-ids'
 readonly ADDITIONAL_LEARN_OPTIONS='--learn'
-readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval org.linqs.psl.evaluation.statistics.RankingEvaluator'
+readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval RankingEvaluator'
 
 function main() {
    trap exit SIGINT
