@@ -24,5 +24,6 @@ dependency-reduced-pom.xml
 
 out*.txt
 out*.err
+sort*.txt
 inferred-predicates/
-results
+results*
