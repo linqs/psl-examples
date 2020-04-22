@@ -75,7 +75,7 @@ function main() {
     trap exit SIGINT
 
     for exampleDir in "$@"; do
-        run_example "${exampleDir}" "${i}"
+        run_example "${exampleDir}"
     done
 }
 
