@@ -9,7 +9,7 @@ from pslpython.predicate import Predicate
 from pslpython.rule import Rule
 
 MODEL_NAME = 'knowledge-graph-identification'
-DATA_DIR = os.path.join('..', 'data', 'kgi')
+DATA_DIR = os.path.join('..', 'data/kgi/0')
 
 ADDITIONAL_PSL_OPTIONS = {
     'log4j.threshold': 'INFO'

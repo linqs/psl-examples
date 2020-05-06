@@ -8,7 +8,7 @@ from pslpython.predicate import Predicate
 from pslpython.rule import Rule
 
 MODEL_NAME = 'entity-resolution'
-DATA_DIR = os.path.join('..', 'data', MODEL_NAME)
+DATA_DIR = os.path.join('..', 'data', MODEL_NAME, '0')
 
 ADDITIONAL_PSL_OPTIONS = {
     'log4j.threshold': 'INFO'
