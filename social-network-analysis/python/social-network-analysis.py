@@ -8,7 +8,8 @@ from pslpython.predicate import Predicate
 from pslpython.rule import Rule
 
 MODEL_NAME = 'social-network-analysis'
-DATA_DIR = os.path.join('..', 'data', MODEL_NAME)
+SPLIT = '0'
+DATA_DIR = os.path.join('..', 'data', MODEL_NAME, SPLIT, 'eval')
 
 ADDITIONAL_PSL_OPTIONS = {
     'log4j.threshold': 'INFO'
