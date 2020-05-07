@@ -8,7 +8,8 @@ from pslpython.predicate import Predicate
 from pslpython.rule import Rule
 
 MODEL_NAME = 'trust-prediction'
-DATA_DIR = os.path.join('..', 'data', MODEL_NAME, '0')
+SPLIT = '0'
+DATA_DIR = os.path.join('..', 'data', MODEL_NAME, SPLIT)
 
 ADDITIONAL_PSL_OPTIONS = {
     'log4j.threshold': 'INFO'
