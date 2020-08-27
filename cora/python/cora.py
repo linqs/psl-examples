@@ -108,11 +108,11 @@ def _add_data(split, link_predicate, hascat_predicate):
 
 def learn(model, link_predicate, hascat_predicate):
     add_learn_data(link_predicate, hascat_predicate)
-    model.learn(additional_cli_optons = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
+    model.learn(additional_cli_options = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
 
 def infer(model, link_predicate, hascat_predicate):
     add_eval_data(link_predicate, hascat_predicate)
-    return model.infer(additional_cli_optons = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
+    return model.infer(additional_cli_options = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
 
 if (__name__ == '__main__'):
     main()

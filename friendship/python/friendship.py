@@ -79,7 +79,7 @@ def add_data(model):
 
 def infer(model):
     add_data(model)
-    return model.infer(additional_cli_optons = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
+    return model.infer(additional_cli_options = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
 
 if (__name__ == '__main__'):
     main()

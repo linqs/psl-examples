@@ -8,7 +8,7 @@ from pslpython.predicate import Predicate
 from pslpython.rule import Rule
 
 MODEL_NAME = 'simple-acquaintances'
-DATA_DIR = os.path.join('..', 'data')
+DATA_DIR = os.path.join('..', 'data', 'simple-acquaintances', '0', 'eval')
 
 ADDITIONAL_PSL_OPTIONS = {
     'log4j.threshold': 'INFO'
@@ -82,7 +82,7 @@ def add_data(model):
 
 def infer(model):
     add_data(model)
-    return model.infer(additional_cli_optons = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
+    return model.infer(additional_cli_options = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
 
 if (__name__ == '__main__'):
     main()
