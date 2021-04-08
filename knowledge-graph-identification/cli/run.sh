@@ -11,7 +11,7 @@ readonly BASE_NAME='knowledge-graph-identification'
 
 readonly ADDITIONAL_PSL_OPTIONS='--int-ids'
 readonly ADDITIONAL_LEARN_OPTIONS='--learn'
-readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval RankingEvaluator'
+readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval AUCEvaluator'
 
 function main() {
    trap exit SIGINT
