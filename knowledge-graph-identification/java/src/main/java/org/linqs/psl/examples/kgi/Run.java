@@ -14,7 +14,7 @@ import org.linqs.psl.database.rdbms.driver.H2DatabaseDriver.Type;
 import org.linqs.psl.database.rdbms.driver.PostgreSQLDriver;
 import org.linqs.psl.database.rdbms.RDBMSDataStore;
 import org.linqs.psl.evaluation.statistics.Evaluator;
-import org.linqs.psl.evaluation.statistics.RankingEvaluator;
+import org.linqs.psl.evaluation.statistics.AUCEvaluator;
 import org.linqs.psl.java.PSLModel;
 import org.linqs.psl.model.atom.GroundAtom;
 import org.linqs.psl.model.predicate.StandardPredicate;
@@ -264,7 +264,7 @@ public class Run {
 
         Database resultsDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TARGETS), closedPredicates, dataStore.getPartition(PARTITION_EVAL_OBSERVATIONS));
         Database truthDB = dataStore.getDatabase(dataStore.getPartition(PARTITION_EVAL_TRUTH), dataStore.getRegisteredPredicates());
-        Evaluator eval = new RankingEvaluator();
+        Evaluator eval = new AUCEvaluator();
 
         ArrayList<StandardPredicate>list = new ArrayList<StandardPredicate>();
         list.add(model.getStandardPredicate("Cat"));
