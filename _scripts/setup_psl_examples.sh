@@ -34,7 +34,7 @@ function fetch_psl_examples() {
 
 # Common to all examples.
 function standard_fixes() {
-    for exampleDir in `find ${PSL_EXAMPLES_DIR} -maxdepth 1 -mindepth 1 -type d -not -name '.*'`; do
+    for exampleDir in `find ${PSL_EXAMPLES_DIR} -maxdepth 1 -mindepth 1 -type d -not -name '.*' -not -name '_*'`; do
         local baseName=`basename ${exampleDir}`
 
         pushd . > /dev/null
