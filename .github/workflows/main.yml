@@ -1,0 +1,44 @@
+# The primary workflow that handles building, testing, and deploying.
+
+name: Main
+
+on: push
+
+jobs:
+  build-test:
+
+    runs-on: ubuntu-20.04
+
+    services:
+      postgres:
+        image: postgres:13.4-buster
+        env:
+          POSTGRES_USER: runner  # Github runner default.
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: psltest
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: 8
+          distribution: adopt
+
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Run Interface Examples
+        run: ./.ci/run_interface_examples.sh
