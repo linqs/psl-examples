@@ -42,3 +42,6 @@ jobs:
 
       - name: Run Interface Examples
         run: ./.ci/run_interface_examples.sh
+
+      - name: Run CLI Examples
+        run: ./.ci/run_cli.sh
