@@ -32,8 +32,8 @@ function run_inference() {
     echo "Running PSL Inference."
 
     java -jar "${JAR_PATH}" \
-        --model "${BASE_NAME}.psl" \
-        --data "${BASE_NAME}.data" \
+        --model "${THIS_DIR}/${BASE_NAME}.psl" \
+        --data "${THIS_DIR}/${BASE_NAME}.data" \
         --output "${OUTPUT_DIRECTORY}" \
         ${ADDITIONAL_PSL_OPTIONS} "$@"
 

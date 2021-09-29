@@ -13,7 +13,7 @@ CLI_WEIGHT_LEARNING_TEMPLATE_PATH = os.path.join(THIS_DIR, 'cli_run_template_wei
 
 EXAMPLES_CONFIG_PATH = os.path.join(THIS_DIR, 'config.json')
 
-SCRIPT_VERSION = '1.3.1'
+SCRIPT_VERSION = '1.3.2'
 PSL_VERSION = '2.3.0-SNAPSHOT'
 
 TEMPLATE_SUBS = {

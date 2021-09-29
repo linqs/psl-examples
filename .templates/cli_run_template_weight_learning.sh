@@ -35,8 +35,8 @@ function run_weight_learning() {
     echo "Running PSL Weight Learning."
 
     java -jar "${JAR_PATH}" \
-        --model "${BASE_NAME}.psl" \
-        --data "${BASE_NAME}-learn.data" \
+        --model "${THIS_DIR}/${BASE_NAME}.psl" \
+        --data "${THIS_DIR}/${BASE_NAME}-learn.data" \
         ${ADDITIONAL_WL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS} "$@"
 
     if [[ "$?" -ne 0 ]]; then
@@ -49,8 +49,8 @@ function run_inference() {
     echo "Running PSL Inference."
 
     java -jar "${JAR_PATH}" \
-        --model "${BASE_NAME}.psl" \
-        --data "${BASE_NAME}.data" \
+        --model "${THIS_DIR}/${BASE_NAME}.psl" \
+        --data "${THIS_DIR}/${BASE_NAME}-eval.data" \
         --output "${OUTPUT_DIRECTORY}" \
         ${ADDITIONAL_EVAL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS} "$@"
 

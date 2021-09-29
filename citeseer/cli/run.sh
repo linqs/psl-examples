@@ -8,7 +8,7 @@ readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 readonly PSL_VERSION='2.3.0-SNAPSHOT'
 readonly JAR_PATH="${THIS_DIR}/psl-cli-${PSL_VERSION}.jar"
-readonly RUN_SCRIPT_VERSION='1.3.1'
+readonly RUN_SCRIPT_VERSION='1.3.2'
 
 readonly BASE_NAME='citeseer'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
@@ -35,8 +35,8 @@ function run_weight_learning() {
     echo "Running PSL Weight Learning."
 
     java -jar "${JAR_PATH}" \
-        --model "${BASE_NAME}.psl" \
-        --data "${BASE_NAME}-learn.data" \
+        --model "${THIS_DIR}/${BASE_NAME}.psl" \
+        --data "${THIS_DIR}/${BASE_NAME}-learn.data" \
         ${ADDITIONAL_WL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS} "$@"
 
     if [[ "$?" -ne 0 ]]; then
@@ -49,8 +49,8 @@ function run_inference() {
     echo "Running PSL Inference."
 
     java -jar "${JAR_PATH}" \
-        --model "${BASE_NAME}.psl" \
-        --data "${BASE_NAME}.data" \
+        --model "${THIS_DIR}/${BASE_NAME}.psl" \
+        --data "${THIS_DIR}/${BASE_NAME}-eval.data" \
         --output "${OUTPUT_DIRECTORY}" \
         ${ADDITIONAL_EVAL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS} "$@"
 
