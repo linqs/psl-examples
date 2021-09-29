@@ -2,10 +2,10 @@
 
 readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-infinite-experiments/jester.zip'
+readonly DATA_URL='__DATA_URL__'
 readonly DATA_FILE=$(basename "${DATA_URL}")
-readonly DATA_DIR='jester'
-readonly SCRIPT_VERSION='1.3.2'
+readonly DATA_DIR='__BASE_NAME__'
+readonly SCRIPT_VERSION='__SCRIPT_VERSION__'
 
 function main() {
     trap exit SIGINT

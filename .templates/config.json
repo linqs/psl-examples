@@ -1,79 +1,93 @@
 {
     "citeseer": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/citeseer.zip",
         "weightLearning": true,
         "pslOptions": "--int-ids",
         "evalOptions": "--eval CategoricalEvaluator -D categoricalevaluator.categoryindexes=1 -D eval.includeobs=true",
         "weightLearningOptions": ""
     },
     "cora": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/cora.zip",
         "weightLearning": true,
         "pslOptions": "--int-ids",
         "evalOptions": "--eval CategoricalEvaluator -D categoricalevaluator.categoryindexes=1 -D eval.includeobs=true",
         "weightLearningOptions": ""
     },
     "entity-resolution": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-small.zip",
         "weightLearning": true,
         "evalOptions": "--eval DiscreteEvaluator",
         "weightLearningOptions": ""
     },
     "epinions": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/epinions.zip",
         "weightLearning": true,
         "pslOptions": "--int-ids",
         "evalOptions": "--eval AUCEvaluator",
         "weightLearningOptions": ""
     },
     "friendship": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/friendship.zip",
         "weightLearning": false,
         "pslOptions": "--int-ids --eval DiscreteEvaluator"
     },
     "jester": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-infinite-experiments/jester.zip",
         "weightLearning": true,
         "pslOptions": "--int-ids",
         "evalOptions": "--eval ContinuousEvaluator",
         "weightLearningOptions": ""
     },
     "knowledge-graph-identification": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/knowledge-graph-identification.zip",
         "weightLearning": true,
         "pslOptions": "--int-ids",
         "evalOptions": "--eval AUCEvaluator",
         "weightLearningOptions": ""
     },
     "lastfm": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/lastfm.zip",
         "weightLearning": true,
         "pslOptions": "--int-ids",
         "evalOptions": "--eval ContinuousEvaluator",
         "weightLearningOptions": ""
     },
     "simple-acquaintances": {
-        "weightLearning": false,
         "fetchData": false,
+        "weightLearning": false,
         "pslOptions": "--eval DiscreteEvaluator"
     },
     "social-network-analysis": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/social-network-analysis.zip",
         "weightLearning": false,
         "pslOptions": "--int-ids -D admmreasoner.maxiterations=500"
     },
     "stance-4forums": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/stance-4forums.zip",
         "weightLearning": true,
         "evalOptions": "--eval ContinuousEvaluator",
         "weightLearningOptions": ""
     },
     "stance-createdebate": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/stance-createdebate.zip",
         "weightLearning": true,
         "evalOptions": "--eval ContinuousEvaluator",
         "weightLearningOptions": ""
     },
     "trust-prediction": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/trust-prediction.zip",
         "weightLearning": true,
         "pslOptions": "--int-ids",
         "evalOptions": "--eval AUCEvaluator",
         "weightLearningOptions": ""
     },
     "user-modeling": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/user-modeling.zip",
         "weightLearning": false,
         "pslOptions": "--eval DiscreteEvaluator"
     },
     "yelp": {
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/yelp.zip",
         "weightLearning": true,
         "pslOptions": "--int-ids",
         "evalOptions": "--eval ContinuousEvaluator",

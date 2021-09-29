@@ -8,8 +8,10 @@ import sys
 THIS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)))
 ROOT_DIR = os.path.join(THIS_DIR, '..')
 
-CLI_INFERENCE_TEMPLATE_PATH = os.path.join(THIS_DIR, 'cli_run_template_inference.sh')
-CLI_WEIGHT_LEARNING_TEMPLATE_PATH = os.path.join(THIS_DIR, 'cli_run_template_weight_learning.sh')
+TEMPLATE_DIR = os.path.join(THIS_DIR, 'templates')
+CLI_INFERENCE_TEMPLATE_PATH = os.path.join(TEMPLATE_DIR, 'run_cli_inference.sh')
+CLI_WEIGHT_LEARNING_TEMPLATE_PATH = os.path.join(TEMPLATE_DIR, 'run_cli_wl.sh')
+FETCH_DATA_TEMPLATE_PATH = os.path.join(TEMPLATE_DIR, 'fetch_data.sh')
 
 EXAMPLES_CONFIG_PATH = os.path.join(THIS_DIR, 'config.json')
 
@@ -22,18 +24,50 @@ TEMPLATE_SUBS = {
     '__FETCH_DATA__': 'bash "${THIS_DIR}/../data/fetchData.sh"',
 
     # Subs still needing values.
+
     '__BASE_NAME__': None,
+
+    # Execution options.
     '__PSL_OPTIONS__': None,
     '__EVAL_OPTIONS__': None,
     '__WL_OPTIONS__': None,
+
+    # Data options.
+    '__DATA_URL__': None
 }
+
+def generateScript(templatePath, subs):
+    with open(templatePath, 'r') as file:
+        contents = file.read()
+
+    for (find, replace) in subs.items():
+        if (replace is not None):
+            contents = contents.replace(find, replace.strip())
+
+    return contents
+
+def generateFetchDataScript(baseName,
+        fetchData = True, dataURL = None,
+        **kwargs):
+    if (not fetchData):
+        return None
+
+    if (dataURL is None):
+        raise KeyError("%s has no dataURL." % (baseName))
+
+    subs = dict(TEMPLATE_SUBS)
+    subs['__BASE_NAME__'] = baseName
+    subs['__DATA_URL__'] = dataURL
+
+    return generateScript(FETCH_DATA_TEMPLATE_PATH, subs)
 
 def generateCLIScript(baseName,
         weightLearning = True, fetchData = True,
-        pslOptions = '', evalOptions = '', weightLearningOptions = ''):
-    template_path = CLI_INFERENCE_TEMPLATE_PATH
+        pslOptions = '', evalOptions = '', weightLearningOptions = '',
+        **kwargs):
+    templatePath = CLI_INFERENCE_TEMPLATE_PATH
     if (weightLearning):
-        template_path = CLI_WEIGHT_LEARNING_TEMPLATE_PATH
+        templatePath = CLI_WEIGHT_LEARNING_TEMPLATE_PATH
 
     subs = dict(TEMPLATE_SUBS)
     subs['__BASE_NAME__'] = baseName
@@ -50,26 +84,35 @@ def generateCLIScript(baseName,
     if (not fetchData):
         subs['__FETCH_DATA__'] = '# No data fetching necessary.'
 
-    with open(template_path, 'r') as file:
-        contents = file.read()
+    return generateScript(templatePath, subs)
 
-    for (find, replace) in subs.items():
-        contents = contents.replace(find, replace.strip())
+def writeCLIScript(baseName, baseConfig):
+    scriptContents = generateCLIScript(baseName, **baseConfig)
 
-    return contents
+    outPath = os.path.join(ROOT_DIR, baseName, 'cli', 'run.sh')
+    with open(outPath, 'w') as file:
+        file.write(scriptContents)
+
+    os.chmod(outPath, 0o775)
+
+def writeFetchDataScript(baseName, baseConfig):
+    scriptContents = generateFetchDataScript(baseName, **baseConfig)
+    if (scriptContents is None):
+        return
+
+    outPath = os.path.join(ROOT_DIR, baseName, 'data', 'fetchData.sh')
+    with open(outPath, 'w') as file:
+        file.write(scriptContents)
+
+    os.chmod(outPath, 0o775)
 
 def main():
     with open(EXAMPLES_CONFIG_PATH, 'r') as file:
         config = json.load(file)
 
     for baseName in config:
-        scriptContents = generateCLIScript(baseName, **config[baseName])
-
-        outPath = os.path.join(ROOT_DIR, baseName, 'cli', 'run.sh')
-        with open(outPath, 'w') as file:
-            file.write(scriptContents)
-
-        os.chmod(outPath, 0o775)
+        writeCLIScript(baseName, config[baseName])
+        writeFetchDataScript(baseName, config[baseName])
 
 def _load_args(args):
     executable = args.pop(0)
