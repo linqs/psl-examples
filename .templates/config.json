@@ -1,7 +1,82 @@
 {
+    "citeseer": {
+        "weightLearning": true,
+        "pslOptions": "--int-ids",
+        "evalOptions": "--eval CategoricalEvaluator -D categoricalevaluator.categoryindexes=1 -D eval.includeobs=true",
+        "weightLearningOptions": ""
+    },
+    "cora": {
+        "weightLearning": true,
+        "pslOptions": "--int-ids",
+        "evalOptions": "--eval CategoricalEvaluator -D categoricalevaluator.categoryindexes=1 -D eval.includeobs=true",
+        "weightLearningOptions": ""
+    },
+    "entity-resolution": {
+        "weightLearning": true,
+        "evalOptions": "--eval DiscreteEvaluator",
+        "weightLearningOptions": ""
+    },
+    "epinions": {
+        "weightLearning": true,
+        "pslOptions": "--int-ids",
+        "evalOptions": "--eval AUCEvaluator",
+        "weightLearningOptions": ""
+    },
+    "friendship": {
+        "weightLearning": false,
+        "pslOptions": "--int-ids --eval DiscreteEvaluator"
+    },
+    "jester": {
+        "weightLearning": true,
+        "pslOptions": "--int-ids",
+        "evalOptions": "--eval ContinuousEvaluator",
+        "weightLearningOptions": ""
+    },
+    "knowledge-graph-identification": {
+        "weightLearning": true,
+        "pslOptions": "--int-ids",
+        "evalOptions": "--eval AUCEvaluator",
+        "weightLearningOptions": ""
+    },
+    "lastfm": {
+        "weightLearning": true,
+        "pslOptions": "--int-ids",
+        "evalOptions": "--eval ContinuousEvaluator",
+        "weightLearningOptions": ""
+    },
     "simple-acquaintances": {
         "weightLearning": false,
         "fetchData": false,
         "pslOptions": "--eval DiscreteEvaluator"
+    },
+    "social-network-analysis": {
+        "weightLearning": false,
+        "pslOptions": "--int-ids -D admmreasoner.maxiterations=500"
+    },
+    "stance-4forums": {
+        "weightLearning": true,
+        "evalOptions": "--eval ContinuousEvaluator",
+        "weightLearningOptions": ""
+    },
+    "stance-createdebate": {
+        "weightLearning": true,
+        "evalOptions": "--eval ContinuousEvaluator",
+        "weightLearningOptions": ""
+    },
+    "trust-prediction": {
+        "weightLearning": true,
+        "pslOptions": "--int-ids",
+        "evalOptions": "--eval AUCEvaluator",
+        "weightLearningOptions": ""
+    },
+    "user-modeling": {
+        "weightLearning": false,
+        "pslOptions": "--eval DiscreteEvaluator"
+    },
+    "yelp": {
+        "weightLearning": true,
+        "pslOptions": "--int-ids",
+        "evalOptions": "--eval ContinuousEvaluator",
+        "weightLearningOptions": ""
     }
 }

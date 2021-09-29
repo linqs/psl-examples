@@ -6,21 +6,21 @@
 
 readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-readonly PSL_VERSION='2.3.0-SNAPSHOT'
+readonly PSL_VERSION='__PSL_VERSION__'
 readonly JAR_PATH="${THIS_DIR}/psl-cli-${PSL_VERSION}.jar"
-readonly RUN_SCRIPT_VERSION='1.3.1'
+readonly RUN_SCRIPT_VERSION='__SCRIPT_VERSION__'
 
-readonly BASE_NAME='knowledge-graph-identification'
+readonly BASE_NAME='__BASE_NAME__'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
 
-readonly ADDITIONAL_PSL_OPTIONS='--int-ids'
-readonly ADDITIONAL_WL_OPTIONS='--learn'
-readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval AUCEvaluator'
+readonly ADDITIONAL_PSL_OPTIONS='__PSL_OPTIONS__'
+readonly ADDITIONAL_WL_OPTIONS='__WL_OPTIONS__'
+readonly ADDITIONAL_EVAL_OPTIONS='__EVAL_OPTIONS__'
 
 function main() {
     trap exit SIGINT
 
-    bash "${THIS_DIR}/../data/fetchData.sh"
+    __FETCH_DATA__
 
     # Make sure we can run PSL.
     check_requirements

@@ -19,7 +19,7 @@ PSL_VERSION = '2.3.0-SNAPSHOT'
 TEMPLATE_SUBS = {
     '__SCRIPT_VERSION__': SCRIPT_VERSION,
     '__PSL_VERSION__': PSL_VERSION,
-    '__FETCH_DATA__': 'bash ../data/fetchData.sh',
+    '__FETCH_DATA__': 'bash "${THIS_DIR}/../data/fetchData.sh"',
 
     # Subs still needing values.
     '__BASE_NAME__': None,
