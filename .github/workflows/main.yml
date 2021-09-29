@@ -5,7 +5,7 @@ name: Main
 on: push
 
 jobs:
-  build-test:
+  main:
 
     runs-on: ubuntu-20.04
 
