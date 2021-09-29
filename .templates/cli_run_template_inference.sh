@@ -6,19 +6,19 @@
 
 readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-readonly PSL_VERSION='2.3.0-SNAPSHOT'
+readonly PSL_VERSION='__PSL_VERSION__'
 readonly JAR_PATH="${THIS_DIR}/psl-cli-${PSL_VERSION}.jar"
-readonly RUN_SCRIPT_VERSION='1.3.1'
+readonly RUN_SCRIPT_VERSION='__SCRIPT_VERSION__'
 
-readonly BASE_NAME='simple-acquaintances'
+readonly BASE_NAME='__BASE_NAME__'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
 
-readonly ADDITIONAL_PSL_OPTIONS='--infer --eval DiscreteEvaluator'
+readonly ADDITIONAL_PSL_OPTIONS='__PSL_OPTIONS__'
 
 function main() {
     trap exit SIGINT
 
-    # No data fetching necessary.
+    __FETCH_DATA__
 
     # Make sure we can run PSL.
     check_requirements

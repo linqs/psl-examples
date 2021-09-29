@@ -1,0 +1,7 @@
+{
+    "simple-acquaintances": {
+        "weightLearning": false,
+        "fetchData": false,
+        "pslOptions": "--eval DiscreteEvaluator"
+    }
+}
