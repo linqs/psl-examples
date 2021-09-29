@@ -4,10 +4,14 @@
 # It esentially just ensures that the data exists and runs the python script.
 # User's should ensure that the `pslpython` python package is installed.
 
+readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 readonly BASE_NAME='simple-acquaintances'
 
 function main() {
    trap exit SIGINT
+
+   cd "${THIS_DIR}"
 
    check_requirements
    run
@@ -31,4 +35,4 @@ function check_requirements() {
    fi
 }
 
-main "$@"
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"

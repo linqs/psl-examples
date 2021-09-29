@@ -1,11 +1,15 @@
 #!/bin/bash
 
+readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 readonly BASE_NAME='simpleacquaintances'
 readonly CLASSPATH_FILE='classpath.out'
 readonly TARGET_CLASS="org.linqs.psl.examples.${BASE_NAME}.Run"
 
 function main() {
    trap exit SIGINT
+
+   cd "${THIS_DIR}"
 
    check_requirements
    compile
@@ -56,4 +60,4 @@ function compile() {
    fi
 }
 
-main "$@"
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"

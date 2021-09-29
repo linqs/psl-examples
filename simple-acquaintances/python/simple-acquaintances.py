@@ -8,7 +8,9 @@ from pslpython.predicate import Predicate
 from pslpython.rule import Rule
 
 MODEL_NAME = 'simple-acquaintances'
-DATA_DIR = os.path.join('..', 'data', 'simple-acquaintances', '0', 'eval')
+
+THIS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)))
+DATA_DIR = os.path.join(THIS_DIR, '..', 'data', 'simple-acquaintances', '0', 'eval')
 
 ADDITIONAL_PSL_OPTIONS = {
     'log4j.threshold': 'INFO'

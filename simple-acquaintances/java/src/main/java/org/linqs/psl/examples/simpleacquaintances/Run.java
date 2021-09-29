@@ -1,7 +1,7 @@
 package org.linqs.psl.examples.simpleacquaintances;
 
 import org.linqs.psl.application.inference.InferenceApplication;
-import org.linqs.psl.application.inference.MPEInference;
+import org.linqs.psl.application.inference.mpe.MPEInference;
 import org.linqs.psl.config.Config;
 import org.linqs.psl.database.Database;
 import org.linqs.psl.database.DataStore;
@@ -40,7 +40,7 @@ public class Run {
     private static final String PARTITION_TARGETS = "targets";
     private static final String PARTITION_TRUTH = "truth";
 
-    private static final String DATA_PATH = Paths.get("..", "data").toString();
+    private static final String DATA_PATH = Paths.get("..", "data", "simple-acquaintances", "0", "eval").toString();
     private static final String OUTPUT_PATH = "inferred-predicates";
 
     private static Logger log = LoggerFactory.getLogger(Run.class);
@@ -118,7 +118,7 @@ public class Run {
         StandardPredicate[] closedPredicates = new StandardPredicate[]{model.getStandardPredicate("Lived"), model.getStandardPredicate("Likes")};
         Database inferDB = dataStore.getDatabase(targetsPartition, closedPredicates, obsPartition);
 
-        InferenceApplication inference = new MPEInference(model, inferDB);
+        InferenceApplication inference = new MPEInference(model.getRules(), inferDB);
         inference.inference();
 
         inference.close();
