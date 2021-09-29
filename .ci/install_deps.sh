@@ -15,9 +15,10 @@ function main() {
     set -e
 
     local pslVersion=$(grep '^PSL_VERSION' "${GENERATE_SCRIPT}" | sed "s/^.* = '\(.\+\)'$/\1/")
+    local versionNumber=$(echo "${pslVersion}" | sed 's/-SNAPSHOT//')
 
     if [[ ${pslVersion} =~ -SNAPSHOT$ ]] ; then
-        python3 -m pip install --user --upgrade --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ pslpython
+        python3 -m pip install --user --upgrade --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ "pslpython>=${versionNumber}.dev,<${versionNumber}.rc"
     else
         python3 -m pip install --user --upgrade pslpython
     fi
