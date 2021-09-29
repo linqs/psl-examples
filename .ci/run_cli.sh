@@ -6,7 +6,7 @@ readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 readonly BASE_DIR="${THIS_DIR}/.."
 
 # Skip these examples because of the amount of memory necessary on the CI machine.
-readonly SKIP_EXAMPLES="lastfm"
+readonly SKIP_EXAMPLES="lastfm yelp"
 
 function main() {
     if [[ $# -ne 0 ]] ; then
