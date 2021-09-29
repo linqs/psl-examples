@@ -43,6 +43,9 @@ jobs:
       - name: Install Dependencies
         run: ./.ci/install_deps.sh
 
+      - name: Run Convention Checks
+        run: ./.ci/check_conventions.sh
+
       - name: Run Interface Examples
         run: ./.ci/run_interface_examples.sh
 
