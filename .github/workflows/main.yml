@@ -50,4 +50,4 @@ jobs:
         run: ./.ci/run_interface_examples.sh
 
       - name: Run CLI Examples
-        run: ./.ci/run_cli.sh
+        run: ./.ci/run_examples.sh
