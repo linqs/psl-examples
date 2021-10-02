@@ -1,5 +1,7 @@
 # PSL Examples
 
+[![Build Status](https://github.com/linqs/psl-examples/actions/workflows/main.yml/badge.svg)](https://github.com/linqs/psl-examples/actions/workflows/main.yml)
+
 Various examples to showcase the functionality of PSL.
 
 Each experiment will generally have the following structure:
