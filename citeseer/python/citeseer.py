@@ -8,7 +8,9 @@ from pslpython.predicate import Predicate
 from pslpython.rule import Rule
 
 MODEL_NAME = 'citeseer'
-DATA_DIR = os.path.join('..', 'data', MODEL_NAME, '0')
+
+THIS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)))
+DATA_DIR = os.path.join(THIS_DIR, '..', 'data', MODEL_NAME, '0')
 
 ADDITIONAL_PSL_OPTIONS = {
     'log4j.threshold': 'INFO'
@@ -46,7 +48,7 @@ def main():
     write_results(results, model)
 
 def write_results(results, model):
-    out_dir = 'inferred-predicates'
+    out_dir = os.path.join(THIS_DIR, 'inferred-predicates')
     os.makedirs(out_dir, exist_ok = True)
 
     for predicate in model.get_predicates().values():

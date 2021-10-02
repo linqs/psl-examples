@@ -4,32 +4,28 @@
 # It esentially just ensures that the data exists and runs the python script.
 # User's should ensure that the `pslpython` python package is installed.
 
+readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 readonly BASE_NAME='citeseer'
-readonly FETCH_DATA_SCRIPT='../data/fetchData.sh'
+readonly RUN_SCRIPT_VERSION='1.1.0'
 
 function main() {
    trap exit SIGINT
 
-   getData
+   cd "${THIS_DIR}"
+
+    bash "${THIS_DIR}/../data/fetchData.sh"
+
    check_requirements
    run
 }
 
-function getData() {
-   pushd . > /dev/null
-
-   cd "$(dirname $FETCH_DATA_SCRIPT)"
-   bash "$(basename $FETCH_DATA_SCRIPT)"
-
-   popd > /dev/null
-}
-
 function run() {
-   echo "Running PSL"
+   echo "Running PSL."
 
    python3 "${BASE_NAME}.py"
    if [[ "$?" -ne 0 ]]; then
-      echo 'ERROR: Failed to run'
+      echo 'ERROR: Failed to run.'
       exit 60
    fi
 }
@@ -37,9 +33,9 @@ function run() {
 function check_requirements() {
    type python3 > /dev/null 2> /dev/null
    if [[ "$?" -ne 0 ]]; then
-      echo 'ERROR: python3 required to run project'
+      echo 'ERROR: python3 required to run project.'
       exit 10
    fi
 }
 
-main "$@"
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
