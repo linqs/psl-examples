@@ -49,7 +49,7 @@ function run_inference() {
     echo "Running PSL Inference."
 
     java -jar "${JAR_PATH}" \
-        --model "${THIS_DIR}/${BASE_NAME}.psl" \
+        --model "${THIS_DIR}/${BASE_NAME}-learned.psl" \
         --data "${THIS_DIR}/${BASE_NAME}-eval.data" \
         --output "${OUTPUT_DIRECTORY}" \
         ${ADDITIONAL_EVAL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS} "$@"
