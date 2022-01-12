@@ -20,7 +20,7 @@ if [ "$TRAVIS_BRANCH" = 'master' ]; then
 fi
 
 # We will use the same owner for PSL core as this repo's owner.
-owner=$(echo "$TRAVIS_REPO_SLUG" | sed 's#/.\+$##')
+owner=$(echo "$TRAVIS_REPO_SLUG" | sed -E 's#/.+$##')
 
 pushd . > /dev/null
     for repo in $TARGET_REPOS; do

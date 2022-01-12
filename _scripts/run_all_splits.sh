@@ -55,7 +55,8 @@ function run_example() {
         fi
 
         # Change the split used in the data files.
-        sed -i "s#data/${exampleName}/[0-9]\\+#data/${exampleName}/${splitId}#g" "${cliDir}/${exampleName}"*.data
+        sed -i'.bak' -E "s#data/${exampleName}/[0-9]+#data/${exampleName}/${splitId}#g" "${cliDir}/${exampleName}"*.data
+        rm "${cliDir}/${exampleName}"*.data.bak
 
         echo "Running ${exampleName} -- ${RUN_ID}:${splitId}."
 
@@ -63,7 +64,8 @@ function run_example() {
     done
 
     # Reset the data files back to split zero.
-    sed -i "s#data/${exampleName}/[0-9]\\+#data/${exampleName}/0#g" "${cliDir}/${exampleName}"*.data
+    sed -i'.bak' -E "s#data/${exampleName}/[0-9]+#data/${exampleName}/0#g" "${cliDir}/${exampleName}"*.data
+    rm "${cliDir}/${exampleName}"*.data.bak
 }
 
 function main() {

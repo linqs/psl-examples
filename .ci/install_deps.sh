@@ -14,8 +14,8 @@ function main() {
     trap exit SIGINT
     set -e
 
-    local pslVersion=$(grep '^PSL_VERSION' "${GENERATE_SCRIPT}" | sed "s/^.* = '\(.\+\)'$/\1/")
-    local versionNumber=$(echo "${pslVersion}" | sed 's/-SNAPSHOT//')
+    local pslVersion=$(grep '^PSL_VERSION' "${GENERATE_SCRIPT}" | sed -E "s/^.* = '(.+)'$/\1/")
+    local versionNumber=$(echo "${pslVersion}" | sed -E 's/-SNAPSHOT//')
 
     if [[ ${pslVersion} =~ -SNAPSHOT$ ]] ; then
         python3 -m pip install --user --upgrade --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ "pslpython>=${versionNumber}.dev,<${versionNumber}.rc"

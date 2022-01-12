@@ -143,11 +143,11 @@ function fetch_psl() {
         rm -f "${metadataFilename}"
         fetch_file "${snotshotMetadataURL}" "${metadataFilename}"
 
-        local snapshotDate=$(grep -m 1 'timestamp' "${metadataFilename}" | sed 's/^.*>\([0-9]\+\.[0-9]\+\)<.*$/\1/')
-        local snapshotNumber=$(grep -m 1 'buildNumber' "${metadataFilename}" | sed 's/^.*>\([0-9]\+\)<.*$/\1/')
+        local snapshotDate=$(grep -m 1 'timestamp' "${metadataFilename}" | sed -E 's/^.*>([0-9]+\.[0-9]+)<.*$/\1/')
+        local snapshotNumber=$(grep -m 1 'buildNumber' "${metadataFilename}" | sed -E 's/^.*>([0-9]+)<.*$/\1/')
         rm -f "${metadataFilename}"
 
-        local baseVersion=$(echo "${PSL_VERSION}" | sed 's/-SNAPSHOT$//')
+        local baseVersion=$(echo "${PSL_VERSION}" | sed -E 's/-SNAPSHOT$//')
         local version="${baseVersion}-${snapshotDate}-${snapshotNumber}"
 
         local snotshotJarURL="https://oss.sonatype.org/content/repositories/snapshots/org/linqs/psl-cli/${PSL_VERSION}/psl-cli-${version}.jar"

@@ -8,7 +8,7 @@ readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 readonly PSL_VERSION='2.3.0-SNAPSHOT'
 readonly JAR_PATH="${THIS_DIR}/psl-cli-${PSL_VERSION}.jar"
-readonly RUN_SCRIPT_VERSION='1.3.3'
+readonly RUN_SCRIPT_VERSION='1.3.4'
 
 readonly BASE_NAME='simple-acquaintances'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
@@ -126,11 +126,11 @@ function fetch_psl() {
         rm -f "${metadataFilename}"
         fetch_file "${snotshotMetadataURL}" "${metadataFilename}"
 
-        local snapshotDate=$(grep -m 1 'timestamp' "${metadataFilename}" | sed 's/^.*>\([0-9]\+\.[0-9]\+\)<.*$/\1/')
-        local snapshotNumber=$(grep -m 1 'buildNumber' "${metadataFilename}" | sed 's/^.*>\([0-9]\+\)<.*$/\1/')
+        local snapshotDate=$(grep -m 1 'timestamp' "${metadataFilename}" | sed -E 's/^.*>([0-9]+\.[0-9]+)<.*$/\1/')
+        local snapshotNumber=$(grep -m 1 'buildNumber' "${metadataFilename}" | sed 's/^.*>([0-9]+)<.*$/\1/')
         rm -f "${metadataFilename}"
 
-        local baseVersion=$(echo "${PSL_VERSION}" | sed 's/-SNAPSHOT$//')
+        local baseVersion=$(echo "${PSL_VERSION}" | sed -E 's/-SNAPSHOT$//')
         local version="${baseVersion}-${snapshotDate}-${snapshotNumber}"
 
         local snotshotJarURL="https://oss.sonatype.org/content/repositories/snapshots/org/linqs/psl-cli/${PSL_VERSION}/psl-cli-${version}.jar"
