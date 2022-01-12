@@ -15,7 +15,7 @@ FETCH_DATA_TEMPLATE_PATH = os.path.join(TEMPLATE_DIR, 'fetch_data.sh')
 
 EXAMPLES_CONFIG_PATH = os.path.join(THIS_DIR, 'config.json')
 
-SCRIPT_VERSION = '1.3.4'
+SCRIPT_VERSION = '1.3.5'
 PSL_VERSION = '2.3.0-SNAPSHOT'
 
 TEMPLATE_SUBS = {

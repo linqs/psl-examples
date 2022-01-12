@@ -127,7 +127,7 @@ function fetch_psl() {
         fetch_file "${snotshotMetadataURL}" "${metadataFilename}"
 
         local snapshotDate=$(grep -m 1 'timestamp' "${metadataFilename}" | sed -E 's/^.*>([0-9]+\.[0-9]+)<.*$/\1/')
-        local snapshotNumber=$(grep -m 1 'buildNumber' "${metadataFilename}" | sed 's/^.*>([0-9]+)<.*$/\1/')
+        local snapshotNumber=$(grep -m 1 'buildNumber' "${metadataFilename}" | sed -E 's/^.*>([0-9]+)<.*$/\1/')
         rm -f "${metadataFilename}"
 
         local baseVersion=$(echo "${PSL_VERSION}" | sed -E 's/-SNAPSHOT$//')
