@@ -22,8 +22,8 @@ elif [[ $OSTYPE == 'darwin'*  || -x "$(command -v sysctl)" ]]; then
     AVAILABLE_MEM_KB=$(echo $(($(sysctl -n hw.memsize) / 1024)))
 fi
 
-# Floor by multiples of 5 and then reserve an additional 5 GB.
-readonly JAVA_MEM_GB=$((${AVAILABLE_MEM_KB} / 1024 / 1024 / 5 * 5 - 5))
+# Reserve 4 GB.
+readonly JAVA_MEM_GB=$((${AVAILABLE_MEM_KB} / 1024 / 1024 - 4))
 
 function fetch_psl_examples() {
    if [ -e ${PSL_EXAMPLES_DIR} ]; then
