@@ -8,7 +8,7 @@ readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 readonly PSL_VERSION='2.3.0-SNAPSHOT'
 readonly JAR_PATH="${THIS_DIR}/psl-cli-${PSL_VERSION}.jar"
-readonly RUN_SCRIPT_VERSION='1.3.5'
+readonly RUN_SCRIPT_VERSION='1.3.6'
 
 readonly BASE_NAME='social-network-analysis'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"

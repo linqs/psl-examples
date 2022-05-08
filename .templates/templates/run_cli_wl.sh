@@ -37,7 +37,7 @@ function run_weight_learning() {
     java -jar "${JAR_PATH}" \
         --model "${THIS_DIR}/${BASE_NAME}.psl" \
         --data "${THIS_DIR}/${BASE_NAME}-learn.data" \
-        ${ADDITIONAL_WL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS} "$@"
+        ${ADDITIONAL_PSL_OPTIONS} ${ADDITIONAL_WL_OPTIONS} "$@"
 
     if [[ "$?" -ne 0 ]]; then
         echo 'ERROR: Failed to run weight learning.'
@@ -52,7 +52,7 @@ function run_inference() {
         --model "${THIS_DIR}/${BASE_NAME}-learned.psl" \
         --data "${THIS_DIR}/${BASE_NAME}-eval.data" \
         --output "${OUTPUT_DIRECTORY}" \
-        ${ADDITIONAL_EVAL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS} "$@"
+        ${ADDITIONAL_PSL_OPTIONS} ${ADDITIONAL_EVAL_OPTIONS} "$@"
 
     if [[ "$?" -ne 0 ]]; then
         echo 'ERROR: Failed to run infernce.'

@@ -8,7 +8,7 @@ readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 readonly PSL_VERSION='2.3.0-SNAPSHOT'
 readonly JAR_PATH="${THIS_DIR}/psl-cli-${PSL_VERSION}.jar"
-readonly RUN_SCRIPT_VERSION='1.3.5'
+readonly RUN_SCRIPT_VERSION='1.3.6'
 
 readonly BASE_NAME='knowledge-graph-identification'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
@@ -37,7 +37,7 @@ function run_weight_learning() {
     java -jar "${JAR_PATH}" \
         --model "${THIS_DIR}/${BASE_NAME}.psl" \
         --data "${THIS_DIR}/${BASE_NAME}-learn.data" \
-        ${ADDITIONAL_WL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS} "$@"
+        ${ADDITIONAL_PSL_OPTIONS} ${ADDITIONAL_WL_OPTIONS} "$@"
 
     if [[ "$?" -ne 0 ]]; then
         echo 'ERROR: Failed to run weight learning.'
@@ -52,7 +52,7 @@ function run_inference() {
         --model "${THIS_DIR}/${BASE_NAME}-learned.psl" \
         --data "${THIS_DIR}/${BASE_NAME}-eval.data" \
         --output "${OUTPUT_DIRECTORY}" \
-        ${ADDITIONAL_EVAL_OPTIONS} ${ADDITIONAL_PSL_OPTIONS} "$@"
+        ${ADDITIONAL_PSL_OPTIONS} ${ADDITIONAL_EVAL_OPTIONS} "$@"
 
     if [[ "$?" -ne 0 ]]; then
         echo 'ERROR: Failed to run infernce.'

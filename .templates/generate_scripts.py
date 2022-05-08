@@ -15,7 +15,7 @@ FETCH_DATA_TEMPLATE_PATH = os.path.join(TEMPLATE_DIR, 'fetch_data.sh')
 
 EXAMPLES_CONFIG_PATH = os.path.join(THIS_DIR, 'config.json')
 
-SCRIPT_VERSION = '1.3.5'
+SCRIPT_VERSION = '1.3.6'
 PSL_VERSION = '2.3.0-SNAPSHOT'
 
 TEMPLATE_SUBS = {
@@ -117,7 +117,7 @@ def main():
 def _load_args(args):
     executable = args.pop(0)
     if (len(args) != 0 or ({'h', 'help'} & {arg.lower().strip().replace('-', '') for arg in args})):
-        print("USAGE: python3 %s" % (executable, OPERATION_OVERALL, OPERATION_CURVE), file = sys.stderr)
+        print("USAGE: python3 %s" % (executable), file = sys.stderr)
         sys.exit(1)
 
 if (__name__ == '__main__'):
