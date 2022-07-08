@@ -6,7 +6,7 @@
 
 readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-readonly PSL_VERSION='2.3.0-SNAPSHOT'
+readonly PSL_VERSION='2.3.0'
 readonly JAR_PATH="${THIS_DIR}/psl-cli-${PSL_VERSION}.jar"
 readonly RUN_SCRIPT_VERSION='1.3.6'
 
