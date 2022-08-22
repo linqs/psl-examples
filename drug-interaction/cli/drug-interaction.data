@@ -17,6 +17,7 @@ observations:
    ligandSimilarity: ../data/drug-bank/ligandsimilarity.csv
    seqSimilarity: ../data/drug-bank/seqsimilarity.csv
    SideEffectSimilarity: ../data/drug-bank/sideeffectsimilarity.csv
+   validInteraction: ../data/drug-bank/validInteractions.txt
    interacts: ../data/drug-bank/0/eval/interacts_obs.txt
 
 targets:
