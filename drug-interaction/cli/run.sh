@@ -13,7 +13,8 @@ readonly RUN_SCRIPT_VERSION='1.3.6'
 readonly BASE_NAME='drug-interaction'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
 
-readonly ADDITIONAL_PSL_OPTIONS='--infer --int-ids --eval DiscreteEvaluator'
+# readonly ADDITIONAL_PSL_OPTIONS='--infer --int-ids --eval DiscreteEvaluator'
+readonly ADDITIONAL_PSL_OPTIONS='--infer --int-ids --eval AUCEvaluator'
 
 function main() {
     trap exit SIGINT
