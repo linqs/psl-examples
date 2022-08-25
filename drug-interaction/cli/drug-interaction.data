@@ -10,13 +10,13 @@ predicates:
     interacts/2: open
 
 observations:
-   ATCsimilarity: ../data/drug-bank/atcsimilarity.csv
-   chemicalSimilarity: ../data/drug-bank/chemicalsimilarity.csv
-   distSimilarity: ../data/drug-bank/distsimilarity.csv
-   GOSimilarity: ../data/drug-bank/gosimilarity.csv
-   ligandSimilarity: ../data/drug-bank/ligandsimilarity.csv
-   seqSimilarity: ../data/drug-bank/seqsimilarity.csv
-   SideEffectSimilarity: ../data/drug-bank/sideeffectsimilarity.csv
+   ATCsimilarity: ../data/drug-bank/atcsimilarity.txt
+   chemicalSimilarity: ../data/drug-bank/chemicalsimilarity.txt
+   distSimilarity: ../data/drug-bank/distsimilarity.txt
+   GOSimilarity: ../data/drug-bank/gosimilarity.txt
+   ligandSimilarity: ../data/drug-bank/ligandsimilarity.txt
+   seqSimilarity: ../data/drug-bank/seqsimilarity.txt
+   SideEffectSimilarity: ../data/drug-bank/sideeffectsimilarity.txt
    validInteraction: ../data/drug-bank/validInteractions.txt
    interacts: ../data/drug-bank/0/eval/interacts_obs.txt
 
