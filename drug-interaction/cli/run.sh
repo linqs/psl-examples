@@ -20,6 +20,10 @@ readonly ADDITIONAL_PSL_OPTIONS="--infer \
     -D discreteevaluator.threshold=0.4 \
 "
 
+readonly ADDITIONAL_WL_OPTIONS="--learn GaussianProcessPrior \
+    -D weightlearning.evaluator=AUCEvaluator \
+"
+
 function main() {
     trap exit SIGINT
 
@@ -31,15 +35,30 @@ function main() {
     fetch_psl
 
     # Run PSL.
+    run_weight_learning "$@"
     run_inference "$@"
+}
+
+function run_weight_learning() {
+    echo "Running PSL Weight Learning."
+
+    java -jar "${JAR_PATH}" \
+        --model "${THIS_DIR}/${BASE_NAME}.psl" \
+        --data "${THIS_DIR}/${BASE_NAME}-learn.data" \
+        ${ADDITIONAL_PSL_OPTIONS} ${ADDITIONAL_WL_OPTIONS} "$@"
+
+    if [[ "$?" -ne 0 ]]; then
+        echo 'ERROR: Failed to run weight learning.'
+        exit 60
+    fi
 }
 
 function run_inference() {
     echo "Running PSL Inference."
 
     java -jar "${JAR_PATH}" \
-        --model "${THIS_DIR}/${BASE_NAME}.psl" \
-        --data "${THIS_DIR}/${BASE_NAME}.data" \
+        --model "${THIS_DIR}/${BASE_NAME}-learned.psl" \
+        --data "${THIS_DIR}/${BASE_NAME}-eval.data" \
         --output "${OUTPUT_DIRECTORY}" \
         ${ADDITIONAL_PSL_OPTIONS} "$@"
 
