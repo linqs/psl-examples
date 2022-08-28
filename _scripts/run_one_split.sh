@@ -19,7 +19,6 @@ function run_psl() {
 
     local outPath="${outDir}/out.txt"
     local errPath="${outDir}/out.err"
-    local timePath="${outDir}/time.txt"
 
     if [[ -e "${outPath}" ]]; then
         echo "Output file already exists, skipping: ${outPath}"
@@ -30,7 +29,7 @@ function run_psl() {
         cd "${cliDir}"
 
         # Run PSL.
-        /usr/bin/time -v --output="${timePath}" ./run.sh ${extraOptions} > "${outPath}" 2> "${errPath}"
+        ./run.sh ${extraOptions} > "${outPath}" 2> "${errPath}"
 
         # Copy any artifacts into the output directory.
         cp -r inferred-predicates "${outDir}/"
@@ -61,7 +60,7 @@ function main() {
     trap exit SIGINT
 
     for exampleDir in "$@"; do
-        run_example "${exampleDir}" "${i}"
+        run_example "${exampleDir}"
     done
 }
 
