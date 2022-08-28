@@ -10,14 +10,14 @@ predicates:
     interacts/2: open
 
 observations:
-   ATCsimilarity: ../data/drug-bank/atcsimilarity.txt
-   chemicalSimilarity: ../data/drug-bank/chemicalsimilarity.txt
-   distSimilarity: ../data/drug-bank/distsimilarity.txt
-   GOSimilarity: ../data/drug-bank/gosimilarity.txt
-   ligandSimilarity: ../data/drug-bank/ligandsimilarity.txt
-   seqSimilarity: ../data/drug-bank/seqsimilarity.txt
-   SideEffectSimilarity: ../data/drug-bank/sideeffectsimilarity.txt
-   validInteraction: ../data/drug-bank/0/eval/validInteractions.txt
+   ATCsimilarity: ../data/drug-bank/similarity_atc.txt
+   chemicalSimilarity: ../data/drug-bank/similarity_chemical.txt
+   distSimilarity: ../data/drug-bank/similarity_dist.txt
+   GOSimilarity: ../data/drug-bank/similarity_go.txt
+   ligandSimilarity: ../data/drug-bank/similarity_ligand.txt
+   seqSimilarity: ../data/drug-bank/similarity_seq.txt
+   SideEffectSimilarity: ../data/drug-bank/similarity_sideeffects.txt
+   validInteraction: ../data/drug-bank/0/eval/valid_interactions_obs.txt
    interacts: ../data/drug-bank/0/eval/interacts_obs.txt
 
 targets:
