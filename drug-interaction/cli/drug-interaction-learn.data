@@ -10,19 +10,19 @@ predicates:
     interacts/2: open
 
 observations:
-   ATCsimilarity: ../data/drug-bank/similarity_atc.txt
-   chemicalSimilarity: ../data/drug-bank/similarity_chemical.txt
-   distSimilarity: ../data/drug-bank/similarity_dist.txt
-   GOSimilarity: ../data/drug-bank/similarity_go.txt
-   ligandSimilarity: ../data/drug-bank/similarity_ligand.txt
-   seqSimilarity: ../data/drug-bank/similarity_seq.txt
-   SideEffectSimilarity: ../data/drug-bank/similarity_sideeffects.txt
-   validInteraction: ../data/drug-bank/0/learn/valid_interactions_obs.txt
-   interacts: ../data/drug-bank/0/learn/interacts_obs.txt
+   ATCsimilarity: ../data/general-interactions/similarity_atc.txt
+   chemicalSimilarity: ../data/general-interactions/similarity_chemical.txt
+   distSimilarity: ../data/general-interactions/similarity_dist.txt
+   GOSimilarity: ../data/general-interactions/similarity_go.txt
+   ligandSimilarity: ../data/general-interactions/similarity_ligand.txt
+   seqSimilarity: ../data/general-interactions/similarity_seq.txt
+   SideEffectSimilarity: ../data/general-interactions/similarity_sideeffects.txt
+   validInteraction: ../data/general-interactions/0/learn/valid_interactions_obs.txt
+   interacts: ../data/general-interactions/0/learn/interacts_obs.txt
 
 targets:
-   interacts: ../data/drug-bank/0/learn/interacts_target.txt
+   interacts: ../data/general-interactions/0/learn/interacts_target.txt
    
 truth:
-   interacts: ../data/drug-bank/0/learn/interacts_truth.txt
+   interacts: ../data/general-interactions/0/learn/interacts_truth.txt
 
