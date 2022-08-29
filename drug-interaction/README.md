@@ -1,25 +1,27 @@
 ### Drug-drug interaction
 
 ## Problem
-
 In this example, we attempt to infer unknown DDIs from a network of
 multiple drug-based similarities and known interactions. 
 
 ## Dataset
-The dataset came from DrugBank version 4.3 for a total of 315 drugs 
-The dataset also contain seven drug–drug similarities. Four of these
+Each dataset below  contain seven drug–drug similarities. Four of these
 similarity measures are drug-based: Chemical-based, Ligand-based,
 Side-effect-based and Annotation-based. Three similarities are be-
 tween drug targets and computed by aggregating over known targets
 for the drugs: Sequence-based, PPI network-based, and Gene
 Ontology-based. 
 
-# Todo 
-datasets and thresholds
-https://linqs.org/publications/#id:sridhar-bio16
+- general-interactions: This dataset came from DrugBank version 4.3 for a total of 4293 interactiosn across 315 drugs 
+- crd-interactions: This dataset came from DrugBank and Drugs.com for a total of 10,106 CRD interactions across 807 drugs
+- ncrd-interactions: This dataset came from DrugBank and Drugs.com for a total of 45,737 NCRD interactions across 807 drugs
 
+# Experimental Setup
+The best threshold chosen for AUC evaluations is 0.4. 
 
 ## Origin
+https://linqs.org/publications/#id:sridhar-bio16
+
 @article{sridhar2016probabilistic,
   title={A probabilistic approach for collective similarity-based drug--drug interaction prediction},
   author={Sridhar, Dhanya and Fakhraei, Shobeir and Getoor, Lise},
