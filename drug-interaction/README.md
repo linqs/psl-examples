@@ -1,5 +1,6 @@
 ### Drug-drug interaction
 
+
 ## Problem
 In this example, we attempt to infer unknown DDIs from a network of
 multiple drug-based similarities and known interactions. 
@@ -12,9 +13,9 @@ tween drug targets and computed by aggregating over known targets
 for the drugs: Sequence-based, PPI network-based, and Gene
 Ontology-based. 
 
-- general-interactions: This dataset came from DrugBank version 4.3 for a total of 4293 interactiosn across 315 drugs 
-- crd-interactions: This dataset came from DrugBank and Drugs.com for a total of 10,106 CRD interactions across 807 drugs
-- ncrd-interactions: This dataset came from DrugBank and Drugs.com for a total of 45,737 NCRD interactions across 807 drugs
+- general-interactions: This dataset came from DrugBank version 4.3 for a total of 4293 interactiosn across 315 drugs.  There is also a file DrugBankIDs, which maps integer IDs to DrugIDs
+- crd-interactions: This dataset came from DrugBank and Drugs.com for a total of 10,106 CRD interactions across 807 drugs. These IDs are anonymized (so there is no DrugBankID mapping)
+- ncrd-interactions: This dataset came from DrugBank and Drugs.com for a total of 45,737 NCRD interactions across 807 drugs. These IDs are also anonymized. 
 
 ## Experimental Setup
 The best threshold chosen for AUC evaluations is 0.4. 
