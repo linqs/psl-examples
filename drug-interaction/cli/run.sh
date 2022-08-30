@@ -13,9 +13,12 @@ readonly RUN_SCRIPT_VERSION='1.3.6'
 readonly BASE_NAME='drug-interaction'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
 
-readonly ADDITIONAL_PSL_OPTIONS="--infer \
+readonly ADDITIONAL_PSL_OPTIONS=" \
     --int-ids \
     --eval AUCEvaluator \
+"
+
+readonly ADDITIONAL_EVAL_OPTIONS="--infer \
     --eval DiscreteEvaluator \
     -D discreteevaluator.threshold=0.4 \
 "
@@ -60,7 +63,7 @@ function run_inference() {
         --model "${THIS_DIR}/${BASE_NAME}-learned.psl" \
         --data "${THIS_DIR}/${BASE_NAME}-eval.data" \
         --output "${OUTPUT_DIRECTORY}" \
-        ${ADDITIONAL_PSL_OPTIONS} "$@"
+        ${ADDITIONAL_PSL_OPTIONS} ${ADDITIONAL_EVAL_OPTIONS} "$@"
 
     if [[ "$?" -ne 0 ]]; then
         echo 'ERROR: Failed to run infernce.'
