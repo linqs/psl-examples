@@ -17,12 +17,12 @@ observations:
    ligandSimilarity: ../data/general-interactions/similarity_ligand.txt
    seqSimilarity: ../data/general-interactions/similarity_seq.txt
    SideEffectSimilarity: ../data/general-interactions/similarity_sideeffects.txt
-   validInteraction: ../data/general-interactions/0/eval/valid_interactions_obs.txt
-   interacts: ../data/general-interactions/0/eval/interacts_obs.txt
+   validInteraction: ../data/general-interactions/00/eval/valid_interactions_obs.txt
+   interacts: ../data/general-interactions/00/eval/interacts_obs.txt
 
 targets:
-   interacts: ../data/general-interactions/0/eval/interacts_target.txt
+   interacts: ../data/general-interactions/00/eval/interacts_target.txt
    
 truth:
-   interacts: ../data/general-interactions/0/eval/interacts_truth.txt
+   interacts: ../data/general-interactions/00/eval/interacts_truth.txt
 
