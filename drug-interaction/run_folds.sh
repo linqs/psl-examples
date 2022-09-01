@@ -39,17 +39,17 @@ function main() {
     sed -ri "s|data/[^/]*/|data/${experiment}/|" cli/drug-interaction*.data
 
     # Initialize folds in the data files to start at 0
-    sed -ri "s|([0-9]+)(/eval)|0\2|" cli/drug-interaction*.data
+    # FIXME: implement it for weight learn
+    sed -ri "s|([0-9]+)(/\w+)|00\2|" cli/drug-interaction*.data
 
 
-    # FIXME: use su seq -w 00 09
-    # for i in $(seq -w 00 09)
 
     # Run 10 fold CV
-    for i in {0..9}
+    # for i in {0..9}
+    for i in $(seq -w 00 09)
     do
       echo "Inferring Fold $i"
-      sed -ri "s|([0-9]+)(/eval)|${i}\2|" cli/drug-interaction*.data
+      sed -ri "s|([0-9]+)(/\w+)|${i}\2|" cli/drug-interaction*.data
 
       outDir="results/experiment::${experiment}/fold::${i}"
 
@@ -61,7 +61,7 @@ function main() {
     sed -ri "s|data/[^/]*/|data/general-interactions/|" cli/drug-interaction*.data
 
     # restore original data file to start at the 0th fold
-    sed -ri "s|([0-9]+)(/eval)|0\2|" cli/drug-interaction*.data
+    sed -ri "s|([0-9]+)(/\w+)|00\2|" cli/drug-interaction*.data
 }
 
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
