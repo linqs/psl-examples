@@ -20,7 +20,7 @@ readonly ADDITIONAL_PSL_OPTIONS=" \
 
 readonly ADDITIONAL_EVAL_OPTIONS="--infer \
     --eval DiscreteEvaluator \
-    -D discreteevaluator.threshold=0.4 \
+    -D discreteevaluator.threshold=0.3 \
 "
 
 readonly ADDITIONAL_WL_OPTIONS="--learn GaussianProcessPrior \

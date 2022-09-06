@@ -39,7 +39,6 @@ function main() {
     sed -ri "s|data/[^/]*/|data/${experiment}/|" cli/drug-interaction*.data
 
     # Initialize folds in the data files to start at 0
-    # FIXME: implement it for weight learn
     sed -ri "s|([0-9]+)(/\w+)|00\2|" cli/drug-interaction*.data
 
 

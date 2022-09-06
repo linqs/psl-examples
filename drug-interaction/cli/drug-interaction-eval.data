@@ -10,13 +10,13 @@ predicates:
     interacts/2: open
 
 observations:
-   ATCsimilarity: ../data/general-interactions/similarity_atc.txt
-   chemicalSimilarity: ../data/general-interactions/similarity_chemical.txt
-   distSimilarity: ../data/general-interactions/similarity_dist.txt
-   GOSimilarity: ../data/general-interactions/similarity_go.txt
-   ligandSimilarity: ../data/general-interactions/similarity_ligand.txt
-   seqSimilarity: ../data/general-interactions/similarity_seq.txt
-   SideEffectSimilarity: ../data/general-interactions/similarity_sideeffects.txt
+   ATCsimilarity: ../data/general-interactions/00/eval/similarity_atc.txt
+   chemicalSimilarity: ../data/general-interactions/00/eval/similarity_chemical.txt
+   distSimilarity: ../data/general-interactions/00/eval/similarity_dist.txt
+   GOSimilarity: ../data/general-interactions/00/eval/similarity_go.txt
+   ligandSimilarity: ../data/general-interactions/00/eval/similarity_ligand.txt
+   seqSimilarity: ../data/general-interactions/00/eval/similarity_seq.txt
+   SideEffectSimilarity: ../data/general-interactions/00/eval/similarity_sideeffects.txt
    validInteraction: ../data/general-interactions/00/eval/valid_interactions_obs.txt
    interacts: ../data/general-interactions/00/eval/interacts_obs.txt
 
