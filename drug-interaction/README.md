@@ -15,7 +15,7 @@ Ontology-based.
 
 - general-interactions: This dataset came from DrugBank version 4.3 for a total of 4293 interactiosn across 315 drugs.  There is also a file DrugBankIDs, which maps integer IDs to DrugIDs.  Each fold share the same similarity data. 
 - crd-interactions: This dataset came from DrugBank and Drugs.com for a total of 10,106 CRD interactions across 807 drugs. These IDs are anonymized (so there is no DrugBankID mapping).  Each fold uses different similarity data (since blocking is stricter in the crd setting).
-- ncrd-interactions: This dataset came from DrugBank and Drugs.com for a total of 45,737 NCRD interactions across 807 drugs. These IDs are also anonymized.  Each split uses different similarity data.  
+- ncrd-interactions: This dataset came from DrugBank and Drugs.com for a total of 45,737 NCRD interactions across 807 drugs. These IDs are also anonymized.  Each fold uses same similarity data.  
 
 ## Experimental Setup
 The best threshold chosen for AUC evaluations is 0.4. 
