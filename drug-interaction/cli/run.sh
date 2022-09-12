@@ -16,11 +16,12 @@ readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
 readonly ADDITIONAL_PSL_OPTIONS=" \
     --int-ids \
     --eval AUCEvaluator \
+    -D aucevaluator.threshold=0.4 \
 "
 
 readonly ADDITIONAL_EVAL_OPTIONS="--infer \
     --eval DiscreteEvaluator \
-    -D discreteevaluator.threshold=0.3 \
+    -D discreteevaluator.threshold=0.4 \
 "
 
 readonly ADDITIONAL_WL_OPTIONS="--learn GaussianProcessPrior \
