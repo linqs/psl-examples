@@ -18,7 +18,7 @@ Ontology-based.
 - ncrd-interactions: This dataset came from DrugBank and Drugs.com for a total of 45,737 NCRD interactions across 807 drugs. These IDs are also anonymized.  Each fold uses same similarity data.  
 
 ## Experimental Setup
-The best threshold chosen for AUC evaluations is 0.4. 
+The default settings for the run script is for the dataset "general-interactions".  Therefore, the evaluator thresholds must be changed when running other datasets. 
 
 ## Origin
 https://linqs.org/publications/#id:sridhar-bio16
