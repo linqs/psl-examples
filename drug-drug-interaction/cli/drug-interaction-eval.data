@@ -22,7 +22,6 @@ observations:
 
 targets:
    interacts: ../data/general-interactions/00/eval/interacts_target.txt
-   
+
 truth:
    interacts: ../data/general-interactions/00/eval/interacts_truth.txt
-
