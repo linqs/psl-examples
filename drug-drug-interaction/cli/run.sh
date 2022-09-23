@@ -10,29 +10,17 @@ readonly PSL_VERSION='3.0.0-SNAPSHOT'
 readonly JAR_PATH="${THIS_DIR}/psl-cli-${PSL_VERSION}.jar"
 readonly RUN_SCRIPT_VERSION='1.3.6'
 
-readonly BASE_NAME='drug-interaction'
+readonly BASE_NAME='drug-drug-interaction'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
 
-readonly ADDITIONAL_PSL_OPTIONS=" \
-    --int-ids \
-    --eval AUCEvaluator \
-    -D aucevaluator.threshold=0.4 \
-"
-
-readonly ADDITIONAL_EVAL_OPTIONS="--infer \
-    --eval DiscreteEvaluator \
-    -D discreteevaluator.threshold=0.4 \
-"
-
-readonly ADDITIONAL_WL_OPTIONS="--learn GaussianProcessPrior \
-    -D weightlearning.evaluator=AUCEvaluator \
-"
+readonly ADDITIONAL_PSL_OPTIONS='--int-ids --eval AUCEvaluator -D aucevaluator.threshold=0.4'
+readonly ADDITIONAL_WL_OPTIONS='--learn --learn GaussianProcessPrior -D weightlearning.evaluator=AUCEvaluator'
+readonly ADDITIONAL_EVAL_OPTIONS='--infer --infer --eval DiscreteEvaluator -D discreteevaluator.threshold=0.4'
 
 function main() {
     trap exit SIGINT
 
-    # TODO: fetch it later
-    # bash "${THIS_DIR}/../data/fetchData.sh"
+    bash "${THIS_DIR}/../data/fetchData.sh"
 
     # Make sure we can run PSL.
     check_requirements
