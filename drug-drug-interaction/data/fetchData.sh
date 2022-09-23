@@ -2,7 +2,7 @@
 
 readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/drug-drug-interaction/drug-drug-interaction.zip'
+readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/drug-drug-interaction.zip'
 readonly DATA_FILE=$(basename "${DATA_URL}")
 readonly DATA_DIR='drug-drug-interaction'
 readonly SCRIPT_VERSION='1.3.6'
