@@ -1,12 +1,12 @@
-1: ATCSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
-1: SideEffectSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
-1: GOSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
-1: ligandSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
-1: chemicalSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
-1: seqSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
-1: distSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
+5: ATCSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
+5: SideEffectSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
+5: GOSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
+5: ligandSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
+5: chemicalSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
+5: seqSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
+5: distSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 - D3) & (D1 - D2)>>interacts(D2, D3) ^2
 
 //prior
-1: validInteraction(D1,D2) >> ~interacts(D1,D2) ^2
+5: validInteraction(D1,D2) >> ~interacts(D1,D2) ^2
 
-1: interacts(D1, D2) = interacts(D2, D1) ^2
+interacts(D1, D2) = interacts(D2, D1) .
