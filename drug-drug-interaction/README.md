@@ -15,8 +15,9 @@ Each dataset above contain seven drug–drug similarities. Four of these similar
 The default settings for the run script is for the dataset "general-interactions".  Therefore, the evaluator thresholds must be changed when running other datasets.
 
 ## Origin
-[A Probabilistic Approach for Collective Similarity-Based Drug-Drug Interaction Prediction](https://linqs.org/publications/#id:sridhar-bio16)
-The data came from the original [repo](https://bitbucket.org/linqs/psl-drug-interaction-prediction/src/master/). Each fold contains ground atoms which have been preprocessed and dumped from the original experiment.
+This example is based on the work from [A Probabilistic Approach for Collective Similarity-Based Drug-Drug Interaction Prediction](https://linqs.org/publications/#id:sridhar-bio16)
+This [repo](https://bitbucket.org/linqs/psl-drug-interaction-prediction/src/master/) contains the original data and experiments from the paper.
+Each fold in this example contains data which have been preprocessed and dumped from the original experiment.
 
 ```
 @article{sridhar:bio16,
