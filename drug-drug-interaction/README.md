@@ -10,7 +10,7 @@ There are three datasets which are derived from [DrugBank 4.3](https://go.drugba
 - ncrd-interactions: This dataset has a total of 45,737 NCRD interactions across 807 drugs. These IDs are also anonymized. Each fold uses same similarity data.
 
 ## Experimental Setup
-The default settings for the run script is for the dataset "general-interactions". Therefore, the evaluator thresholds must be changed when running other datasets.
+The default settings for the run script is for the dataset "general-interactions". Therefore, the evaluator thresholds must be changed when running other datasets. For example, `./run.sh -D discreteevaluator.threshold=<NEW_THRESHOLD> aucevaluator.threshold=<NEW_THRESHOLD>` will use the new values NEW\_THRESHOLD.
 
 ## Origin
 This example is based on the work from [A Probabilistic Approach for Collective Similarity-Based Drug-Drug Interaction Prediction](https://linqs.org/publications/#id:sridhar-bio16). This [repo](https://bitbucket.org/linqs/psl-drug-interaction-prediction/src/master/) contains the original data and experiments from the paper. This example contains data which have been preprocessed and dumped from the original experiment. To reference the original work, please use this citation:
