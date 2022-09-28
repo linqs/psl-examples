@@ -11,10 +11,9 @@ There are three datasets which are derived from [DrugBank 4.3](https://go.drugba
 
 ## Experimental Setup
 The default settings for the run script is for the dataset "general-interactions". Therefore, the evaluator thresholds must be changed when running other datasets.
-For example, `sed -i "s|threshold=[[:digit:]]\.[[:digit:]]*|threshold=<NEW_THRESHOLD>|g" run.sh`, will change the thresholds to NEW\_THRESHOLD.
 
 ## Origin
-This example is based on the work from [A Probabilistic Approach for Collective Similarity-Based Drug-Drug Interaction Prediction](https://linqs.org/publications/#id:sridhar-bio16). This [repo](https://bitbucket.org/linqs/psl-drug-interaction-prediction/src/master/) contains the original data and experiments from the paper. This example contains data which have been preprocessed and dumped from the original experiment.
+This example is based on the work from [A Probabilistic Approach for Collective Similarity-Based Drug-Drug Interaction Prediction](https://linqs.org/publications/#id:sridhar-bio16). This [repo](https://bitbucket.org/linqs/psl-drug-interaction-prediction/src/master/) contains the original data and experiments from the paper. This example contains data which have been preprocessed and dumped from the original experiment. To reference the original work, please use this citation:
 
 ```
 @article{sridhar:bio16,
