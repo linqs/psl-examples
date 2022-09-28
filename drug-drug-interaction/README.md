@@ -11,9 +11,9 @@ Each dataset below contain seven drug–drug similarities. Four of these similar
 - crd-interactions: This dataset has a total of 10,106 CRD interactions across 807 drugs. These IDs are anonymized (so there is no DrugBankID mapping). Each fold uses different similarity data (since blocking is stricter in the crd setting).
 - ncrd-interactions: This dataset has a total of 45,737 NCRD interactions across 807 drugs. These IDs are also anonymized. Each fold uses same similarity data.
 
-
 ## Experimental Setup
 The default settings for the run script is for the dataset "general-interactions".  Therefore, the evaluator thresholds must be changed when running other datasets.
+For example, `sed -e "s|threshold=[[:digit:]]\.[[:digit:]]*|threshold=<NEW_THRESHOLD>|g" run.sh`, will change the thresholds to NEW\_THRESHOLD.
 
 ## Origin
 This example is based on the work from [A Probabilistic Approach for Collective Similarity-Based Drug-Drug Interaction Prediction](https://linqs.org/publications/#id:sridhar-bio16).
