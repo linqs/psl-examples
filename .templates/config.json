@@ -17,8 +17,8 @@
         "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/drug-drug-interaction.zip",
         "weightLearning": true,
         "pslOptions": "--int-ids --eval AUCEvaluator -D aucevaluator.threshold=0.4",
-        "evalOptions": "--infer --eval DiscreteEvaluator -D discreteevaluator.threshold=0.4",
-        "weightLearningOptions": "--learn GaussianProcessPrior -D weightlearning.evaluator=AUCEvaluator"
+        "evalOptions": "--eval DiscreteEvaluator -D discreteevaluator.threshold=0.4",
+        "weightLearningOptions": "GaussianProcessPrior -D weightlearning.evaluator=AUCEvaluator"
     },
     "entity-resolution": {
         "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-small.zip",
