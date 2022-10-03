@@ -18,7 +18,7 @@
         "weightLearning": true,
         "pslOptions": "--int-ids --eval AUCEvaluator -D aucevaluator.threshold=0.4",
         "evalOptions": "--eval DiscreteEvaluator -D discreteevaluator.threshold=0.4",
-        "weightLearningOptions": "GaussianProcessPrior -D weightlearning.evaluator=AUCEvaluator"
+        "weightLearningOptions": "GuidedRandomGridSearch -D gridsearch.weights=0.01:0.1:1.0 -D randomgridsearch.maxlocations=75 -D weightlearning.evaluator=AUCEvaluator"
     },
     "entity-resolution": {
         "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-small.zip",

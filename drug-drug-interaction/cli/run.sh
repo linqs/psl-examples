@@ -14,7 +14,7 @@ readonly BASE_NAME='drug-drug-interaction'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
 
 readonly ADDITIONAL_PSL_OPTIONS='--int-ids --eval AUCEvaluator -D aucevaluator.threshold=0.4'
-readonly ADDITIONAL_WL_OPTIONS='--learn GaussianProcessPrior -D weightlearning.evaluator=AUCEvaluator'
+readonly ADDITIONAL_WL_OPTIONS='--learn GuidedRandomGridSearch -D gridsearch.weights=0.01:0.1:1.0 -D randomgridsearch.maxlocations=75 -D weightlearning.evaluator=AUCEvaluator'
 readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval DiscreteEvaluator -D discreteevaluator.threshold=0.4'
 
 function main() {
