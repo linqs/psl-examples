@@ -13,7 +13,7 @@ There are three datasets which are derived from [DrugBank 4.3](https://go.drugba
 The default settings for the run script is for the dataset "general-interactions". Therefore, the evaluator thresholds must be changed when running other datasets. For example, `./run.sh -D discreteevaluator.threshold=<NEW_THRESHOLD> aucevaluator.threshold=<NEW_THRESHOLD>` will use the new values NEW\_THRESHOLD.
 
 ## Weight Learning
-For each dataset, we used a Guided Random Grid Search to tune the weights. This produces slightly better results than the original weight learning method. To produce the same results from the original experiment, then disable weight learning and use the default hardcoded weights.
+The original experiments this example is derived from uses an outdated weight learning method (MaxLikelihoodMPE). This example replaces the outdated weight learning method with more modern methods that perform marginally better. Using the default weights and disabling weight learning will also approximate the original results.
 
 ## Origin
 This example is based on the work from [A Probabilistic Approach for Collective Similarity-Based Drug-Drug Interaction Prediction](https://linqs.org/publications/#id:sridhar-bio16). This [repo](https://bitbucket.org/linqs/psl-drug-interaction-prediction/src/master/) contains the original data and experiments from the paper. This example contains data which have been preprocessed and dumped from the original experiment. To reference the original work, please use this citation:
