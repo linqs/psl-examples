@@ -1,0 +1,27 @@
+predicates:
+    ATCSimilarity/2: closed
+    SideEffectSimilarity/2: closed
+    GOSimilarity/2: closed
+    ligandSimilarity/2: closed
+    chemicalSimilarity/2: closed
+    seqSimilarity/2: closed
+    distSimilarity/2: closed
+    validInteraction/2: closed
+    interacts/2: open
+
+observations:
+   ATCsimilarity: ../data/drug-drug-interaction/general-interactions/00/learn/similarity_atc.txt
+   chemicalSimilarity: ../data/drug-drug-interaction/general-interactions/00/learn/similarity_chemical.txt
+   distSimilarity: ../data/drug-drug-interaction/general-interactions/00/learn/similarity_dist.txt
+   GOSimilarity: ../data/drug-drug-interaction/general-interactions/00/learn/similarity_go.txt
+   ligandSimilarity: ../data/drug-drug-interaction/general-interactions/00/learn/similarity_ligand.txt
+   seqSimilarity: ../data/drug-drug-interaction/general-interactions/00/learn/similarity_seq.txt
+   SideEffectSimilarity: ../data/drug-drug-interaction/general-interactions/00/learn/similarity_sideeffects.txt
+   validInteraction: ../data/drug-drug-interaction/general-interactions/00/learn/valid_interactions_obs.txt
+   interacts: ../data/drug-drug-interaction/general-interactions/00/learn/interacts_obs.txt
+
+targets:
+   interacts: ../data/drug-drug-interaction/general-interactions/00/learn/interacts_target.txt
+
+truth:
+   interacts: ../data/drug-drug-interaction/general-interactions/00/learn/interacts_truth.txt
