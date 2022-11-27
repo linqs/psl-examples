@@ -1,108 +1,53 @@
 {
     "citeseer": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/citeseer.zip",
-        "weightLearning": true,
-        "pslOptions": "--int-ids",
-        "evalOptions": "--eval CategoricalEvaluator -D categoricalevaluator.categoryindexes=1 -D eval.includeobs=true",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/citeseer.zip"
     },
     "cora": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/cora.zip",
-        "weightLearning": true,
-        "pslOptions": "--int-ids",
-        "evalOptions": "--eval CategoricalEvaluator -D categoricalevaluator.categoryindexes=1 -D eval.includeobs=true",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/cora.zip"
     },
     "drug-drug-interaction": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/drug-drug-interaction.zip",
-        "weightLearning": true,
-        "pslOptions": "--int-ids --eval AUCEvaluator -D aucevaluator.threshold=0.4",
-        "evalOptions": "--eval DiscreteEvaluator -D discreteevaluator.threshold=0.4",
-        "weightLearningOptions": "GuidedRandomGridSearch -D gridsearch.weights=0.01:0.1:1.0 -D randomgridsearch.maxlocations=75 -D weightlearning.evaluator=AUCEvaluator"
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/drug-drug-interaction.zip"
     },
     "entity-resolution": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-small.zip",
-        "weightLearning": true,
-        "evalOptions": "--eval DiscreteEvaluator",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-small.zip"
     },
     "epinions": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/epinions.zip",
-        "weightLearning": true,
-        "pslOptions": "--int-ids",
-        "evalOptions": "--eval AUCEvaluator",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/epinions.zip"
     },
     "friendship": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/friendship.zip",
-        "weightLearning": false,
-        "pslOptions": "--int-ids --eval DiscreteEvaluator"
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/friendship.zip"
     },
     "imdb-er": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/imdb-er.zip",
-        "weightLearning": false,
-        "pslOptions": "--int-ids"
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/imdb-er.zip"
     },
     "jester": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-infinite-experiments/jester.zip",
-        "weightLearning": true,
-        "pslOptions": "--int-ids",
-        "evalOptions": "--eval ContinuousEvaluator",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-infinite-experiments/jester.zip"
     },
     "knowledge-graph-identification": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/knowledge-graph-identification.zip",
-        "weightLearning": true,
-        "pslOptions": "--int-ids",
-        "evalOptions": "--eval AUCEvaluator",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/knowledge-graph-identification.zip"
     },
     "lastfm": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/lastfm.zip",
-        "weightLearning": true,
-        "pslOptions": "--int-ids",
-        "evalOptions": "--eval ContinuousEvaluator",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/lastfm.zip"
     },
     "simple-acquaintances": {
-        "fetchData": false,
-        "weightLearning": false,
-        "pslOptions": "--eval DiscreteEvaluator"
+        "fetchData": false
     },
     "social-network-analysis": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/social-network-analysis.zip",
-        "weightLearning": false,
-        "pslOptions": "--int-ids -D admmreasoner.maxiterations=500"
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/social-network-analysis.zip"
     },
     "stance-4forums": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/stance-4forums.zip",
-        "weightLearning": true,
-        "evalOptions": "--eval ContinuousEvaluator",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/stance-4forums.zip"
     },
     "stance-createdebate": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/stance-createdebate.zip",
-        "weightLearning": true,
-        "evalOptions": "--eval ContinuousEvaluator",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/stance-createdebate.zip"
     },
     "trust-prediction": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/trust-prediction.zip",
-        "weightLearning": true,
-        "pslOptions": "--int-ids",
-        "evalOptions": "--eval AUCEvaluator",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/trust-prediction.zip"
     },
     "user-modeling": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/user-modeling.zip",
-        "weightLearning": false,
-        "pslOptions": "--eval DiscreteEvaluator"
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/user-modeling.zip"
     },
     "yelp": {
-        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/yelp.zip",
-        "weightLearning": true,
-        "pslOptions": "--int-ids",
-        "evalOptions": "--eval ContinuousEvaluator",
-        "weightLearningOptions": ""
+        "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/yelp.zip"
     }
 }

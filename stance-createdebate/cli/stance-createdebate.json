@@ -1,0 +1,114 @@
+{
+    "rules": [
+        //Prior that the label given by the text classifier is indeed the stance labe, likewise for disagreement.
+        "1: localPro(A, T) -> isProAuth(A, T) ^2",
+        "1: !localPro(A, T) -> !isProAuth(A, T) ^2",
+
+        "1: localDisagrees(A1, A2) -> disagrees(A1, A2) ^2",
+        "1: !localDisagrees(A1, A2) -> !disagrees(A1, A2) ^2",
+
+        // Disagreement affects stance.
+        "1: disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A2, T) & isProAuth(A1, T) -> !isProAuth(A2, T) ^2",
+        "1: disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & participates(A2, T) & !isProAuth(A1, T) -> isProAuth(A2, T) ^2",
+
+        "1: !disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A2, T) & isProAuth(A1, T) -> isProAuth(A2, T) ^2",
+        "1: !disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & participates(A2, T) & !isProAuth(A1, T) -> !isProAuth(A2, T) ^2",
+
+        "1: disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & isProAuth(A2, T) -> !isProAuth(A1, T) ^2",
+        "1: disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & participates(A2, T) & !isProAuth(A2, T) -> isProAuth(A1, T) ^2",
+
+        "1: !disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & isProAuth(A2, T) -> isProAuth(A1, T) ^2",
+        "1: !disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & participates(A2, T) & !isProAuth(A2, T) -> !isProAuth(A1, T) ^2",
+
+        // Stance affects disagreement.
+        "1: responds(A1, A2) & (A1 != A2) & participates(A2, T) & isProAuth(A1, T) & !isProAuth(A2, T) -> disagrees(A1, A2) ^2",
+        "1: responds(A1, A2) & (A1 != A2) & participates(A1, T) & !isProAuth(A1, T) & isProAuth(A2, T) -> disagrees(A1, A2) ^2",
+
+        "1: responds(A1, A2) & (A1 != A2) & participates(A2, T) & isProAuth(A1, T) & isProAuth(A2, T) -> !disagrees(A1, A2) ^2",
+        "1: responds(A1, A2) & (A1 != A2) & participates(A1, T) & participates(A2, T) & !isProAuth(A1, T) & !isProAuth(A2, T) -> !disagrees(A1, A2) ^2"
+    ],
+    "predicates": {
+        "isProAuth/2": {
+            "evaluations": [
+                "ContinuousEvaluator"
+            ],
+            "targets": {
+                "learn": [
+                    "../data/stance-createdebate/0/learn/abortion/isProAuth_targets.txt"
+                ],
+                "infer": [
+                    "../data/stance-createdebate/0/eval/abortion/isProAuth_targets.txt"
+                ]
+            },
+            "truth": {
+                "learn": [
+                    "../data/stance-createdebate/0/learn/abortion/isProAuth_truth.txt"
+                ],
+                "infer": [
+                    "../data/stance-createdebate/0/eval/abortion/isProAuth_truth.txt"
+                ]
+            }
+        },
+        "disagrees/2": {
+            "evaluations": [
+                "ContinuousEvaluator"
+            ],
+            "targets": {
+                "learn": [
+                    "../data/stance-createdebate/0/learn/abortion/disagrees_targets.txt"
+                ],
+                "infer": [
+                    "../data/stance-createdebate/0/eval/abortion/disagrees_targets.txt"
+                ]
+            },
+            "truth": {
+                "learn": [
+                    "../data/stance-createdebate/0/learn/abortion/disagrees_truth.txt"
+                ],
+                "infer": [
+                    "../data/stance-createdebate/0/eval/abortion/disagrees_truth.txt"
+                ]
+            }
+        },
+        "participates/2": {
+            "observations": {
+                "learn": [
+                    "../data/stance-createdebate/0/learn/abortion/participates_obs.txt"
+                ],
+                "infer": [
+                    "../data/stance-createdebate/0/eval/abortion/participates_obs.txt"
+                ]
+            }
+        },
+        "localPro/2": {
+            "observations": {
+                "learn": [
+                    "../data/stance-createdebate/0/learn/abortion/localPro_obs.txt"
+                ],
+                "infer": [
+                    "../data/stance-createdebate/0/eval/abortion/localPro_obs.txt"
+                ]
+            }
+        },
+        "localDisagrees/2": {
+            "observations": {
+                "learn": [
+                    "../data/stance-createdebate/0/learn/abortion/localDisagrees_obs.txt"
+                ],
+                "infer": [
+                    "../data/stance-createdebate/0/eval/abortion/localDisagrees_obs.txt"
+                ]
+            }
+        },
+        "responds/2": {
+            "observations": {
+                "learn": [
+                    "../data/stance-createdebate/0/learn/abortion/responds_obs.txt"
+                ],
+                "infer": [
+                    "../data/stance-createdebate/0/eval/abortion/responds_obs.txt"
+                ]
+            }
+        }
+    }
+}

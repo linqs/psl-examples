@@ -1,0 +1,36 @@
+{
+    "options": {
+        "runtime.db.intids": true
+    },
+    "rules": [
+        "10: Block(P1, A) & Block(P2, A) & Similar(P1, P2) & P1 != P2 -> Friends(P1, P2) ^2",
+        "10: Block(P1, A) & Block(P2, A) & Block(P3, A) & Friends(P1, P2) & Friends(P2, P3) & P1 != P2 & P2 != P3 & P1 != P3 -> Friends(P1, P3) ^2",
+        "10: Block(P1, A) & Block(P2, A) & Friends(P1, P2) & P1 != P2 -> Friends(P2, P1) ^2",
+
+        // Negative prior.
+        "1: !Friends(P1, P2) ^2"
+    ],
+    "predicates": {
+        "Similar/2": {
+            "observations": [
+                "../data/friendship/0/eval/similar_obs.txt"
+            ]
+        },
+        "Block/2": {
+            "observations": [
+                "../data/friendship/0/eval/location_obs.txt"
+            ]
+        },
+        "Friends/2": {
+            "evaluations": [
+                "DiscreteEvaluator"
+            ],
+            "targets": [
+                "../data/friendship/0/eval/friends_targets.txt"
+            ],
+            "truth": [
+                "../data/friendship/0/eval/friends_truth.txt"
+            ]
+        }
+    }
+}

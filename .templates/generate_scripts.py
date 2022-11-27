@@ -9,13 +9,12 @@ THIS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)))
 ROOT_DIR = os.path.join(THIS_DIR, '..')
 
 TEMPLATE_DIR = os.path.join(THIS_DIR, 'templates')
-CLI_INFERENCE_TEMPLATE_PATH = os.path.join(TEMPLATE_DIR, 'run_cli_inference.sh')
-CLI_WEIGHT_LEARNING_TEMPLATE_PATH = os.path.join(TEMPLATE_DIR, 'run_cli_wl.sh')
+CLI_TEMPLATE_PATH = os.path.join(TEMPLATE_DIR, 'run_cli.sh')
 FETCH_DATA_TEMPLATE_PATH = os.path.join(TEMPLATE_DIR, 'fetch_data.sh')
 
 EXAMPLES_CONFIG_PATH = os.path.join(THIS_DIR, 'config.json')
 
-SCRIPT_VERSION = '1.3.8'
+SCRIPT_VERSION = '2.0.0'
 PSL_VERSION = '3.0.0-SNAPSHOT'
 
 TEMPLATE_SUBS = {
@@ -29,8 +28,6 @@ TEMPLATE_SUBS = {
 
     # Execution options.
     '__PSL_OPTIONS__': None,
-    '__EVAL_OPTIONS__': None,
-    '__WL_OPTIONS__': None,
 
     # Data options.
     '__DATA_URL__': None
@@ -62,24 +59,14 @@ def generateFetchDataScript(baseName,
     return generateScript(FETCH_DATA_TEMPLATE_PATH, subs)
 
 def generateCLIScript(baseName,
-        weightLearning = True, fetchData = True,
-        pslOptions = '', evalOptions = '', weightLearningOptions = '',
+        fetchData = True,
+        pslOptions = '',
         **kwargs):
-    templatePath = CLI_INFERENCE_TEMPLATE_PATH
-    if (weightLearning):
-        templatePath = CLI_WEIGHT_LEARNING_TEMPLATE_PATH
+    templatePath = CLI_TEMPLATE_PATH
 
     subs = dict(TEMPLATE_SUBS)
     subs['__BASE_NAME__'] = baseName
-
-    if (not weightLearning):
-        subs['__PSL_OPTIONS__'] = '--infer ' + pslOptions
-        del subs['__EVAL_OPTIONS__']
-        del subs['__WL_OPTIONS__']
-    else:
-        subs['__PSL_OPTIONS__'] = pslOptions
-        subs['__EVAL_OPTIONS__'] = '--infer ' + evalOptions
-        subs['__WL_OPTIONS__'] = '--learn ' + weightLearningOptions
+    subs['__PSL_OPTIONS__'] = pslOptions
 
     if (not fetchData):
         subs['__FETCH_DATA__'] = '# No data fetching necessary.'

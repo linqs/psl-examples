@@ -1,0 +1,52 @@
+{
+    "options": {
+        "runtime.db.intids": true
+    },
+    "rules": [
+        // Prior
+        "0.02: !SAME(R1, R2) ^2",
+
+        // Similarity rule
+        "0.3: CANDSAME(R1, R2) & SIM(ID1, ID2) & INREF(ID1, R1) & INREF(ID2, R2) -> SAME(R1, R2)",
+
+        // Transitivity rule
+        "0.4: CANDSAME(R1, R2) & CANDSAME(R2, R3) & CANDSAME(R1, R3) & SAME(R1, R2) & SAME(R2, R3) -> SAME(R1, R3)",
+
+        // Sparsity rule
+        "0.2: CANDSAME(R1, R2) & CANDSAME(R1, R3) & SAME(R1, R2) -> !SAME(R1, R3)",
+
+        // Exclusivity
+        // If an actor from movie matches an actor in another movie. Then they cannot match any other actor from the second movie.
+        "0.3: CANDSAME(R1, R2) & CANDSAME(R1, R3) & SAME(R1, R2) & INMOVIE(R2, M) & INMOVIE(R3, M) -> !SAME(R1, R3)",
+
+        // Symmetry
+        "10.0: Same(R1, R2) = Same(R2, R1)"
+    ],
+    "predicates": {
+        "SAME/2": {
+            "targets": [
+                "../data/imdb-er/0/eval/same_targets.txt"
+            ]
+        },
+        "CANDSAME/2": {
+            "observations": [
+                "../data/imdb-er/0/eval/candsame.txt"
+            ]
+        },
+        "SIM/2": {
+            "observations": [
+                "../data/imdb-er/0/eval/sim.txt"
+            ]
+        },
+        "INMOVIE/2": {
+            "observations": [
+                "../data/imdb-er/0/eval/inmovie.txt"
+            ]
+        },
+        "INREF/2": {
+            "observations": [
+                "../data/imdb-er/0/eval/inref.txt"
+            ]
+        }
+    }
+}

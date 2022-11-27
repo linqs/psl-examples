@@ -8,14 +8,12 @@ readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 readonly PSL_VERSION='3.0.0-SNAPSHOT'
 readonly JAR_PATH="${THIS_DIR}/psl-cli-${PSL_VERSION}.jar"
-readonly RUN_SCRIPT_VERSION='1.3.8'
+readonly RUN_SCRIPT_VERSION='2.0.0'
 
 readonly BASE_NAME='yelp'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
 
-readonly ADDITIONAL_PSL_OPTIONS='--int-ids'
-readonly ADDITIONAL_WL_OPTIONS='--learn'
-readonly ADDITIONAL_EVAL_OPTIONS='--infer --eval ContinuousEvaluator'
+readonly ADDITIONAL_PSL_OPTIONS=''
 
 function main() {
     trap exit SIGINT
@@ -27,32 +25,16 @@ function main() {
     fetch_psl
 
     # Run PSL.
-    run_weight_learning "$@"
-    run_inference "$@"
+    run_psl "$@"
 }
 
-function run_weight_learning() {
-    echo "Running PSL Weight Learning."
-
-    java -jar "${JAR_PATH}" \
-        --model "${THIS_DIR}/${BASE_NAME}.psl" \
-        --data "${THIS_DIR}/${BASE_NAME}-learn.data" \
-        ${ADDITIONAL_PSL_OPTIONS} ${ADDITIONAL_WL_OPTIONS} "$@"
-
-    if [[ "$?" -ne 0 ]]; then
-        echo 'ERROR: Failed to run weight learning.'
-        exit 60
-    fi
-}
-
-function run_inference() {
+function run_psl() {
     echo "Running PSL Inference."
 
     java -jar "${JAR_PATH}" \
-        --model "${THIS_DIR}/${BASE_NAME}-learned.psl" \
-        --data "${THIS_DIR}/${BASE_NAME}-eval.data" \
+        --config "${THIS_DIR}/${BASE_NAME}.json" \
         --output "${OUTPUT_DIRECTORY}" \
-        ${ADDITIONAL_PSL_OPTIONS} ${ADDITIONAL_EVAL_OPTIONS} "$@"
+        ${ADDITIONAL_PSL_OPTIONS} "$@"
 
     if [[ "$?" -ne 0 ]]; then
         echo 'ERROR: Failed to run infernce.'

@@ -1,0 +1,143 @@
+{
+    "options": {
+        "runtime.db.intids": true,
+        "runtime.learn.method": "GuidedRandomGridSearch",
+        "gridsearch.weights": "0.01:0.1:1.0",
+        "randomgridsearch.maxlocations": 75
+    },
+    "rules": [
+        "5: ATCSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 != D3) & (D1 != D2) -> interacts(D2, D3) ^2",
+        "5: SideEffectSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 != D3) & (D1 != D2) -> interacts(D2, D3) ^2",
+        "5: GOSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 != D3) & (D1 != D2) -> interacts(D2, D3) ^2",
+        "5: ligandSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 != D3) & (D1 != D2) -> interacts(D2, D3) ^2",
+        "5: chemicalSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 != D3) & (D1 != D2) -> interacts(D2, D3) ^2",
+        "5: seqSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 != D3) & (D1 != D2) -> interacts(D2, D3) ^2",
+        "5: distSimilarity(D1, D2) & interacts(D1, D3) & validInteraction(D1, D3) & validInteraction(D2, D3) & (D2 != D3) & (D1 != D2) -> interacts(D2, D3) ^2",
+        # Priors
+        "5: validInteraction(D1,D2) -> !interacts(D1,D2) ^2",
+        "interacts(D1, D2) = interacts(D2, D1) ."
+    ],
+    "predicates": {
+        "ATCsimilarity/2": {
+            "observations": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/similarity_atc.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/similarity_atc.txt"
+                ]
+            }
+        },
+        "chemicalSimilarity/2": {
+            "observations": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/similarity_chemical.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/similarity_chemical.txt"
+                ]
+            }
+        },
+        "distSimilarity/2": {
+            "observations": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/similarity_dist.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/similarity_dist.txt"
+                ]
+            }
+        },
+        "GOSimilarity/2": {
+            "observations": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/similarity_go.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/similarity_go.txt"
+                ]
+            }
+        },
+        "ligandSimilarity/2": {
+            "observations": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/similarity_ligand.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/similarity_ligand.txt"
+                ]
+            }
+        },
+        "seqSimilarity/2": {
+            "observations": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/similarity_seq.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/similarity_seq.txt"
+                ]
+            }
+        },
+        "SideEffectSimilarity/2": {
+            "observations": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/similarity_sideeffects.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/similarity_sideeffects.txt"
+                ]
+            }
+        },
+        "validInteraction/2": {
+            "observations": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/valid_interactions_obs.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/valid_interactions_obs.txt"
+                ]
+            }
+        },
+        "interacts/2": {
+            "evaluations": [
+                {
+                    "evaluator": "AUCEvaluator",
+                    "primary": true,
+                    "options": {
+                        "aucevaluator.threshold": 0.4
+                    }
+                },
+                {
+                    "evaluator": "DiscreteEvaluator",
+                    "options": {
+                        "discreteevaluator.threshold": 0.4
+                    }
+                }
+            ],
+            "observations": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/interacts_obs.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/interacts_obs.txt"
+                ]
+            },
+            "targets": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/interacts_target.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/interacts_target.txt"
+                ]
+            },
+            "truth": {
+                "learn": [
+                    "../data/drug-drug-interaction/general-interactions/00/learn/interacts_truth.txt"
+                ],
+                "infer": [
+                    "../data/drug-drug-interaction/general-interactions/00/eval/interacts_truth.txt"
+                ]
+            }
+        }
+    }
+}

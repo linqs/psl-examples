@@ -1,0 +1,62 @@
+{
+    "rules": [
+        // Priors from local classifiers.
+        "50: Has(U, S) & Predicts(S, U, A, L) -> Is(U, A, L) ^2",
+        "50: Has(U, S) & ~Predicts(S, U, A, L) -> ~Is(U, A, L) ^2",
+
+        // Collective Rules for relational signals.
+        "100: Joins(U, G) & Joins(V, G) & Is(V, A, L) -> Is(U, A, L) ^2",
+        "100: Joins(U, G) & Joins(V, G) & ~Is(V, A, L) -> ~Is(U, A, L) ^2",
+        "10: Likes(U, T) & Likes(V, T) & Is(V, A, L) -> Is(U, A, L) ^2",
+        "10: Likes(U, T) & Likes(V, T) & ~Is(V, A, L) -> ~Is(U, A, L) ^2",
+
+        "1: Friend(U, V) & Is(V, A, L)-> Is(U, A, L) ^2",
+        "1: Friend(U, V) & ~Is(V, A, L)-> ~Is(U, A, L) ^2",
+        "1: Friend(V, U) & Is(V, A, L)-> Is(U, A, L) ^2",
+        "1: Friend(V, U) & ~Is(V, A, L)-> ~Is(U, A, L) ^2",
+
+        // Ensure that user has one attribute.
+        "1: Is(U, A, +L) = 1"
+    ],
+    "predicates": {
+        "Is/3": {
+            "evaluations": [
+                "DiscreteEvaluator"
+            ],
+            "observations": [
+                "../data/user-modeling/0/eval/user_train.txt"
+            ],
+            "targets": [
+                "../data/user-modeling/0/eval/user_target.txt"
+            ],
+            "truth": [
+                "../data/user-modeling/0/eval/user_truth.txt"
+            ]
+        },
+        "Predicts/4": {
+            "observations": [
+                "../data/user-modeling/0/eval/local_predictor_obs.txt"
+            ]
+        },
+        "Has/2": {
+            "observations": [
+                "../data/user-modeling/0/eval/has_obs.txt"
+            ]
+        },
+        "Friend/2": {
+            "observations": [
+                "../data/user-modeling/0/eval/friend_obs.txt"
+            ]
+        },
+        "Likes/2": {
+            "observations": [
+                "../data/user-modeling/0/eval/likes_obs.txt"
+            ]
+        },
+        "Joins/2": {
+            "observations": [
+                "../data/user-modeling/0/eval/joins_obs.txt"
+            ]
+        }
+    }
+}

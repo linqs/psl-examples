@@ -1,0 +1,315 @@
+{
+    "options": {
+        "runtime.db.intids": true
+    },
+    "rules": [
+        "0025: VALCAT(B, C) & SAMEENTITY(A, B) & CAT(A, C) -> CAT(B, C) ^2",
+        "0025: VALREL(B, Z, R) & SAMEENTITY(A, B) & REL(A, Z, R) -> REL(B, Z, R) ^2",
+        "0025: VALREL(Z, B, R) & SAMEENTITY(A, B) & REL(Z, A, R) -> REL(Z, B, R) ^2",
+        "0100: VALCAT(A, D) & SUB(C, D) & CAT(A, C) -> CAT(A, D) ^2",
+        "0100: VALREL(A, B, S) & RSUB(R, S) & REL(A, B, R) -> REL(A, B, S) ^2",
+        "0100: VALCAT(A, D) & MUT(C, D) & CAT(A, C) -> !CAT(A, D) ^2",
+        "0100: VALREL(A, B, S) & RMUT(R, S) & REL(A, B, R) -> !REL(A, B, S) ^2",
+        "0100: VALREL(B, A, S) & INV(R, S) & REL(A, B, R) -> REL(B, A, S) ^2",
+        "0100: VALCAT(A, C) & DOMAIN(R, C) & REL(A, B, R) -> CAT(A, C) ^2",
+        "0100: VALCAT(B, C) & RANGE2(R, C) & REL(A, B, R) -> CAT(B, C) ^2",
+        "0001: VALCAT(A, C) & CANDCAT_GENERAL(A, C) -> CAT(A, C) ^2",
+        "0001: VALREL(A, B, R) & CANDREL_GENERAL(A, B, R) -> REL(A, B, R) ^2",
+        "0001: VALCAT(A, C) & CANDCAT_CBL(A, C) -> CAT(A, C) ^2",
+        "0001: VALREL(A, B, R) & CANDREL_CBL(A, B, R) -> REL(A, B, R) ^2",
+        "0001: VALCAT(A, C) & CANDCAT_CMC(A, C) -> CAT(A, C) ^2",
+        "0001: VALCAT(A, C) & CANDCAT_CPL(A, C) -> CAT(A, C) ^2",
+        "0001: VALREL(A, B, R) & CANDREL_CPL(A, B, R) -> REL(A, B, R) ^2",
+        "0001: VALCAT(A, C) & CANDCAT_MORPH(A, C) -> CAT(A, C) ^2",
+        "0001: VALCAT(A, C) & CANDCAT_SEAL(A, C) -> CAT(A, C) ^2",
+        "0001: VALREL(A, B, R) & CANDREL_SEAL(A, B, R) -> REL(A, B, R) ^2",
+        "0001: VALCAT(A, C) & PROMCAT_GENERAL(A, C) -> CAT(A, C) ^2",
+        "0001: VALREL(A, B, R) & PROMREL_GENERAL(A, B, R) -> REL(A, B, R) ^2",
+
+        // Priors.
+        "0002: VALCAT(A, C) -> !CAT(A, C) ^2",
+        "0002: VALREL(A, B, R) -> !REL(A, B, R) ^2",
+        "0001: VALCAT(A, C) -> CAT(A, C) ^2",
+        "0001: VALREL(A, B, R) -> REL(A, B, R) ^2"
+    ],
+    "predicates": {
+        "Cat/2": {
+            "evaluations": [
+                "AUCEvaluator"
+            ],
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CAT_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CAT_obs.txt"
+                ]
+            },
+            "targets": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CAT_targets.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CAT_targets.txt"
+                ]
+            },
+            "truth": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CAT_truth.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CAT_truth.txt"
+                ]
+            }
+        },
+        "Rel/3": {
+            "evaluations": [
+                "AUCEvaluator"
+            ],
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/REL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/REL_obs.txt"
+                ]
+            },
+            "targets": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/REL_targets.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/REL_targets.txt"
+                ]
+            },
+            "truth": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/REL_truth.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/REL_truth.txt"
+                ]
+            }
+        },
+        "CandCat_CBL/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CANDCAT_CBL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CANDCAT_CBL_obs.txt"
+                ]
+            }
+        },
+        "CandCat_CMC/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CANDCAT_CMC_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CANDCAT_CMC_obs.txt"
+                ]
+            }
+        },
+        "CandCat_CPL/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CANDCAT_CPL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CANDCAT_CPL_obs.txt"
+                ]
+            }
+        },
+        "CandCat_General/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CANDCAT_GENERAL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CANDCAT_GENERAL_obs.txt"
+                ]
+            }
+        },
+        "CandCat_MORPH/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CANDCAT_MORPH_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CANDCAT_MORPH_obs.txt"
+                ]
+            }
+        },
+        "CandCat_SEAL/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CANDCAT_SEAL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CANDCAT_SEAL_obs.txt"
+                ]
+            }
+        },
+        "CandRel_CBL/3": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CANDREL_CBL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CANDREL_CBL_obs.txt"
+                ]
+            }
+        },
+        "CandRel_CPL/3": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CANDREL_CPL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CANDREL_CPL_obs.txt"
+                ]
+            }
+        },
+        "CandRel_General/3": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CANDREL_GENERAL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CANDREL_GENERAL_obs.txt"
+                ]
+            }
+        },
+        "CandRel_SEAL/3": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/CANDREL_SEAL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/CANDREL_SEAL_obs.txt"
+                ]
+            }
+        },
+        "Domain/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/DOMAIN_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/DOMAIN_obs.txt"
+                ]
+            }
+        },
+        "Inv/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/INV_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/INV_obs.txt"
+                ]
+            }
+        },
+        "Mut/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/MUT_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/MUT_obs.txt"
+                ]
+            }
+        },
+        "PromCat_General/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/PROMCAT_GENERAL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/PROMCAT_GENERAL_obs.txt"
+                ]
+            }
+        },
+        "PromRel_General/3": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/PROMREL_GENERAL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/PROMREL_GENERAL_obs.txt"
+                ]
+            }
+        },
+        "Range2/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/RANGE2_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/RANGE2_obs.txt"
+                ]
+            }
+        },
+        "RMut/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/RMUT_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/RMUT_obs.txt"
+                ]
+            }
+        },
+        "RSub/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/RSUB_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/RSUB_obs.txt"
+                ]
+            }
+        },
+        "SameEntity/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/SAMEENTITY_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/SAMEENTITY_obs.txt"
+                ]
+            }
+        },
+        "Sub/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/SUB_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/SUB_obs.txt"
+                ]
+            }
+        },
+        "ValCat/2": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/VALCAT_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/VALCAT_obs.txt"
+                ]
+            }
+        },
+        "ValRel/3": {
+            "observations": {
+                "learn": [
+                    "../data/knowledge-graph-identification/0/learn/VALREL_obs.txt"
+                ],
+                "infer": [
+                    "../data/knowledge-graph-identification/0/eval/VALREL_obs.txt"
+                ]
+            }
+        }
+    }
+}

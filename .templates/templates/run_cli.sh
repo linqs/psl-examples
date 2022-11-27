@@ -25,15 +25,14 @@ function main() {
     fetch_psl
 
     # Run PSL.
-    run_inference "$@"
+    run_psl "$@"
 }
 
-function run_inference() {
+function run_psl() {
     echo "Running PSL Inference."
 
     java -jar "${JAR_PATH}" \
-        --model "${THIS_DIR}/${BASE_NAME}.psl" \
-        --data "${THIS_DIR}/${BASE_NAME}.data" \
+        --config "${THIS_DIR}/${BASE_NAME}.json" \
         --output "${OUTPUT_DIRECTORY}" \
         ${ADDITIONAL_PSL_OPTIONS} "$@"
 

@@ -8,12 +8,12 @@ readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 readonly PSL_VERSION='3.0.0-SNAPSHOT'
 readonly JAR_PATH="${THIS_DIR}/psl-cli-${PSL_VERSION}.jar"
-readonly RUN_SCRIPT_VERSION='1.3.8'
+readonly RUN_SCRIPT_VERSION='2.0.0'
 
 readonly BASE_NAME='social-network-analysis'
 readonly OUTPUT_DIRECTORY="${THIS_DIR}/inferred-predicates"
 
-readonly ADDITIONAL_PSL_OPTIONS='--infer --int-ids -D admmreasoner.maxiterations=500'
+readonly ADDITIONAL_PSL_OPTIONS=''
 
 function main() {
     trap exit SIGINT
@@ -25,15 +25,14 @@ function main() {
     fetch_psl
 
     # Run PSL.
-    run_inference "$@"
+    run_psl "$@"
 }
 
-function run_inference() {
+function run_psl() {
     echo "Running PSL Inference."
 
     java -jar "${JAR_PATH}" \
-        --model "${THIS_DIR}/${BASE_NAME}.psl" \
-        --data "${THIS_DIR}/${BASE_NAME}.data" \
+        --config "${THIS_DIR}/${BASE_NAME}.json" \
         --output "${OUTPUT_DIRECTORY}" \
         ${ADDITIONAL_PSL_OPTIONS} "$@"
 
