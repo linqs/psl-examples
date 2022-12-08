@@ -17,6 +17,9 @@ function main() {
     trap exit SIGINT
     set -e
 
+    # Remove all cached jars.
+    rm -f "${BASE_DIR}"/*/cli/*.jar
+
     for runPath in "${BASE_DIR}/"*/*"/run.sh" ; do
         local exampleName=$(basename $(dirname $(dirname "${runPath}")))
         local exampleType=$(basename $(dirname "${runPath}"))

@@ -1,6 +1,6 @@
 {
     "rules": [
-        //Prior that the label given by the text classifier is indeed the stance labe, likewise for disagreement.
+        // Prior that the label given by the text classifier is indeed the stance labe, likewise for disagreement.
         "1: localPro(A, T) -> isProAuth(A, T) ^2",
         "1: !localPro(A, T) -> !isProAuth(A, T) ^2",
 
@@ -15,17 +15,9 @@
         "1: !disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & participates(A2, T) & !isProAuth(A1, T) -> !isProAuth(A2, T) ^2",
 
         "1: disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & isProAuth(A2, T) -> !isProAuth(A1, T) ^2",
-        "1: disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & participates(A2, T) & !isProAuth(A2, T) -> isProAuth(A1, T) ^2",
 
         "1: !disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & isProAuth(A2, T) -> isProAuth(A1, T) ^2",
-        "1: !disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & participates(A2, T) & !isProAuth(A2, T) -> !isProAuth(A1, T) ^2",
-
-        // Stance affects disagreement.
-        "1: responds(A1, A2) & (A1 != A2) & participates(A2, T) & isProAuth(A1, T) & !isProAuth(A2, T) -> disagrees(A1, A2) ^2",
-        "1: responds(A1, A2) & (A1 != A2) & participates(A1, T) & !isProAuth(A1, T) & isProAuth(A2, T) -> disagrees(A1, A2) ^2",
-
-        "1: responds(A1, A2) & (A1 != A2) & participates(A2, T) & isProAuth(A1, T) & isProAuth(A2, T) -> !disagrees(A1, A2) ^2",
-        "1: responds(A1, A2) & (A1 != A2) & participates(A1, T) & participates(A2, T) & !isProAuth(A1, T) & !isProAuth(A2, T) -> !disagrees(A1, A2) ^2"
+        "1: !disagrees(A1, A2) & (A1 != A2) & responds(A1, A2) & participates(A1, T) & participates(A2, T) & !isProAuth(A2, T) -> !isProAuth(A1, T) ^2"
     ],
     "predicates": {
         "isProAuth/2": {

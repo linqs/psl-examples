@@ -14,6 +14,9 @@ function main() {
     trap exit SIGINT
     set -e
 
+    # Remove cached jar.
+    rm -f "${EXAMPLE_DIR}"/cli/*.jar
+
     for runScript in "${EXAMPLE_DIR}/"*"/run.sh" ; do
         "${runScript}" --postgres psltest -D log4j.threshold=DEBUG -D votedperceptron.numsteps=1 -D admmreasoner.maxiterations=10
     done
