@@ -10,14 +10,14 @@ readonly GENERATION_SCRIPT="${BASE_DIR}/.templates/generate_scripts.py"
 # Check that every example has a specific path.
 function check_path() {
     local relativePath=$1
-    local skipExample=$2
+    local skipExamples=" $2 "
 
     local returnValue=0
 
     for exampleDir in "${BASE_DIR}/"* ; do
         local exampleName=$(basename "${exampleDir}")
 
-        if [[ ! -d "${exampleDir}" || "${exampleName}" == '_scripts' || "${exampleName}" == "${skipExample}" ]] ; then
+        if [[ ! -d "${exampleDir}" || "${exampleName}" == '_scripts' || "${skipExamples}" == *" ${exampleName} "* ]] ; then
             continue
         fi
 
@@ -98,7 +98,7 @@ function main() {
     check_path 'cli/run.sh'
     status=$(($status | $?))
 
-    check_path 'data/.gitignore' 'simple-acquaintances'
+    check_path 'data/.gitignore' 'simple-acquaintances smokers'
     status=$(($status | $?))
 
     check_path 'README.md'
