@@ -32,6 +32,9 @@
     "simple-acquaintances": {
         "fetchData": false
     },
+    "smokers": {
+        "fetchData": false
+    },
     "social-network-analysis": {
         "dataURL": "https://linqs-data.soe.ucsc.edu/public/psl-examples-data/social-network-analysis.zip"
     },

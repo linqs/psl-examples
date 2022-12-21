@@ -1,0 +1,63 @@
+{
+    "rules": [
+        "0.5: Smokes(X) -> Cancer(X) ^2",
+        "0.4: Friends(A1, A2) & Smokes(A1) -> Smokes(A2) ^2",
+        "0.4: Friends(A1, A2) & Smokes(A2) -> Smokes(A1) ^2",
+
+        "0.01: !Smokes(X)",
+        "0.01: !Cancer(X)"
+    ],
+    "predicates": {
+        "Friends/2": {
+            "observations": [
+                ["Anna", "Bob"],
+                ["Anna", "Edward"],
+                ["Anna", "Frank"],
+                ["Edward", "Frank"],
+                ["Gary", "Helen"]
+            ]
+        },
+        "Smokes/1": {
+            "evaluations": [
+                "DiscreteEvaluator"
+            ],
+            "observations": [
+                ["Anna"],
+                ["Edward"]
+            ],
+            "targets": [
+                ["Bob"],
+                ["Frank"],
+                ["Gary"],
+                ["Helen"]
+            ],
+            "truth": [
+                ["Bob", 1],
+                ["Frank", 1],
+                ["Gary", 0],
+                ["Helen", 0]
+            ]
+        },
+        "Cancer/1": {
+            "evaluations": [
+                "DiscreteEvaluator"
+            ],
+            "targets": [
+                ["Anna"],
+                ["Bob"],
+                ["Edward"],
+                ["Frank"],
+                ["Gary"],
+                ["Helen"]
+            ],
+            "truth": [
+                ["Anna", 1],
+                ["Bob", 1],
+                ["Edward", 1],
+                ["Frank", 1],
+                ["Gary", 0],
+                ["Helen", 0]
+            ]
+        }
+    }
+}
