@@ -10,15 +10,15 @@ The dataset originally came from CiteSeer.
 The full dataset contains around 3,000 author references and 1,500 paper references.
 Part of the full dataset was used to create three varying size datasets:
  - small:
-   - [link](https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-small.tar.gz)
+   - [link](https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-small.zip)
    - Number of Authors: 1136
    - Number of Papers: 864
  - medium:
-   - [link](https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-medium.tar.gz)
+   - [link](https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-medium.zip)
    - Number of Authors: 1813
    - Number of Papers: 1143
  - large:
-   - [link](https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-large.tar.gz)
+   - [link](https://linqs-data.soe.ucsc.edu/public/psl-examples-data/entity-resolution/entity-resolution-large.zip)
    - Number of Authors: 2892
    - Number of Papers: 1504
 
