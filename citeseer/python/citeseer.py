@@ -13,12 +13,10 @@ THIS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)))
 DATA_DIR = os.path.join(THIS_DIR, '..', 'data', MODEL_NAME, '0')
 
 ADDITIONAL_PSL_OPTIONS = {
-    'log4j.threshold': 'INFO'
+    'runtime.log.level': 'INFO'
+    # 'runtime.db.type': 'Postgres',
+    # 'runtime.db.pg.name': 'psl',
 }
-
-ADDITIONAL_CLI_OPTIONS = [
-    # '--postgres'
-]
 
 NUM_CATEGORIES = 7
 
@@ -52,17 +50,17 @@ def write_results(results, model):
     os.makedirs(out_dir, exist_ok = True)
 
     for predicate in model.get_predicates().values():
-        if (predicate.closed()):
+        if (predicate not in results):
             continue
 
         out_path = os.path.join(out_dir, "%s.txt" % (predicate.name()))
         results[predicate].to_csv(out_path, sep = "\t", header = False, index = False)
 
 def add_predicates(model):
-    link_predicate = Predicate('Link', closed = True, size = 2)
+    link_predicate = Predicate('Link', size = 2)
     model.add_predicate(link_predicate)
 
-    hascat_predicate = Predicate('HasCat', closed = False, size = 2)
+    hascat_predicate = Predicate('HasCat', size = 2)
     model.add_predicate(hascat_predicate)
 
     return link_predicate, hascat_predicate
@@ -110,11 +108,11 @@ def _add_data(split, link_predicate, hascat_predicate):
 
 def learn(model, link_predicate, hascat_predicate):
     add_learn_data(link_predicate, hascat_predicate)
-    model.learn(additional_cli_options = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
+    model.learn(psl_options = ADDITIONAL_PSL_OPTIONS)
 
 def infer(model, link_predicate, hascat_predicate):
     add_eval_data(link_predicate, hascat_predicate)
-    return model.infer(additional_cli_options = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
+    return model.infer(psl_options = ADDITIONAL_PSL_OPTIONS)
 
 if (__name__ == '__main__'):
     main()

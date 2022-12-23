@@ -13,12 +13,10 @@ THIS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)))
 DATA_DIR = os.path.join(THIS_DIR, '..', 'data', 'simple-acquaintances', '0', 'eval')
 
 ADDITIONAL_PSL_OPTIONS = {
-    'log4j.threshold': 'INFO'
+    'runtime.log.level': 'INFO'
+    # 'runtime.db.type': 'Postgres',
+    # 'runtime.db.pg.name': 'psl',
 }
-
-ADDITIONAL_CLI_OPTIONS = [
-    # '--postgres'
-]
 
 def main():
     model = Model(MODEL_NAME)
@@ -39,20 +37,20 @@ def write_results(results, model):
     os.makedirs(out_dir, exist_ok = True)
 
     for predicate in model.get_predicates().values():
-        if (predicate.closed()):
+        if (predicate not in results):
             continue
 
         out_path = os.path.join(out_dir, "%s.txt" % (predicate.name()))
         results[predicate].to_csv(out_path, sep = "\t", header = False, index = False)
 
 def add_predicates(model):
-    predicate = Predicate('Knows', closed = False, size = 2)
+    predicate = Predicate('Knows', size = 2)
     model.add_predicate(predicate)
 
-    predicate = Predicate('Likes', closed = True, size = 2)
+    predicate = Predicate('Likes', size = 2)
     model.add_predicate(predicate)
 
-    predicate = Predicate('Lived', closed = True, size = 2)
+    predicate = Predicate('Lived', size = 2)
     model.add_predicate(predicate)
 
 def add_rules(model):
@@ -84,7 +82,7 @@ def add_data(model):
 
 def infer(model):
     add_data(model)
-    return model.infer(additional_cli_options = ADDITIONAL_CLI_OPTIONS, psl_config = ADDITIONAL_PSL_OPTIONS)
+    return model.infer(psl_options = ADDITIONAL_PSL_OPTIONS)
 
 if (__name__ == '__main__'):
     main()
