@@ -54,7 +54,7 @@ function check_config() {
     done
 
     # Ensure that we have seen the same number of examples represented in the config.
-    local configCount=$(grep '^    "' "${TEMPLATE_CONFIG_PATH}" | wc -l)
+    local configCount=$(grep '^    "' "${TEMPLATE_CONFIG_PATH}" | wc -l | sed 's/ //g')
     if [[ ${count} != ${configCount} ]] ; then
         echo "ERROR: Number of examples found in config (${configCount}) does not match number of seen config dirs (${count})."
         returnValue=1
@@ -73,7 +73,7 @@ function check_generation() {
 
     "${GENERATION_SCRIPT}"
 
-    changeCount=$(git diff --name-only | wc -l)
+    changeCount=$(git diff --name-only | wc -l | sed 's/ //g')
     if [[ ${changeCount} != 0 ]] ; then
         echo "ERROR: Changes seen in git after script generation:"
         git diff --name-only
