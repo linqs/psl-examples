@@ -5,7 +5,7 @@
 # This is a good script to start with when setting up experiments.
 
 # Basic configuration options.
-readonly PSL_VERSION='3.0.0-SNAPSHOT'
+readonly PSL_VERSION='2.4.0'
 
 readonly BASE_DIR=$(realpath "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"/..)
 

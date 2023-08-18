@@ -5,7 +5,7 @@ readonly THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 readonly DATA_URL='https://linqs-data.soe.ucsc.edu/public/psl-examples-data/user-modeling.zip'
 readonly DATA_FILE=$(basename "${DATA_URL}")
 readonly DATA_DIR='user-modeling'
-readonly SCRIPT_VERSION='2.0.0'
+readonly SCRIPT_VERSION='2.0.1'
 
 function main() {
     trap exit SIGINT
