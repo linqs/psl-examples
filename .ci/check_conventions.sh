@@ -65,7 +65,7 @@ function check_config() {
 
 # Use git commands to ensure that all generated files match the currently committed files.
 function check_generation() {
-    local changeCount=$(git diff --name-only | wc -l)
+    local changeCount=$(git diff --name-only | wc -l | sed 's/ //g')
     if [[ ${changeCount} != 0 ]] ; then
         echo "ERROR: Changes in git seen even before generation, should be running in a clean checkout."
         return 1
